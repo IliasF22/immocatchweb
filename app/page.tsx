@@ -2,6 +2,12 @@
 // Design : B2B local, institutionnel, aplats de couleurs solides.
 // Aucun dégradé, aucun halo, aucun néon. Slate-900 + Blanc + Orange #FF6B00.
 
+import { Logo } from "@/components/Logo";
+
+const PHONE_DISPLAY = "+33 6 15 88 97 44";
+const PHONE_HREF = "tel:+33615889744";
+const EMAIL = "ilias@immocatch.fr";
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-slate-900 text-slate-100">
@@ -10,23 +16,7 @@ export default function Home() {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
           {/* Logo */}
           <a href="#" className="flex items-center gap-2.5" aria-label="ImmoCatch — accueil">
-            {/* Icône minimaliste : toit de maison stylisé */}
-            <span className="flex h-9 w-9 items-center justify-center rounded-md bg-[#FF6B00]">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="white"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-5 w-5"
-                aria-hidden="true"
-              >
-                <path d="M3 11.5 12 4l9 7.5" />
-                <path d="M5 10v9h14v-9" />
-                <path d="M10 19v-5h4v5" />
-              </svg>
-            </span>
+            <Logo className="h-9 w-9" houseClassName="text-white" />
             <span className="text-xl font-bold tracking-tight">
               <span className="text-white">Immo</span>
               <span className="text-[#FF6B00]">Catch</span>
@@ -35,10 +25,11 @@ export default function Home() {
 
           {/* CTA header : appel direct */}
           <a
-            href="tel:+33615889744"
-            className="rounded-md border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-100 transition-colors hover:border-[#FF6B00] hover:text-[#FF6B00]"
+            href={PHONE_HREF}
+            className="rounded-md bg-[#FF6B00] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#e65f00]"
           >
-            <span className="hidden sm:inline">Appeler : </span>06 15 88 97 44
+            <span className="hidden sm:inline">Appeler le </span>
+            {PHONE_DISPLAY}
           </a>
         </div>
       </header>
@@ -47,7 +38,7 @@ export default function Home() {
       <section className="border-b border-slate-800">
         <div className="mx-auto max-w-4xl px-5 py-20 text-center sm:py-28">
           <p className="text-sm font-bold uppercase tracking-widest text-[#FF6B00]">
-            Solution IA pour agences indépendantes du Val-d&apos;Oise
+            Assistant IA WhatsApp pour agences immobilières indépendantes
           </p>
 
           <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
@@ -68,13 +59,93 @@ export default function Home() {
               Voir la démo en 90s
             </a>
           </div>
+
+          {/* Chiffres clés */}
+          <dl className="mx-auto mt-14 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
+            {[
+              { value: "< 60s", label: "pour qualifier un prospect" },
+              { value: "24/7", label: "disponibilité, même la nuit" },
+              { value: "48h", label: "pour être opérationnel" },
+            ].map((stat) => (
+              <div
+                key={stat.label}
+                className="rounded-md border border-slate-800 bg-slate-800 p-5"
+              >
+                <dt className="text-3xl font-extrabold text-[#FF6B00]">
+                  {stat.value}
+                </dt>
+                <dd className="mt-1 text-sm text-slate-300">{stat.label}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      {/* ==================== BANDE D'IMPACT (PROBLÈME) ==================== */}
+      <section className="bg-[#FF6B00]">
+        <div className="mx-auto max-w-4xl px-5 py-12 text-center">
+          <p className="text-xl font-bold leading-relaxed text-white sm:text-2xl">
+            Un lead qui n&apos;obtient pas de réponse dans l&apos;heure appelle
+            l&apos;agence d&apos;à côté. Chaque prospect ignoré, c&apos;est un
+            mandat pour votre concurrent.
+          </p>
+        </div>
+      </section>
+
+      {/* ==================== COMMENT ÇA MARCHE ==================== */}
+      <section className="border-b border-slate-800">
+        <div className="mx-auto max-w-5xl px-5 py-20 sm:py-24">
+          <h2 className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+            Comment ça marche
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-center text-lg text-slate-300">
+            Trois étapes, entièrement automatiques. Vous ne touchez à rien.
+          </p>
+
+          <div className="mt-14 grid gap-6 md:grid-cols-3">
+            {[
+              {
+                step: "01",
+                title: "Le lead arrive",
+                text: "Un prospect vous contacte via Leboncoin, votre site ou une annonce. L'IA répond instantanément sur WhatsApp, à toute heure.",
+              },
+              {
+                step: "02",
+                title: "L'IA qualifie",
+                text: "Budget, apport, projet, délai : l'assistant pose les bonnes questions et trie les prospects sérieux des simples curieux.",
+              },
+              {
+                step: "03",
+                title: "La visite est planifiée",
+                text: "Le rendez-vous est calé dans votre agenda et la fiche prospect qualifiée atterrit directement dans votre CRM.",
+              },
+            ].map((item) => (
+              <div
+                key={item.step}
+                className="rounded-md border border-slate-800 bg-slate-800 p-7"
+              >
+                <span className="text-2xl font-extrabold text-[#FF6B00]">
+                  {item.step}
+                </span>
+                <h3 className="mt-3 text-xl font-bold text-white">
+                  {item.title}
+                </h3>
+                <p className="mt-3 leading-relaxed text-slate-300">
+                  {item.text}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ========================= PREUVE / DÉMO ========================= */}
       <section id="demo" className="border-b border-slate-800 scroll-mt-20">
         <div className="mx-auto max-w-4xl px-5 py-20 sm:py-24">
-          <p className="mx-auto mb-8 max-w-2xl text-center text-lg leading-relaxed text-slate-300">
+          <h2 className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+            Voyez-le en action
+          </h2>
+          <p className="mx-auto mt-4 mb-10 max-w-2xl text-center text-lg leading-relaxed text-slate-300">
             Découvrez comment notre IA qualifie le budget, l&apos;apport et
             planifie la visite d&apos;un lead Leboncoin pendant que vous dormez.
           </p>
@@ -114,25 +185,25 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= TRANSPARENCE & CONFIANCE (LOCAL) ================= */}
+      {/* ================= TRANSPARENCE & CONFIANCE ================= */}
       <section className="border-b border-slate-800 bg-white text-slate-900">
         <div className="mx-auto max-w-4xl px-5 py-20 sm:py-24">
           <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
-            Un partenariat de proximité dans le 95
+            Un interlocuteur unique, pas une plateforme anonyme
           </h2>
 
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-700">
             Je m&apos;appelle Ilias. Basé à Cergy, j&apos;aide personnellement les
-            agences immobilières indépendantes du Val-d&apos;Oise à automatiser
-            leur premier contact client. Pas de plateforme américaine complexe,
-            pas de support anonyme. Vous avez mon numéro direct, je m&apos;occupe
-            de tout le setup technique en 48 heures pour votre agence.
+            agences immobilières indépendantes à automatiser leur premier contact
+            client. Pas de plateforme américaine complexe, pas de support anonyme.
+            Vous avez mon numéro direct, je m&apos;occupe de tout le setup
+            technique en 48 heures pour votre agence.
           </p>
 
           {/* Contact direct */}
           <div className="mt-10 grid gap-4 sm:grid-cols-2">
             <a
-              href="tel:+33615889744"
+              href={PHONE_HREF}
               className="flex items-center gap-4 rounded-md border border-slate-200 bg-slate-50 p-5 transition-colors hover:border-[#FF6B00]"
             >
               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-[#FF6B00]">
@@ -145,13 +216,13 @@ export default function Home() {
                   Téléphone direct
                 </span>
                 <span className="block text-lg font-bold text-slate-900">
-                  06 15 88 97 44
+                  {PHONE_DISPLAY}
                 </span>
               </span>
             </a>
 
             <a
-              href="mailto:ilias@immocatch.fr"
+              href={`mailto:${EMAIL}`}
               className="flex items-center gap-4 rounded-md border border-slate-200 bg-slate-50 p-5 transition-colors hover:border-[#FF6B00]"
             >
               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-[#FF6B00]">
@@ -165,7 +236,7 @@ export default function Home() {
                   Email
                 </span>
                 <span className="block text-lg font-bold text-slate-900">
-                  ilias@immocatch.fr
+                  {EMAIL}
                 </span>
               </span>
             </a>
@@ -190,7 +261,7 @@ export default function Home() {
             </p>
 
             <a
-              href="tel:+33615889744"
+              href={PHONE_HREF}
               className="mt-8 inline-block rounded-md bg-[#FF6B00] px-8 py-4 text-lg font-bold text-white transition-colors hover:bg-[#e65f00]"
             >
               Réserver mon setup en 48h
@@ -204,12 +275,7 @@ export default function Home() {
         <div className="mx-auto max-w-6xl px-5 py-12">
           <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
             <div className="flex items-center gap-2.5">
-              <span className="flex h-8 w-8 items-center justify-center rounded-md bg-[#FF6B00]">
-                <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4" aria-hidden="true">
-                  <path d="M3 11.5 12 4l9 7.5" />
-                  <path d="M5 10v9h14v-9" />
-                </svg>
-              </span>
+              <Logo className="h-8 w-8" houseClassName="text-white" />
               <span className="text-lg font-bold">
                 <span className="text-white">Immo</span>
                 <span className="text-[#FF6B00]">Catch</span>
@@ -217,11 +283,11 @@ export default function Home() {
             </div>
 
             <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-semibold text-slate-300">
-              <a href="tel:+33615889744" className="transition-colors hover:text-[#FF6B00]">
-                06 15 88 97 44
+              <a href={PHONE_HREF} className="transition-colors hover:text-[#FF6B00]">
+                {PHONE_DISPLAY}
               </a>
-              <a href="mailto:ilias@immocatch.fr" className="transition-colors hover:text-[#FF6B00]">
-                ilias@immocatch.fr
+              <a href={`mailto:${EMAIL}`} className="transition-colors hover:text-[#FF6B00]">
+                {EMAIL}
               </a>
               <a href="#demo" className="transition-colors hover:text-[#FF6B00]">
                 Voir la démo
@@ -230,8 +296,8 @@ export default function Home() {
           </div>
 
           <p className="mt-8 border-t border-slate-800 pt-6 text-center text-xs text-slate-500">
-            ImmoCatch © 2026. Service édité par IFGlobal SASU. Propulsé localement
-            dans le Val-d&apos;Oise.
+            ImmoCatch © 2026 — Service édité par IFGlobal SASU. Tél. {PHONE_DISPLAY}{" "}
+            · {EMAIL}
           </p>
         </div>
       </footer>
