@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "ImmoCatch — Assistant IA WhatsApp pour agences immobilières",
+  title: "ImmoCatch — Assistant IA back-office pour agences immobilières",
   description:
-    "60% des leads immobiliers sont perdus faute de réactivité. ImmoCatch qualifie vos prospects 24h/24 sur WhatsApp et planifie vos visites en moins de 60 secondes.",
+    "Dictez une note vocale sur Telegram : ImmoCatch la transforme en fiche complète et fait remonter automatiquement les acheteurs de votre base à chaque nouveau mandat. Vous gardez toujours la main.",
   openGraph: {
-    title: "ImmoCatch — Ne perdez plus aucun mandat le soir et le week-end",
+    title:
+      "ImmoCatch — Vos heures de saisie et de rapprochement redeviennent des heures de visite",
     description:
-      "Assistant IA WhatsApp qui qualifie vos prospects 24h/24, 7j/7 et planifie vos visites automatiquement, pour les agences immobilières indépendantes.",
+      "Assistant IA à usage interne : note vocale Telegram → fiche structurée → rapprochement automatique des acheteurs, avec validation humaine. Pour les agences immobilières indépendantes.",
     locale: "fr_FR",
     type: "website",
   },

@@ -6,7 +6,8 @@
 
 import { Logo } from "@/components/Logo";
 
-const PHONE_DISPLAY = "+33 6 15 88 97 44";
+// Le numéro n'est jamais affiché en clair : il n'est révélé qu'au clic
+// (le dialer s'ouvre via le lien tel:). On expose donc uniquement le href.
 const PHONE_HREF = "tel:+33615889744";
 const EMAIL = "ilias@immocatch.fr";
 
@@ -35,8 +36,7 @@ export default function Home() {
             href={PHONE_HREF}
             className="rounded-md bg-[#FF6B00] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#e65f00]"
           >
-            <span className="hidden sm:inline">Appeler : </span>
-            {PHONE_DISPLAY}
+            Nous contacter
           </a>
         </div>
       </header>
@@ -45,7 +45,7 @@ export default function Home() {
       <section className="border-b border-slate-800">
         <div className="mx-auto max-w-4xl px-5 py-20 text-center sm:py-28">
           <p className="text-sm font-bold uppercase tracking-widest text-[#FF6B00]">
-            Solution IA pour agences indépendantes du Val-d&apos;Oise
+            Solution IA pour agences immobilières indépendantes
           </p>
 
           <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
@@ -73,7 +73,7 @@ export default function Home() {
           {/* Piliers */}
           <dl className="mx-auto mt-14 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
             {[
-              { value: "Vous dictez", label: "une note vocale sur WhatsApp ou Telegram" },
+              { value: "Vous dictez", label: "une note vocale sur Telegram" },
               { value: "L'IA structure", label: "la fiche contact / bien dans votre base" },
               { value: "Vous validez", label: "chaque message avant tout envoi" },
             ].map((pillar) => (
@@ -158,7 +158,7 @@ export default function Home() {
               {
                 step: "01",
                 title: "Dictée vocale",
-                text: "Après un appel ou une visite, vous dictez une note vocale sur WhatsApp ou Telegram. Aucune saisie, aucune application à ouvrir.",
+                text: "Après un appel ou une visite, vous dictez une note vocale sur Telegram. Aucune saisie, aucune application à ouvrir.",
               },
               {
                 step: "02",
@@ -229,7 +229,7 @@ export default function Home() {
           {/* Zones images à insérer (captures réelles) */}
           <div className="mx-auto mt-6 grid max-w-3xl gap-6 sm:grid-cols-2">
             <div className="flex min-h-[180px] items-center justify-center rounded-md border-2 border-dashed border-slate-700 bg-slate-800 p-6 text-center text-sm font-medium text-slate-400">
-              [Insérer capture : note vocale WhatsApp / Telegram transformée en fiche]
+              [Insérer capture : note vocale Telegram transformée en fiche]
             </div>
             <div className="flex min-h-[180px] items-center justify-center rounded-md border-2 border-dashed border-slate-700 bg-slate-800 p-6 text-center text-sm font-medium text-slate-400">
               [Insérer capture : liste d&apos;acheteurs compatibles générée pour un nouveau mandat]
@@ -253,23 +253,23 @@ export default function Home() {
             {[
               {
                 name: "Module Fiches",
-                benefit: "Une note vocale suffit : votre fiche contact ou bien est complète, propre et à jour, sans une minute de saisie.",
+                benefit: "Une note vocale dictée sur Telegram suffit : votre fiche contact ou bien est complète, propre et à jour, sans une minute de saisie.",
                 soon: false,
               },
               {
                 name: "Module Rapprochement",
-                benefit: "À chaque nouveau mandat, la liste des acheteurs compatibles de votre base sort toute seule, brouillons de message inclus.",
+                benefit: "À chaque nouveau mandat, la liste des acheteurs compatibles de votre base sort toute seule, avec des brouillons de message prêts à envoyer sur Telegram.",
                 soon: false,
               },
               {
                 name: "Module Relances",
-                benefit: "Un suivi intelligent de vos contacts dans la durée : vous ne laissez plus refroidir un acheteur chaud.",
+                benefit: "Un suivi intelligent de vos contacts dans la durée, avec rappels et relances sur Telegram : vous ne laissez plus refroidir un acheteur chaud.",
                 soon: false,
               },
               {
                 name: "Module Accueil",
-                benefit: "Pré-qualification des leads entrants, pensée pour les indépendants débordés qui ne peuvent pas tout traiter en direct.",
-                soon: false,
+                benefit: "Pré-qualification des leads entrants, pensée pour les indépendants débordés qui ne peuvent pas tout traiter en direct. S'appuie sur WhatsApp (à venir).",
+                soon: true,
               },
               {
                 name: "Module Photos",
@@ -340,11 +340,11 @@ export default function Home() {
           </h2>
 
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-700">
-            Je m&apos;appelle Ilias. Basé à Cergy, j&apos;aide personnellement les
-            agences immobilières indépendantes à se débarrasser de la saisie et du
-            rapprochement manuels. Pas de plateforme américaine complexe, pas de
-            support anonyme. Vous avez mon numéro direct, je m&apos;occupe de tout
-            le setup technique pour votre agence.
+            Je m&apos;appelle Ilias. Basé dans le Val-d&apos;Oise, j&apos;aide
+            personnellement toutes les agences immobilières à se débarrasser de la
+            saisie et du rapprochement manuels. Pas de plateforme américaine
+            complexe, pas de support anonyme. Vous avez une ligne directe, je
+            m&apos;occupe de tout le setup technique pour votre agence.
           </p>
 
           {/* Contact direct */}
@@ -363,7 +363,7 @@ export default function Home() {
                   Téléphone direct
                 </span>
                 <span className="block text-lg font-bold text-slate-900">
-                  {PHONE_DISPLAY}
+                  Appeler directement
                 </span>
               </span>
             </a>
@@ -405,7 +405,7 @@ export default function Home() {
 
             <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-semibold text-slate-300">
               <a href={PHONE_HREF} className="transition-colors hover:text-[#FF6B00]">
-                {PHONE_DISPLAY}
+                Nous appeler
               </a>
               <a href={`mailto:${EMAIL}`} className="transition-colors hover:text-[#FF6B00]">
                 {EMAIL}
@@ -424,11 +424,10 @@ export default function Home() {
             </p>
             <p className="mt-1">
               SIREN [000 000 000] · RCS [Ville] · Siège social : [adresse complète],
-              [code postal] Cergy.
+              [code postal] [Ville] (Val-d&apos;Oise).
             </p>
             <p className="mt-1">
-              Directeur de la publication : Ilias [Nom]. Contact : {PHONE_DISPLAY} ·{" "}
-              {EMAIL}.
+              Directeur de la publication : Ilias [Nom]. Contact : {EMAIL}.
             </p>
           </div>
         </div>
