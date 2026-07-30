@@ -179,8 +179,8 @@ export default function Home() {
             {/* Option 1 */}
             <div className="rounded-md border border-slate-800 bg-slate-800 p-7">
               <h3 className="text-lg font-bold text-white">Vous continuez seul</h3>
-              <p className="mt-4 text-4xl font-extrabold text-slate-400">
-                <CountUp to={165} suffix=" h" />
+              <p className="mt-4 whitespace-nowrap text-4xl font-extrabold lg:text-5xl text-slate-400">
+                <CountUp to={165} suffix={"\u00A0h"} />
               </p>
               <p className="mt-1 text-sm text-slate-400">par an, soit 5 semaines</p>
               <p className="mt-4 leading-relaxed text-slate-300">
@@ -192,8 +192,8 @@ export default function Home() {
             {/* Option 2 */}
             <div className="rounded-md border border-slate-800 bg-slate-800 p-7">
               <h3 className="text-lg font-bold text-white">Vous embauchez</h3>
-              <p className="mt-4 text-4xl font-extrabold text-slate-400">
-                <CountUp to={2000} prefix="~" suffix=" €" />
+              <p className="mt-4 whitespace-nowrap text-4xl font-extrabold lg:text-5xl text-slate-400">
+                <CountUp to={2000} prefix="~" suffix={"\u00A0€"} />
               </p>
               <p className="mt-1 text-sm text-slate-400">par mois, chargé</p>
               <p className="mt-4 leading-relaxed text-slate-300">
@@ -207,8 +207,8 @@ export default function Home() {
               <h3 className="text-lg font-bold text-[#FF6B00]">
                 Vous déléguez à ImmoCatch
               </h3>
-              <p className="mt-4 text-4xl font-extrabold text-white">
-                <CountUp to={250} suffix=" €" />
+              <p className="mt-4 whitespace-nowrap text-4xl font-extrabold lg:text-5xl text-white">
+                <CountUp to={250} suffix={"\u00A0€"} />
               </p>
               <p className="mt-1 text-sm text-slate-400">par mois, sans engagement</p>
               <p className="mt-4 leading-relaxed text-slate-300">
@@ -221,7 +221,7 @@ export default function Home() {
           <p className="mx-auto mt-10 max-w-3xl rounded-md border border-slate-700 bg-slate-800 p-6 text-center text-lg leading-relaxed text-slate-200">
             Soit{" "}
             <span className="font-bold text-white">
-              <CountUp to={3000} suffix=" €" />
+              <CountUp to={3000} suffix={"\u00A0€"} />
             </span>{" "}
             sur l&apos;année. Un seul mandat rattrapé dans votre base, et
             c&apos;est remboursé.
@@ -473,7 +473,7 @@ export default function Home() {
             <p className="mt-3 text-lg text-slate-200">
               À partir de{" "}
               <span className="font-bold text-white">
-                <CountUp to={1800} suffix=" €" />
+                <CountUp to={1800} suffix={"\u00A0€"} />
               </span>{" "}
               d&apos;installation +{" "}
               <span className="font-bold text-white">250 €/mois</span>.
@@ -535,7 +535,7 @@ export default function Home() {
           <h2 className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
             Opérationnel en{" "}
             <span className="text-[#FF6B00]">
-              <CountUp to={48} suffix=" h" />
+              <CountUp to={48} suffix={"\u00A0h"} />
             </span>
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-center text-lg text-slate-300">
@@ -638,7 +638,7 @@ export default function Home() {
           <p className="mx-auto mt-4 max-w-xl text-lg text-slate-300">
             Remboursé sous{" "}
             <span className="font-bold text-white">
-              <CountUp to={30} suffix=" jours" />
+              <CountUp to={30} suffix={"\u00A0jours"} />
             </span>{" "}
             sur l&apos;installation. Abonnement sans engagement.
           </p>

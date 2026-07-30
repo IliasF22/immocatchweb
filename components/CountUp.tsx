@@ -18,7 +18,7 @@ export function CountUp({
   to,
   prefix = "",
   suffix = "",
-  duration = 1600,
+  duration = 2200,
   className = "",
 }: {
   to: number;
@@ -63,7 +63,9 @@ export function CountUp({
         };
         requestAnimationFrame(tick);
       },
-      { threshold: 0.4 },
+      // Déclenchement dès que le chiffre entre dans l'écran (et non à 40 % de
+      // visibilité) : en défilant normalement, on voit le comptage se jouer.
+      { threshold: 0, rootMargin: "0px 0px -80px 0px" },
     );
 
     observer.observe(el);
