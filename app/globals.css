@@ -5,3 +5,8 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* FAQ : masque le triangle natif de <summary> (Safari/Chrome) */
+summary::-webkit-details-marker {
+  display: none;
+}
