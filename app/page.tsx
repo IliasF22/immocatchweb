@@ -1,20 +1,28 @@
 // ImmoCatch — Landing Page (One-Page)
 // Positionnement : assistant IA BACK-OFFICE à usage interne pour l'agent immobilier.
-// Dictée vocale -> fiche structurée -> rapprochement acheteurs, TOUJOURS avec
-// validation humaine (aucun prospect contacté à la place de l'agent).
+// Note vocale WhatsApp -> fiche structurée -> rapprochement acheteurs, TOUJOURS
+// avec validation humaine (aucun prospect contacté à la place de l'agent).
 // Design : B2B local, aplats de couleurs solides. Slate-900 + Blanc + Orange #FF6B00.
 
-import { Logo } from "@/components/Logo";
+import { CountUp } from "@/components/CountUp";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 
 // Le numéro n'est jamais affiché en clair : il n'est révélé qu'au clic
 // (le dialer s'ouvre via le lien tel:). On expose donc uniquement le href.
 const PHONE_HREF = "tel:+33615889744";
 const EMAIL = "ilias@immocatch.fr";
 
-// Variantes de titre H1 (même esprit "temps gagné / retour au terrain") :
-//   A. "Vos heures de saisie et de rapprochement redeviennent des heures de visite."  (retenu)
-//   B. "Reprenez les heures que le CRM vous vole chaque jour."
-//   C. "La saisie et le rapprochement, faits pour vous. Vous, sur le terrain."
+// Le glyphe WhatsApp utilise le vert officiel #25D366, écrit en dur dans les
+// classes (Tailwind ne génère pas les classes construites dynamiquement).
+
+function Wordmark({ className = "" }: { className?: string }) {
+  return (
+    <span className={`font-bold tracking-tight ${className}`}>
+      <span className="text-white">Immo</span>
+      <span className="text-[#FF6B00]">Catch</span>
+    </span>
+  );
+}
 
 export default function Home() {
   return (
@@ -22,16 +30,10 @@ export default function Home() {
       {/* ============================= HEADER ============================= */}
       <header className="sticky top-0 z-50 border-b border-slate-800 bg-slate-900">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-          {/* Logo */}
-          <a href="#" className="flex items-center gap-2.5" aria-label="ImmoCatch — accueil">
-            <Logo className="h-9 w-9" />
-            <span className="text-xl font-bold tracking-tight">
-              <span className="text-white">Immo</span>
-              <span className="text-[#FF6B00]">Catch</span>
-            </span>
+          <a href="#" aria-label="ImmoCatch — accueil">
+            <Wordmark className="text-xl" />
           </a>
 
-          {/* CTA header : appel direct */}
           <a
             href={PHONE_HREF}
             className="rounded-md bg-[#FF6B00] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#e65f00]"
@@ -54,12 +56,17 @@ export default function Home() {
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-300 sm:text-xl">
-            Dictez une note vocale sur WhatsApp après un appel ou une visite :
-            ImmoCatch la transforme en fiche complète et fait remonter
-            automatiquement, à chaque nouveau mandat, les acheteurs de votre base
-            qui collent au bien. Jamais un prospect n&apos;est contacté à votre
-            place — vous validez, vous décidez.
+            Vous dictez un vocal. La fiche se remplit toute seule. À chaque
+            mandat, les bons acheteurs de votre base remontent automatiquement.
           </p>
+
+          {/* Canal : WhatsApp */}
+          <div className="mt-6 inline-flex items-center gap-2 rounded-md border border-slate-700 bg-slate-800 px-4 py-2">
+            <WhatsAppIcon className="h-5 w-5 text-[#25D366]" />
+            <span className="text-sm font-semibold text-slate-200">
+              Tout se passe sur WhatsApp
+            </span>
+          </div>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
@@ -76,7 +83,6 @@ export default function Home() {
             </a>
           </div>
 
-          {/* Réassurance immédiate */}
           <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-semibold text-slate-400">
             <li>Sans engagement</li>
             <li className="text-slate-700">·</li>
@@ -88,16 +94,19 @@ export default function Home() {
           {/* Piliers */}
           <dl className="mx-auto mt-14 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
             {[
-              { value: "Vous dictez", label: "une note vocale sur WhatsApp, en sortant de visite" },
-              { value: "L'IA structure", label: "la fiche contact / bien, complète et rangée" },
-              { value: "Vous validez", label: "chaque message avant le moindre envoi" },
+              { value: "Vous dictez", label: "un vocal en sortant de visite", wa: true },
+              { value: "L'IA structure", label: "la fiche, complète et rangée", wa: false },
+              { value: "Vous validez", label: "avant le moindre envoi", wa: false },
             ].map((pillar) => (
               <div
                 key={pillar.value}
                 className="rounded-md border border-slate-800 bg-slate-800 p-5 text-left"
               >
-                <dt className="text-lg font-extrabold text-[#FF6B00]">
+                <dt className="flex items-center gap-2 text-lg font-extrabold text-[#FF6B00]">
                   {pillar.value}
+                  {pillar.wa && (
+                    <WhatsAppIcon className="h-4 w-4 text-[#25D366]" />
+                  )}
                 </dt>
                 <dd className="mt-1 text-sm text-slate-300">{pillar.label}</dd>
               </div>
@@ -113,23 +122,22 @@ export default function Home() {
             Le problème
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-center text-lg text-slate-300">
-            Vous êtes payé à la commission. Pourtant, une partie de vos journées
-            part dans des tâches chronophages qui ne génèrent aucun business.
+            Vous êtes payé à la commission. Vos journées, elles, partent ailleurs.
           </p>
 
           <div className="mt-14 grid gap-6 md:grid-cols-3">
             {[
               {
-                title: "La saisie fastidieuse dans le CRM",
-                text: "Après chaque appel et chaque visite, il faut ressaisir les informations à la main. C'est long, répétitif, et ça finit souvent à plus tard… ou jamais.",
+                title: "La saisie dans le CRM",
+                text: "Après chaque appel, tout est à ressaisir à la main. Ça finit à plus tard… ou jamais.",
               },
               {
                 title: "Des fiches incomplètes",
-                text: "Faute de temps, les fiches contacts et biens restent à moitié remplies. Les critères d'un acheteur, son budget, son apport : autant d'informations perdues.",
+                text: "Budget, apport, critères : faute de temps, la moitié des informations ne sont jamais notées.",
               },
               {
-                title: "Le rapprochement « fait de tête »",
-                text: "Relier les bons acheteurs à un nouveau mandat repose sur votre mémoire. Un acheteur rencontré il y a six mois, personne ne s'en souvient le jour où le bien rentre.",
+                title: "Le rapprochement « de tête »",
+                text: "Un acheteur croisé il y a six mois ? Personne ne s'en souvient le jour où le bien rentre.",
               },
             ].map((item) => (
               <div
@@ -144,7 +152,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ==================== CITATION (TÉMOIGNAGE-STYLE) ==================== */}
+      {/* ==================== CITATION ==================== */}
       <section className="bg-[#FF6B00]">
         <div className="mx-auto max-w-4xl px-5 py-12 text-center">
           <p className="text-xl font-bold leading-relaxed text-white sm:text-2xl">
@@ -157,43 +165,40 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ==================== LE VRAI COÛT (ANCRAGE) ==================== */}
+      {/* ==================== LE VRAI COÛT (ANCRAGE + COMPTEURS) ==================== */}
       <section className="border-b border-slate-800">
         <div className="mx-auto max-w-5xl px-5 py-20 sm:py-24">
           <h2 className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-            Ce travail, aujourd&apos;hui, quelqu&apos;un le fait déjà
+            Ce travail, quelqu&apos;un le fait déjà
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-center text-lg text-slate-300">
-            C&apos;est vous, le soir. Vous avez trois options — une seule ne vous
-            coûte ni vos soirées, ni un salaire.
+            C&apos;est vous, le soir. Vous avez trois options.
           </p>
 
           <div className="mt-14 grid gap-6 md:grid-cols-3">
             {/* Option 1 */}
             <div className="rounded-md border border-slate-800 bg-slate-800 p-7">
               <h3 className="text-lg font-bold text-white">Vous continuez seul</h3>
-              <p className="mt-4 text-3xl font-extrabold text-slate-400">
-                ~5 semaines
+              <p className="mt-4 text-4xl font-extrabold text-slate-400">
+                <CountUp to={165} suffix=" h" />
               </p>
-              <p className="mt-1 text-sm text-slate-400">de travail par an</p>
+              <p className="mt-1 text-sm text-slate-400">par an, soit 5 semaines</p>
               <p className="mt-4 leading-relaxed text-slate-300">
-                45 minutes de saisie par jour, c&apos;est près de 165 heures sur
-                l&apos;année. Presque cinq semaines de travail passées à taper au
-                lieu de vendre.
+                45 minutes de saisie par jour. Cinq semaines à taper au lieu de
+                vendre.
               </p>
             </div>
 
             {/* Option 2 */}
             <div className="rounded-md border border-slate-800 bg-slate-800 p-7">
               <h3 className="text-lg font-bold text-white">Vous embauchez</h3>
-              <p className="mt-4 text-3xl font-extrabold text-slate-400">
-                ~2 000 €
+              <p className="mt-4 text-4xl font-extrabold text-slate-400">
+                <CountUp to={2000} prefix="~" suffix=" €" />
               </p>
               <p className="mt-1 text-sm text-slate-400">par mois, chargé</p>
               <p className="mt-4 leading-relaxed text-slate-300">
-                Un mi-temps ou un temps plein administratif. À recruter, à former,
-                à remplacer pendant les congés — et présent seulement aux heures
-                de bureau.
+                À recruter, à former, à remplacer en congés. Et présent seulement
+                aux heures de bureau.
               </p>
             </div>
 
@@ -202,21 +207,24 @@ export default function Home() {
               <h3 className="text-lg font-bold text-[#FF6B00]">
                 Vous déléguez à ImmoCatch
               </h3>
-              <p className="mt-4 text-3xl font-extrabold text-white">250 €</p>
+              <p className="mt-4 text-4xl font-extrabold text-white">
+                <CountUp to={250} suffix=" €" />
+              </p>
               <p className="mt-1 text-sm text-slate-400">par mois, sans engagement</p>
               <p className="mt-4 leading-relaxed text-slate-300">
-                Opérationnel jour et nuit, sans contrat de travail. Vous dictez en
-                sortant de visite, la fiche est déjà écrite avant que vous
-                rentriez à l&apos;agence.
+                Jour et nuit, sans contrat de travail. La fiche est écrite avant
+                que vous rentriez à l&apos;agence.
               </p>
             </div>
           </div>
 
           <p className="mx-auto mt-10 max-w-3xl rounded-md border border-slate-700 bg-slate-800 p-6 text-center text-lg leading-relaxed text-slate-200">
-            250 €/mois, c&apos;est <span className="font-bold text-white">3 000 € sur l&apos;année</span>.
-            Regardez le montant de votre dernière commission : il suffit d&apos;un
-            seul mandat rattrapé dans votre base pour que l&apos;année soit
-            remboursée.
+            Soit{" "}
+            <span className="font-bold text-white">
+              <CountUp to={3000} suffix=" €" />
+            </span>{" "}
+            sur l&apos;année. Un seul mandat rattrapé dans votre base, et
+            c&apos;est remboursé.
           </p>
         </div>
       </section>
@@ -228,40 +236,48 @@ export default function Home() {
             Comment ça marche
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-center text-lg text-slate-300">
-            Quatre étapes. Vous parlez, l&apos;assistant fait le reste — et vous
-            reprenez la main au bon moment.
+            Vous parlez, l&apos;assistant fait le reste.
           </p>
 
           <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {[
               {
                 step: "01",
-                title: "Dictée vocale",
-                text: "Après un appel ou une visite, vous dictez une note vocale sur WhatsApp. Comme un message à un collègue : aucune saisie, aucune nouvelle application à apprendre.",
+                title: "Vous dictez",
+                text: "Un vocal sur WhatsApp, comme à un collègue. Rien à installer, rien à apprendre.",
+                wa: true,
               },
               {
                 step: "02",
-                title: "Fiche structurée automatiquement",
-                text: "L'assistant transcrit et range tout seul les informations dans la fiche contact ou bien : budget, apport, critères, projet, délai.",
+                title: "La fiche se remplit",
+                text: "Budget, apport, critères, délai : tout est transcrit et rangé automatiquement.",
+                wa: false,
               },
               {
                 step: "03",
-                title: "Rapprochement instantané",
-                text: "À chaque nouveau mandat, la base ressort automatiquement les acheteurs compatibles, avec des brouillons de message prêts à partir.",
+                title: "Les acheteurs remontent",
+                text: "Nouveau mandat ? La liste des acheteurs compatibles sort seule, brouillons inclus.",
+                wa: false,
               },
               {
                 step: "04",
-                title: "Vous décidez et contactez",
-                text: "Vous relisez, vous ajustez, vous validez. Rien n'est jamais envoyé à un prospect sans votre feu vert.",
+                title: "Vous validez",
+                text: "Vous relisez, vous corrigez, vous envoyez. Jamais sans votre feu vert.",
+                wa: false,
               },
             ].map((item) => (
               <div
                 key={item.step}
                 className="rounded-md border border-slate-800 bg-slate-800 p-7"
               >
-                <span className="text-2xl font-extrabold text-[#FF6B00]">
-                  {item.step}
-                </span>
+                <div className="flex items-center justify-between">
+                  <span className="text-2xl font-extrabold text-[#FF6B00]">
+                    {item.step}
+                  </span>
+                  {item.wa && (
+                    <WhatsAppIcon className="h-6 w-6 text-[#25D366]" />
+                  )}
+                </div>
                 <h3 className="mt-3 text-lg font-bold text-white">{item.title}</h3>
                 <p className="mt-3 leading-relaxed text-slate-300">{item.text}</p>
               </div>
@@ -270,7 +286,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ==================== AVANT / APRÈS (SCÉNARIO CONCRET) ==================== */}
+      {/* ==================== AVANT / APRÈS ==================== */}
       <section className="border-b border-slate-800">
         <div className="mx-auto max-w-5xl px-5 py-20 sm:py-24">
           <h2 className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
@@ -285,9 +301,9 @@ export default function Home() {
               </p>
               <ul className="mt-6 space-y-4 text-slate-300">
                 {[
-                  "Vous notez trois mots sur un carnet, en vous disant que vous saisirez tout demain.",
-                  "Demain, deux nouveaux rendez-vous tombent. La fiche reste vide.",
-                  "Un mandat rentre jeudi. Vous cherchez dans votre tête qui pourrait être intéressé.",
+                  "Trois mots sur un carnet. Vous saisirez demain.",
+                  "Demain, deux rendez-vous tombent. La fiche reste vide.",
+                  "Jeudi, un mandat rentre. Vous cherchez de mémoire.",
                   "Vous rappelez les trois acheteurs dont vous vous souvenez. Les onze autres dorment dans la base.",
                 ].map((line) => (
                   <li key={line} className="flex gap-3">
@@ -300,15 +316,16 @@ export default function Home() {
 
             {/* Après */}
             <div className="rounded-md border-2 border-[#FF6B00] bg-slate-800 p-8">
-              <p className="text-sm font-bold uppercase tracking-widest text-[#FF6B00]">
+              <p className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-[#FF6B00]">
                 Avec ImmoCatch
+                <WhatsAppIcon className="h-4 w-4 text-[#25D366]" />
               </p>
               <ul className="mt-6 space-y-4 text-slate-300">
                 {[
-                  "Dans la voiture, vous dictez 40 secondes de vocal sur WhatsApp.",
-                  "En arrivant, la fiche est complète : budget, apport, critères, niveau de motivation.",
-                  "Jeudi, le mandat rentre. La liste des acheteurs compatibles arrive toute seule.",
-                  "Vous relisez les brouillons, vous corrigez deux mots, vous envoyez. Quatorze acheteurs touchés en dix minutes.",
+                  "Dans la voiture, 40 secondes de vocal.",
+                  "En arrivant, la fiche est complète.",
+                  "Jeudi, le mandat rentre. La liste arrive toute seule.",
+                  "Vous corrigez deux mots, vous envoyez. Quatorze acheteurs touchés en dix minutes.",
                 ].map((line) => (
                   <li key={line} className="flex gap-3">
                     <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#FF6B00]" />
@@ -328,14 +345,13 @@ export default function Home() {
             Voyez-le en action
           </h2>
           <p className="mx-auto mt-4 mb-10 max-w-2xl text-center text-lg leading-relaxed text-slate-300">
-            Découvrez comment une note vocale dictée après un appel devient une
-            fiche complète, et comment un nouveau mandat fait remonter
-            instantanément les bons acheteurs de votre base.
+            Un vocal dicté après un appel devient une fiche complète. Un mandat
+            fait remonter les bons acheteurs.
           </p>
 
           {/*
             Lecteur vidéo — placeholder en attendant la démo.
-            Pour brancher la vraie vidéo, remplacer tout le bloc ci-dessous par :
+            Pour brancher la vraie vidéo, remplacer le bloc ci-dessous par :
 
             <div className="aspect-video">
               <iframe
@@ -370,7 +386,7 @@ export default function Home() {
 
           <p className="mx-auto mt-6 max-w-2xl text-center text-slate-300">
             La vidéo arrive. En attendant, je vous la fais en direct sur votre
-            propre cas, en 15 minutes au téléphone.
+            propre cas.
           </p>
           <div className="mt-6 text-center">
             <a
@@ -390,44 +406,51 @@ export default function Home() {
             Nos modules
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-center text-lg text-slate-300">
-            Vous démarrez avec l&apos;essentiel, vous ajoutez les modules dont
-            votre agence a besoin.
+            Vous démarrez avec l&apos;essentiel, vous ajoutez le reste au besoin.
           </p>
 
           <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
               {
                 name: "Module Fiches",
-                benefit: "Une note vocale dictée sur WhatsApp suffit : votre fiche contact ou bien est complète, propre et à jour, sans une minute de saisie.",
+                benefit: "Un vocal suffit : la fiche est complète, propre et à jour.",
                 soon: false,
+                wa: true,
               },
               {
                 name: "Module Rapprochement",
-                benefit: "À chaque nouveau mandat, la liste des acheteurs compatibles de votre base sort toute seule, avec des brouillons de message prêts à envoyer.",
+                benefit: "Nouveau mandat, acheteurs compatibles et brouillons prêts à envoyer.",
                 soon: false,
+                wa: true,
               },
               {
                 name: "Module Relances",
-                benefit: "Un suivi intelligent de vos contacts dans la durée, avec rappels sur WhatsApp : vous ne laissez plus refroidir un acheteur chaud.",
+                benefit: "Rappels au bon moment : vous ne laissez plus refroidir un acheteur chaud.",
                 soon: false,
+                wa: true,
               },
               {
                 name: "Module Accueil",
-                benefit: "Pré-qualification des leads entrants sur WhatsApp, pensée pour les indépendants débordés qui ne peuvent pas tout traiter en direct.",
+                benefit: "Pré-qualification des leads entrants, pour les indépendants débordés.",
                 soon: true,
+                wa: true,
               },
               {
                 name: "Module Photos",
-                benefit: "Extraction des caractéristiques « coup de cœur » d'un bien à partir de photos : moulures, cheminée, luminosité…",
+                benefit: "Les caractéristiques « coup de cœur » extraites des photos : moulures, cheminée, luminosité.",
                 soon: true,
+                wa: false,
               },
             ].map((mod) => (
               <div
                 key={mod.name}
                 className="flex flex-col rounded-md border border-slate-800 bg-slate-800 p-7"
               >
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center gap-3">
                   <h3 className="text-lg font-bold text-white">{mod.name}</h3>
+                  {mod.wa && (
+                    <WhatsAppIcon className="h-4 w-4 text-[#25D366]" />
+                  )}
                   {mod.soon && (
                     <span className="rounded-md border border-[#FF6B00] px-2 py-0.5 text-xs font-bold uppercase tracking-wide text-[#FF6B00]">
                       À venir
@@ -449,13 +472,14 @@ export default function Home() {
             </p>
             <p className="mt-3 text-lg text-slate-200">
               À partir de{" "}
-              <span className="font-bold text-white">1 800 € d&apos;installation</span>{" "}
-              + <span className="font-bold text-white">250 €/mois</span>.
+              <span className="font-bold text-white">
+                <CountUp to={1800} suffix=" €" />
+              </span>{" "}
+              d&apos;installation +{" "}
+              <span className="font-bold text-white">250 €/mois</span>.
             </p>
             <p className="mt-2 text-sm text-slate-400">
-              Installation : paramétrage sur mesure, reprise de votre base
-              existante et prise en main. Les autres modules se discutent selon
-              votre agence.
+              Installation : paramétrage, reprise de votre base et prise en main.
             </p>
             <a
               href={PHONE_HREF}
@@ -467,30 +491,30 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ==================== OBJECTIONS / RÉASSURANCE ==================== */}
+      {/* ==================== OBJECTIONS ==================== */}
       <section className="border-b border-slate-800">
         <div className="mx-auto max-w-5xl px-5 py-20 sm:py-24">
           <h2 className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-            Ce qui ne changera pas dans votre agence
+            Ce qui ne changera pas
           </h2>
 
           <div className="mt-14 grid gap-6 sm:grid-cols-2">
             {[
               {
                 title: "Vous ne changez pas de CRM",
-                text: "ImmoCatch vient nourrir votre organisation actuelle. Vous gardez vos outils, vos habitudes et vos données.",
+                text: "ImmoCatch nourrit votre organisation actuelle. Vous gardez vos outils et vos habitudes.",
               },
               {
                 title: "L'IA ne parle jamais à vos clients",
-                text: "Elle prépare, vous décidez. Aucun message ne part sans votre validation : votre relation client reste la vôtre.",
+                text: "Elle prépare, vous décidez. Aucun message ne part sans votre validation.",
               },
               {
                 title: "Aucune compétence technique",
-                text: "Si vous savez envoyer un vocal sur WhatsApp, vous savez utiliser ImmoCatch. Il n'y a rien d'autre à apprendre.",
+                text: "Si vous savez envoyer un vocal sur WhatsApp, vous savez l'utiliser.",
               },
               {
                 title: "Votre base reste votre base",
-                text: "Vos données ne sont ni revendues, ni partagées avec d'autres agences. Vous pouvez les exporter, et tout arrêter quand vous voulez.",
+                text: "Jamais revendue, jamais partagée. Exportable, et vous arrêtez quand vous voulez.",
               },
             ].map((item) => (
               <div
@@ -509,11 +533,13 @@ export default function Home() {
       <section className="border-b border-slate-800">
         <div className="mx-auto max-w-5xl px-5 py-20 sm:py-24">
           <h2 className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-            Opérationnel en 48 heures
+            Opérationnel en{" "}
+            <span className="text-[#FF6B00]">
+              <CountUp to={48} suffix=" h" />
+            </span>
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-center text-lg text-slate-300">
-            Vous n&apos;avez rien à installer, rien à configurer. Je m&apos;occupe
-            de tout.
+            Rien à installer, rien à configurer. Je m&apos;occupe de tout.
           </p>
 
           <div className="mt-14 grid gap-6 md:grid-cols-3">
@@ -521,17 +547,17 @@ export default function Home() {
               {
                 step: "Jour 0",
                 title: "On se parle 30 minutes",
-                text: "Vous me montrez comment vous travaillez aujourd'hui, et ce qui vous prend le plus de temps.",
+                text: "Vous me montrez comment vous travaillez et ce qui vous prend le plus de temps.",
               },
               {
                 step: "Jour 1",
                 title: "Je paramètre tout",
-                text: "Mise en place de l'assistant, reprise de votre base existante, adaptation aux champs qui comptent pour vous.",
+                text: "Mise en place, reprise de votre base, adaptation aux champs qui comptent pour vous.",
               },
               {
                 step: "Jour 2",
                 title: "Vous dictez votre premier vocal",
-                text: "Prise en main en quelques minutes. À partir de là, vous n'avez plus qu'à parler.",
+                text: "Prise en main en quelques minutes. Ensuite, vous n'avez plus qu'à parler.",
               },
             ].map((item) => (
               <div
@@ -559,28 +585,28 @@ export default function Home() {
           <div className="mt-12 space-y-4">
             {[
               {
-                q: "Est-ce que je dois abandonner mon CRM actuel ?",
-                a: "Non. ImmoCatch s'ajoute à votre organisation, il ne la remplace pas. On regarde ensemble comment vous travaillez, et je paramètre l'assistant pour qu'il alimente votre base existante.",
+                q: "Je dois abandonner mon CRM ?",
+                a: "Non. ImmoCatch s'ajoute à votre organisation, il ne la remplace pas. Je paramètre l'assistant pour qu'il alimente votre base existante.",
               },
               {
-                q: "Est-ce que l'IA va contacter mes clients toute seule ?",
-                a: "Jamais. C'est le principe même de l'outil : il prépare le travail (fiches, listes d'acheteurs, brouillons de messages) et vous gardez la main sur chaque envoi. Votre relation client ne se délègue pas.",
+                q: "L'IA va contacter mes clients toute seule ?",
+                a: "Jamais. Elle prépare les fiches, les listes et les brouillons ; vous gardez la main sur chaque envoi.",
               },
               {
-                q: "Je ne suis pas à l'aise avec la technologie, c'est compliqué ?",
-                a: "Vous envoyez un message vocal sur WhatsApp, exactement comme à un collègue. C'est tout ce que vous avez à faire. Le reste se passe en coulisses, et c'est moi qui l'installe.",
+                q: "Je ne suis pas à l'aise avec la technologie.",
+                a: "Vous envoyez un vocal sur WhatsApp, comme à un collègue. C'est tout. Le reste, c'est moi qui l'installe.",
               },
               {
                 q: "Combien de temps avant d'être opérationnel ?",
-                a: "48 heures après notre premier échange. Vous n'avez rien à installer : je m'occupe du paramétrage et de la reprise de votre base.",
+                a: "48 heures après notre premier échange, paramétrage et reprise de base compris.",
               },
               {
                 q: "Et si ça ne me convient pas ?",
-                a: "Vous êtes remboursé sous 30 jours sur l'installation, et l'abonnement mensuel est sans engagement. Vous arrêtez quand vous voulez, en gardant vos données.",
+                a: "Remboursé sous 30 jours sur l'installation, abonnement sans engagement. Vous partez avec vos données.",
               },
               {
-                q: "Ça fonctionne si je suis agent indépendant, tout seul ?",
-                a: "C'est même le cas le plus fréquent. Quand on est seul, personne ne fait la saisie à votre place : c'est là que le gain de temps est le plus net. L'outil fonctionne aussi pour une équipe.",
+                q: "Ça marche si je suis seul ?",
+                a: "C'est le cas le plus fréquent — et celui où le gain est le plus net, puisque personne ne fait la saisie à votre place.",
               },
             ].map((item) => (
               <details
@@ -610,8 +636,11 @@ export default function Home() {
             Zéro risque pour votre agence
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-lg text-slate-300">
-            Satisfait ou remboursé sous 30 jours sur l&apos;installation.
-            Abonnement mensuel sans engagement.
+            Remboursé sous{" "}
+            <span className="font-bold text-white">
+              <CountUp to={30} suffix=" jours" />
+            </span>{" "}
+            sur l&apos;installation. Abonnement sans engagement.
           </p>
         </div>
       </section>
@@ -624,11 +653,9 @@ export default function Home() {
           </h2>
 
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-700">
-            Je m&apos;appelle Ilias. Basé dans le Val-d&apos;Oise, j&apos;aide
-            personnellement toutes les agences immobilières à se débarrasser de la
-            saisie et du rapprochement manuels. Pas de plateforme américaine
-            complexe, pas de support anonyme. Vous avez une ligne directe, je
-            m&apos;occupe de tout le setup technique pour votre agence.
+            Je m&apos;appelle Ilias, je suis basé dans le Val-d&apos;Oise. Pas de
+            plateforme américaine, pas de support anonyme : vous avez une ligne
+            directe, et je m&apos;occupe de tout le setup technique.
           </p>
 
           {/* Contact direct */}
@@ -682,8 +709,7 @@ export default function Home() {
             Combien de mandats dorment dans votre base ?
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-white/90">
-            Quinze minutes au téléphone suffisent pour le savoir. Sans engagement,
-            et sans jargon technique.
+            Quinze minutes au téléphone suffisent pour le savoir.
           </p>
           <a
             href={PHONE_HREF}
@@ -698,13 +724,7 @@ export default function Home() {
       <footer className="bg-slate-900">
         <div className="mx-auto max-w-6xl px-5 py-12">
           <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-            <div className="flex items-center gap-2.5">
-              <Logo className="h-8 w-8" />
-              <span className="text-lg font-bold">
-                <span className="text-white">Immo</span>
-                <span className="text-[#FF6B00]">Catch</span>
-              </span>
-            </div>
+            <Wordmark className="text-lg" />
 
             <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-semibold text-slate-300">
               <a href={PHONE_HREF} className="transition-colors hover:text-[#FF6B00]">
