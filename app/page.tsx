@@ -4,8 +4,34 @@
 // avec validation humaine (aucun prospect contacté à la place de l'agent).
 // Design : B2B local, aplats de couleurs solides. Slate-900 + Blanc + Orange #FF6B00.
 
+import fs from "node:fs";
+import path from "node:path";
+
 import { CountUp } from "@/components/CountUp";
 import { WhatsAppIcon } from "@/components/WhatsAppIcon";
+
+/* ─────────────────────────── VIDÉO DE DÉMO ───────────────────────────
+ * OÙ METTRE LA VIDÉO : déposer le fichier dans le dossier `public/`, à la
+ * racine du projet, en le nommant `demo.mp4` (ou .webm / .mov).
+ * Image d'aperçu optionnelle : `public/demo-poster.jpg`.
+ * Le lecteur s'affiche alors tout seul — aucune ligne de code à modifier.
+ *
+ * Si la vidéo est plutôt hébergée sur YouTube ou Vimeo, laisser `public/`
+ * vide et coller ici l'URL d'intégration (bouton Partager > Intégrer) :
+ *   YouTube → "https://www.youtube.com/embed/IDENTIFIANT"
+ *   Vimeo   → "https://player.vimeo.com/video/IDENTIFIANT"
+ * ------------------------------------------------------------------- */
+const DEMO_EMBED_URL = "";
+
+// Détection au moment du build : pas de configuration à maintenir à la main.
+const PUBLIC_DIR = path.join(process.cwd(), "public");
+const DEMO_FILE =
+  ["demo.mp4", "demo.webm", "demo.mov"].find((name) =>
+    fs.existsSync(path.join(PUBLIC_DIR, name)),
+  ) ?? null;
+const DEMO_POSTER = fs.existsSync(path.join(PUBLIC_DIR, "demo-poster.jpg"))
+  ? "/demo-poster.jpg"
+  : undefined;
 
 // Le numéro n'est jamais affiché en clair : il n'est révélé qu'au clic
 // (le dialer s'ouvre via le lien tel:). On expose donc uniquement le href.
@@ -73,7 +99,7 @@ export default function Home() {
               href="#demo"
               className="w-full rounded-md bg-[#FF6B00] px-8 py-4 text-lg font-bold text-white transition-colors hover:bg-[#e65f00] sm:w-auto"
             >
-              Voir la démo en 90s
+              Voir la démo en 2 min
             </a>
             <a
               href={PHONE_HREF}
@@ -349,45 +375,52 @@ export default function Home() {
             fait remonter les bons acheteurs.
           </p>
 
-          {/*
-            Lecteur vidéo — placeholder en attendant la démo.
-            Pour brancher la vraie vidéo, remplacer le bloc ci-dessous par :
-
-            <div className="aspect-video">
+          {/* Lecteur : fichier déposé dans public/, sinon hébergeur externe,
+              sinon placeholder (voir la configuration en haut du fichier). */}
+          <div className="mx-auto max-w-3xl overflow-hidden rounded-md border border-slate-700 bg-slate-800">
+            {DEMO_FILE ? (
+              <video
+                className="aspect-video w-full bg-slate-800"
+                controls
+                preload="metadata"
+                poster={DEMO_POSTER}
+                src={`/${DEMO_FILE}`}
+              >
+                Votre navigateur ne peut pas lire cette vidéo.
+              </video>
+            ) : DEMO_EMBED_URL ? (
               <iframe
-                className="h-full w-full"
-                src="https://www.youtube.com/embed/VIDEO_ID"
+                className="aspect-video w-full"
+                src={DEMO_EMBED_URL}
                 title="Démo ImmoCatch"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture"
                 allowFullScreen
               />
-            </div>
-
-            …ou, pour un fichier hébergé dans /public :
-            <video className="w-full" controls poster="/demo-poster.jpg" src="/demo.mp4" />
-          */}
-          <div className="mx-auto max-w-3xl overflow-hidden rounded-md border border-slate-700 bg-slate-800">
-            <div className="relative flex aspect-video items-center justify-center bg-slate-800">
-              <div className="flex h-20 w-20 items-center justify-center rounded-md bg-[#FF6B00]">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="white"
-                  className="ml-1 h-8 w-8"
-                  aria-hidden="true"
-                >
-                  <path d="M8 5v14l11-7z" />
-                </svg>
+            ) : (
+              <div className="relative flex aspect-video items-center justify-center bg-slate-800">
+                <div className="flex h-20 w-20 items-center justify-center rounded-md bg-[#FF6B00]">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="white"
+                    className="ml-1 h-8 w-8"
+                    aria-hidden="true"
+                  >
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+                <span className="absolute bottom-4 left-4 rounded-md bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">
+                  Démo en préparation
+                </span>
               </div>
-              <span className="absolute bottom-4 left-4 rounded-md bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">
-                Démo en préparation
-              </span>
-            </div>
+            )}
           </div>
 
-          <p className="mx-auto mt-6 max-w-2xl text-center text-slate-300">
-            La vidéo arrive. En attendant, je vous la fais en direct sur votre
-            propre cas.
-          </p>
+          {!DEMO_FILE && !DEMO_EMBED_URL && (
+            <p className="mx-auto mt-6 max-w-2xl text-center text-slate-300">
+              La vidéo arrive. En attendant, je vous la fais en direct sur votre
+              propre cas.
+            </p>
+          )}
           <div className="mt-6 text-center">
             <a
               href={PHONE_HREF}
