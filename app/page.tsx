@@ -922,7 +922,7 @@ export default function Home() {
               26/09/2025. Inscrite au RNE.
             </p>
             <p className="mt-1">
-              Siège social : [adresse complète], [code postal] [Ville].
+              Siège social : 6 place des 3 Gares, 95800 Cergy.
             </p>
             <p className="mt-1">
               Directeur de la publication : Ilias Frej. Contact : {EMAIL}.
