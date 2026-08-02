@@ -775,15 +775,22 @@ export default function Home() {
           {/* Mentions légales — remplacer les placeholders par les vraies informations */}
           <div className="mt-8 border-t border-slate-800 pt-6 text-center text-xs leading-relaxed text-slate-500">
             <p>
-              ImmoCatch © 2026 — Service édité par IFGlobal SASU, SASU au capital
-              de [montant] €.
+              ImmoCatch © 2026 — Service édité par IFGlobal, SASU (société par
+              actions simplifiée unipersonnelle).
             </p>
             <p className="mt-1">
-              SIREN [000 000 000] · RCS [Ville] · Siège social : [adresse complète],
-              [code postal] [Ville] (Val-d&apos;Oise).
+              SIREN 991 793 712 · SIRET (siège) 991 793 712 00019 · TVA
+              intracommunautaire FR44991793712.
             </p>
             <p className="mt-1">
-              Directeur de la publication : Ilias [Nom]. Contact : {EMAIL}.
+              991 793 712 R.C.S. Pontoise — inscrite au greffe de Pontoise le
+              26/09/2025. Inscrite au RNE.
+            </p>
+            <p className="mt-1">
+              Siège social : [adresse complète], [code postal] [Ville].
+            </p>
+            <p className="mt-1">
+              Directeur de la publication : Ilias Frej. Contact : {EMAIL}.
             </p>
           </div>
         </div>
