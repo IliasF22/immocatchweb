@@ -9,6 +9,7 @@ import path from "node:path";
 
 import { CountUp } from "@/components/CountUp";
 import { Reveal } from "@/components/Reveal";
+import { RevealText } from "@/components/RevealText";
 import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 
 /* ─────────────────────────── VIDÉO DE DÉMO ───────────────────────────
@@ -78,10 +79,11 @@ export default function Home() {
               Solution IA pour agences immobilières indépendantes
             </p>
 
-            <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
-              Vos heures de saisie et de rapprochement redeviennent des heures
-              de visite.
-            </h1>
+            <RevealText
+              as="h1"
+              className="mt-6 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl"
+              text="Vos heures de saisie et de rapprochement redeviennent des heures de visite."
+            />
 
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-300 sm:text-xl">
               Vous dictez un vocal. La fiche se remplit toute seule. À chaque
@@ -163,9 +165,11 @@ export default function Home() {
       <section className="bg-slate-950 border-b border-slate-800">
         <Reveal>
           <div className="mx-auto max-w-5xl px-5 py-20 sm:py-24">
-            <h2 className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-              Le problème
-            </h2>
+            <RevealText
+              as="h2"
+              className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl"
+              text="Le problème"
+            />
             <p className="mx-auto mt-4 max-w-2xl text-center text-lg text-slate-300">
               Vous êtes payé à la commission. Vos journées, elles, partent
               ailleurs.
@@ -250,9 +254,11 @@ export default function Home() {
       <section className="border-b border-slate-800">
         <Reveal>
           <div className="mx-auto max-w-5xl px-5 py-20 sm:py-24">
-            <h2 className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-              Ce travail, quelqu&apos;un le fait déjà
-            </h2>
+            <RevealText
+              as="h2"
+              className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl"
+              text="Ce travail, quelqu'un le fait déjà"
+            />
             <p className="mx-auto mt-4 max-w-2xl text-center text-lg text-slate-300">
               C&apos;est vous, le soir. Vous avez trois options.
             </p>
@@ -322,9 +328,11 @@ export default function Home() {
       <section className="bg-slate-950 border-b border-slate-800">
         <Reveal>
           <div className="mx-auto max-w-6xl px-5 py-20 sm:py-24">
-            <h2 className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-              Comment ça marche
-            </h2>
+            <RevealText
+              as="h2"
+              className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl"
+              text="Comment ça marche"
+            />
             <p className="mx-auto mt-4 max-w-2xl text-center text-lg text-slate-300">
               Vous parlez, l&apos;assistant fait le reste.
             </p>
@@ -385,9 +393,11 @@ export default function Home() {
       <section className="border-b border-slate-800">
         <Reveal>
           <div className="mx-auto max-w-5xl px-5 py-20 sm:py-24">
-            <h2 className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-              Un mardi, 18h30. Vous rentrez de deux visites.
-            </h2>
+            <RevealText
+              as="h2"
+              className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl"
+              text="Un mardi, 18h30. Vous rentrez de deux visites."
+            />
 
             <div className="mt-14 grid gap-6 md:grid-cols-2">
               {/* Avant */}
@@ -442,9 +452,11 @@ export default function Home() {
       >
         <Reveal>
           <div className="mx-auto max-w-4xl px-5 py-20 sm:py-24">
-            <h2 className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-              Voyez-le en action
-            </h2>
+            <RevealText
+              as="h2"
+              className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl"
+              text="Voyez-le en action"
+            />
             <p className="mx-auto mt-4 mb-10 max-w-2xl text-center text-lg leading-relaxed text-slate-300">
               Un vocal dicté après un appel devient une fiche complète. Un
               mandat fait remonter les bons acheteurs.
@@ -513,9 +525,11 @@ export default function Home() {
       <section className="border-b border-slate-800">
         <Reveal>
           <div className="mx-auto max-w-6xl px-5 py-20 sm:py-24">
-            <h2 className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-              Nos modules
-            </h2>
+            <RevealText
+              as="h2"
+              className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl"
+              text="Nos modules"
+            />
             <p className="mx-auto mt-4 max-w-2xl text-center text-lg text-slate-300">
               Vous démarrez avec l&apos;essentiel, vous ajoutez le reste au
               besoin.
@@ -616,9 +630,11 @@ export default function Home() {
       <section className="bg-slate-950 border-b border-slate-800">
         <Reveal>
           <div className="mx-auto max-w-5xl px-5 py-20 sm:py-24">
-            <h2 className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-              Ce qui ne changera pas
-            </h2>
+            <RevealText
+              as="h2"
+              className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl"
+              text="Ce qui ne changera pas"
+            />
 
             <div className="mt-14 grid gap-6 sm:grid-cols-2">
               {[
@@ -661,29 +677,35 @@ export default function Home() {
             <h2 className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
               Opérationnel en{" "}
               <span className="text-[#FF6B00]">
-                <CountUp to={48} suffix={"\u00A0h"} />
+                <CountUp to={7} suffix={"\u00A0jours"} />
               </span>
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-center text-lg text-slate-300">
-              Rien à installer, rien à configurer. Je m&apos;occupe de tout.
+              Une semaine, le temps de faire les choses proprement. Rien à
+              installer de votre côté : je m&apos;occupe de tout.
             </p>
 
-            <div className="mt-14 grid gap-6 md:grid-cols-3">
+            <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {[
                 {
-                  step: "Jour 0",
+                  step: "Jour 1",
                   title: "On se parle 30 minutes",
                   text: "Vous me montrez comment vous travaillez et ce qui vous prend le plus de temps.",
                 },
                 {
-                  step: "Jour 1",
-                  title: "Je paramètre tout",
-                  text: "Mise en place, reprise de votre base, adaptation aux champs qui comptent pour vous.",
+                  step: "Jours 2 et 3",
+                  title: "Je reprends votre base",
+                  text: "Récupération de vos contacts et de vos biens existants, nettoyage et mise au bon format.",
                 },
                 {
-                  step: "Jour 2",
-                  title: "Vous dictez votre premier vocal",
-                  text: "Prise en main en quelques minutes. Ensuite, vous n'avez plus qu'à parler.",
+                  step: "Jours 4 et 5",
+                  title: "Je paramètre sur mesure",
+                  text: "Mise en place de l'assistant, adapté aux champs et aux critères qui comptent pour votre agence.",
+                },
+                {
+                  step: "Jours 6 et 7",
+                  title: "Prise en main et réglages",
+                  text: "Vous dictez vos premiers vocaux, on ajuste ensemble. Ensuite, vous n'avez plus qu'à parler.",
                 },
               ].map((item) => (
                 <div
@@ -710,9 +732,11 @@ export default function Home() {
       <section className="bg-slate-950 border-b border-slate-800">
         <Reveal>
           <div className="mx-auto max-w-3xl px-5 py-20 sm:py-24">
-            <h2 className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-              Les questions qu&apos;on me pose
-            </h2>
+            <RevealText
+              as="h2"
+              className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl"
+              text="Les questions qu'on me pose"
+            />
 
             <div className="mt-12 space-y-4">
               {[
@@ -730,7 +754,7 @@ export default function Home() {
                 },
                 {
                   q: "Combien de temps avant d'être opérationnel ?",
-                  a: "48 heures après notre premier échange, paramétrage et reprise de base compris.",
+                  a: "Une semaine après notre premier échange, reprise de votre base et paramétrage sur mesure compris. Vous n'avez rien à faire pendant ce temps-là.",
                 },
                 {
                   q: "Et si ça ne me convient pas ?",
@@ -768,9 +792,11 @@ export default function Home() {
       <section className="border-b border-slate-800">
         <Reveal>
           <div className="mx-auto max-w-4xl px-5 py-16 text-center">
-            <h2 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
-              Zéro risque pour votre agence
-            </h2>
+            <RevealText
+              as="h2"
+              className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl"
+              text="Zéro risque pour votre agence"
+            />
             <p className="mx-auto mt-4 max-w-xl text-lg text-slate-300">
               Remboursé sous{" "}
               <span className="font-bold text-white">
@@ -786,9 +812,11 @@ export default function Home() {
       <section className="border-b border-slate-800 bg-white text-slate-900">
         <Reveal>
           <div className="mx-auto max-w-4xl px-5 py-20 sm:py-24">
-            <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
-              Un interlocuteur unique, pas une plateforme anonyme
-            </h2>
+            <RevealText
+              as="h2"
+              className="text-3xl font-extrabold tracking-tight sm:text-4xl"
+              text="Un interlocuteur unique, pas une plateforme anonyme"
+            />
 
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-700">
               Je m&apos;appelle Ilias, je suis basé dans le Val-d&apos;Oise. Pas
@@ -863,9 +891,11 @@ export default function Home() {
       <section className="bg-[#FF6B00]">
         <Reveal>
           <div className="mx-auto max-w-3xl px-5 py-16 text-center">
-            <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-              Combien de mandats dorment dans votre base ?
-            </h2>
+            <RevealText
+              as="h2"
+              className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl"
+              text="Combien de mandats dorment dans votre base ?"
+            />
             <p className="mt-4 text-lg leading-relaxed text-white/90">
               Quinze minutes au téléphone suffisent pour le savoir.
             </p>
