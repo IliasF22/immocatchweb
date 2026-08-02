@@ -382,6 +382,7 @@ export default function Home() {
               <video
                 className="aspect-video w-full bg-slate-800"
                 controls
+                playsInline
                 preload="metadata"
                 poster={DEMO_POSTER}
                 src={`/${DEMO_FILE}`}
