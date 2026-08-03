@@ -58,7 +58,7 @@ export default function Home() {
       {/* ============================= HEADER ============================= */}
       <header className="sticky top-0 z-50 border-b border-slate-800 bg-slate-900">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-          <a href="#" aria-label="ImmoCatch — accueil">
+          <a href="#" aria-label="ImmoCatch, accueil">
             <Wordmark className="text-xl" />
           </a>
 
@@ -76,7 +76,7 @@ export default function Home() {
         <Reveal>
           <div className="mx-auto max-w-4xl px-5 py-20 text-center sm:py-28">
             <p className="text-sm font-bold uppercase tracking-widest text-[#FF6B00]">
-              Solution IA pour agences immobilières indépendantes
+              Solution IA pour agences immobilières
             </p>
 
             <RevealText
@@ -110,16 +110,35 @@ export default function Home() {
                 href={PHONE_HREF}
                 className="w-full rounded-md border border-slate-600 px-8 py-4 text-lg font-bold text-slate-100 transition-colors hover:border-[#FF6B00] hover:text-[#FF6B00] sm:w-auto"
               >
-                Parler à Ilias — 15 min
+                Parler à Ilias (15 min)
               </a>
             </div>
 
-            <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-semibold text-slate-400">
-              <li>Sans engagement</li>
-              <li className="text-slate-700">·</li>
-              <li>Vous gardez votre CRM</li>
-              <li className="text-slate-700">·</li>
-              <li>Remboursé sous 30 jours</li>
+            {/* Réassurance : empilée sur mobile (les points séparateurs
+                laissaient un « · » orphelin en fin de ligne), alignée sur une
+                seule ligne à partir du format tablette. */}
+            <ul className="mx-auto mt-8 flex w-fit flex-col items-start gap-2.5 text-sm font-semibold text-slate-400 sm:w-auto sm:flex-row sm:items-center sm:justify-center sm:gap-x-7">
+              {[
+                "Sans engagement",
+                "Vous gardez votre CRM",
+                "Remboursé sous 30 jours",
+              ].map((item) => (
+                <li key={item} className="flex items-center gap-2">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#FF6B00"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-4 w-4 shrink-0"
+                    aria-hidden="true"
+                  >
+                    <path d="m5 12 5 5L20 7" />
+                  </svg>
+                  {item}
+                </li>
+              ))}
             </ul>
 
             {/* Piliers */}
@@ -240,7 +259,7 @@ export default function Home() {
         <Reveal>
           <div className="mx-auto max-w-4xl px-5 py-12 text-center">
             <p className="text-xl font-bold leading-relaxed text-white sm:text-2xl">
-              « Il y a largement de quoi occuper une personne à temps plein » —
+              « Il y a largement de quoi occuper une personne à temps plein ».
               rien que pour qualifier les contacts et cibler les bons acheteurs.
             </p>
             <p className="mt-4 text-sm font-semibold uppercase tracking-widest text-white/80">
@@ -762,7 +781,7 @@ export default function Home() {
                 },
                 {
                   q: "Ça marche si je suis seul ?",
-                  a: "C'est le cas le plus fréquent — et celui où le gain est le plus net, puisque personne ne fait la saisie à votre place.",
+                  a: "C'est le cas le plus fréquent, et celui où le gain est le plus net : personne ne fait la saisie à votre place.",
                 },
               ].map((item) => (
                 <details
@@ -903,7 +922,7 @@ export default function Home() {
               href={PHONE_HREF}
               className="mt-8 inline-block rounded-md bg-slate-900 px-8 py-4 text-lg font-bold text-white transition-colors hover:bg-slate-800"
             >
-              Parler à Ilias — 15 min
+              Parler à Ilias (15 min)
             </a>
           </div>
         </Reveal>
@@ -940,7 +959,7 @@ export default function Home() {
           {/* Mentions légales — remplacer les placeholders par les vraies informations */}
           <div className="mt-8 border-t border-slate-800 pt-6 text-center text-xs leading-relaxed text-slate-500">
             <p>
-              ImmoCatch © 2026 — Service édité par IFGlobal, SASU (société par
+              ImmoCatch © 2026. Service édité par IFGlobal, SASU (société par
               actions simplifiée unipersonnelle).
             </p>
             <p className="mt-1">
@@ -948,7 +967,7 @@ export default function Home() {
               intracommunautaire FR44991793712.
             </p>
             <p className="mt-1">
-              991 793 712 R.C.S. Pontoise — inscrite au greffe de Pontoise le
+              991 793 712 R.C.S. Pontoise, inscrite au greffe de Pontoise le
               26/09/2025. Inscrite au RNE.
             </p>
             <p className="mt-1">
@@ -965,7 +984,7 @@ export default function Home() {
           href={PHONE_HREF}
           className="block rounded-md bg-[#FF6B00] px-6 py-3.5 text-center text-base font-bold text-white"
         >
-          Parler à Ilias — 15 min
+          Parler à Ilias (15 min)
         </a>
       </div>
     </main>
