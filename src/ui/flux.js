@@ -1,5 +1,5 @@
 /**
- * Section « Flux en direct » : conversation pleine largeur, aurore en fond.
+ * Section « Flux en direct » : conversation pleine largeur, ruban 3D en fond.
  *
  * Chaque message se forme en se condensant : les mots arrivent dispersés et
  * flous, puis se rassemblent à leur place pendant que la bulle se dessine.
@@ -124,10 +124,10 @@ export function initialiserFlux() {
   lignes[0].setAttribute("data-vu", "oui");
   lignes.slice(1).forEach((ligne) => observateur.observe(ligne));
 
-  // ------------------------------ aurore ---------------------------------
+  // ----------------------------- ruban 3D --------------------------------
   if (!canvas) return;
 
-  let aurore = null;
+  let ruban = null;
   let idFrame = 0;
 
   /**
@@ -137,7 +137,7 @@ export function initialiserFlux() {
    * On mesure la traversée complète (hauteur de section + hauteur d'écran)
    * plutôt que le seul débordement `hauteur - écran` : sur téléphone, la
    * section dépasse à peine la hauteur de l'écran, et cette seconde formule
-   * donnait une course de quelques dizaines de pixels — la teinte basculait
+   * donnait une course de quelques dizaines de pixels — le ruban se traçait
    * d'un coup, sans qu'on voie rien.
    */
   function progresSection() {
@@ -149,10 +149,10 @@ export function initialiserFlux() {
   function appliquer() {
     idFrame = 0;
     // La traversée commence avant que la section soit lisible et finit après :
-    // on ne garde que la portion utile, celle où le visiteur parcourt
-    // vraiment la conversation.
+    // on ne garde que la portion utile pour que le tracé corresponde au moment
+    // où le visiteur parcourt vraiment la conversation.
     const brut = (progresSection() - 0.25) / 0.6;
-    aurore?.viserProgres(brut);
+    ruban?.viserProgres(brut * 1.1 + 0.05);
   }
 
   function surDefilement() {
@@ -162,8 +162,8 @@ export function initialiserFlux() {
 
   async function demarrer() {
     try {
-      const { initialiserAurore } = await import("../scene/aurora.js");
-      aurore = initialiserAurore(canvas, {
+      const { initialiserRuban } = await import("../scene/ribbon.js");
+      ruban = initialiserRuban(canvas, {
         surPret: () => canvas.setAttribute("data-pret", "oui"),
       });
       window.addEventListener("scroll", surDefilement, { passive: true });
@@ -172,7 +172,7 @@ export function initialiserFlux() {
     } catch (erreur) {
       // Pas de WebGL ou chunk indisponible : la conversation se suffit à
       // elle-même, le canvas reste simplement transparent.
-      console.warn("Aurore indisponible.", erreur);
+      console.warn("Ruban 3D indisponible.", erreur);
     }
   }
 

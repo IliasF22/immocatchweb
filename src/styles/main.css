@@ -387,9 +387,13 @@ h3 {
   opacity: 1;
 }
 
-/* Pas de réduction d'opacité sur téléphone : contrairement à un objet aux
-   contours nets, une lumière diffuse ne gêne pas la lecture — les bulles ont
-   leur propre fond translucide et leur flou d'arrière-plan. */
+/* Sur téléphone, le ruban croise les bulles de bien plus près : on le fait
+   reculer au rang de texture de fond pour préserver la lisibilité. */
+@media (max-width: 700px) {
+  .flux__canvas[data-pret="oui"] {
+    opacity: 0.5;
+  }
+}
 
 .flux__contenu {
   grid-area: 1 / 1;

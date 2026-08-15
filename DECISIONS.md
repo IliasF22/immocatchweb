@@ -156,40 +156,28 @@ l'authenticité à la démonstration lisse.
 
 ---
 
-## 12. Une aurore en fond, les messages se condensent
+## 12. Les messages se condensent, le ruban reste en fond
 
-Section « Flux en direct » : des nappes de lumière dérivent lentement derrière
-la conversation, pendant que chaque message se forme en se condensant — les
-mots arrivent dispersés et flous, puis se rassemblent à leur place.
+Section « Flux en direct » : un ruban 3D se trace derrière la conversation
+pendant que chaque message se forme en se condensant — les mots arrivent
+dispersés et flous, puis se rassemblent à leur place, un mot après l'autre.
 
-**Deux fonds ont été écartés avant celui-ci.** Un ruban 3D qui serpentait
-derrière les bulles : lisible, mais il ressemblait à un tuyau et ne racontait
-rien. Puis des glyphes en cubes posés à côté des messages : ils détournaient
-le regard de ce qu'il fallait lire. L'aurore assume d'être purement
-atmosphérique — c'est une lumière, pas un objet, donc elle ne rivalise pas
-avec le texte.
-
-**Un seul quad plein écran et un fragment shader** : aucune géométrie, un seul
-appel de rendu. Trois foyers gaussiens se déplacent sur des trajectoires
-indépendantes, et le domaine est légèrement déformé pour que les nappes
-ondulent au lieu de glisser en bloc.
-
-**Rendu à `pixelRatio` 1**, même sur écran haute densité. L'image n'est faite
-que de dégradés très doux : la calculer à la densité réelle coûterait quatre
-fois plus de pixels pour un résultat indiscernable une fois agrandi.
-
-**Tramage obligatoire** : un large dégradé sombre se découpe en bandes
-visibles sur la plupart des écrans. Un grain d'amplitude 0,014 ajouté dans le
-shader suffit à les casser.
-
-**La teinte suit le récit** : plutôt verte en haut de section (la voix), plutôt
-ambre en bas (la donnée rangée), pilotée par la progression du défilement.
+**Une version intermédiaire a été écartée** : des glyphes en cubes (micro,
+fiche, liste, coche, enveloppe) posés à côté des bulles. L'idée était de faire
+porter le sens par des objets, mais le résultat détournait le regard du
+message au lieu de le servir, et le ruban continu — plus discret — tenait
+mieux le fond. L'animation demandée portait de toute façon sur les messages
+eux-mêmes, pas sur des objets voisins.
 
 **Comment le texte est découpé** : `ui/flux.js` parcourt les nœuds de texte de
 chaque bulle et enveloppe les mots dans des spans, en conservant les
-séparateurs. Le texte reste sélectionnable, lisible par un lecteur d'écran, et
-le retour à la ligne se fait toujours entre les mots. Sans JavaScript ou avec
-animations réduites, aucun découpage n'a lieu et le texte est servi net.
+séparateurs. Le texte reste donc sélectionnable, lisible par un lecteur
+d'écran, et le retour à la ligne se fait toujours entre les mots. `inline-block`
+est nécessaire pour que la transformation s'applique.
+
+**Sans JavaScript ou avec animations réduites**, aucun découpage n'a lieu et
+le texte est servi net : la condensation est posée par l'attribut
+`data-progressif`, ajouté seulement quand l'animation peut se jouer.
 
 **Le message vocal n'a pas de mots** : ce sont les barres de son onde qui se
 dressent une à une, avec le même principe de retard échelonné.
@@ -200,6 +188,10 @@ que sur `hauteur du conteneur − sa propre hauteur`, d'où le `min-height: 185v
 `overflow: hidden` sur la section en fait un conteneur de défilement et le
 canvas s'en va avec le reste ; `margin-bottom: -100vh` écrase la course
 disponible. D'où la superposition en grille, sans `overflow`.
+
+**Épaisseur du tube** : 0.17 sur grand écran, 0.085 en dessous de 700px, avec
+une opacité réduite à 50 %. À pleine épaisseur, il passait devant les bulles
+sur téléphone et rendait la conversation pénible à lire.
 
 ---
 
