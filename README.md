@@ -40,6 +40,7 @@ src/
     header.js           filet de l'en-tête, CTA collant mobile
     faq.js              accordéon accessible
     reveal.js           apparitions au défilement + compteurs
+    phone.js            téléphone 3D piloté par le défilement (section "Preuve en direct")
     analytics.js        événements Plausible
 public/
   demo.mp4              vidéo de démonstration

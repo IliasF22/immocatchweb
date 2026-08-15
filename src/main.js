@@ -20,6 +20,7 @@ import { initialiserAnalytics } from "./ui/analytics.js";
 import { initialiserEntete } from "./ui/header.js";
 import { initialiserFaq } from "./ui/faq.js";
 import { initialiserApparitions, initialiserCompteurs } from "./ui/reveal.js";
+import { initialiserTelephone } from "./ui/phone.js";
 import { initialiserTimeline } from "./timeline/index.js";
 
 document.documentElement.classList.remove("no-js");
@@ -28,6 +29,7 @@ initialiserEntete();
 initialiserFaq();
 initialiserApparitions();
 initialiserCompteurs();
+initialiserTelephone();
 initialiserAnalytics();
 
 function afficherRepli() {

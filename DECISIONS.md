@@ -142,13 +142,43 @@ numéro reste accessible en un geste sur mobile.
 
 ---
 
+## 11. La conversation de la section « Preuve en direct » est une version nettoyée
+
+Le vrai échange transmis montrait l'assistant demander trois fois de suite des
+précisions sur « Larache » avant de comprendre. Utilisé tel quel, il aurait
+montré l'IA en échec sur la page de vente elle-même.
+
+**Choix retenu**, validé avec le client : un scénario qui reprend le ton et les
+emojis réels du produit, mais qui réussit du premier coup et illustre le cycle
+complet — dictée, fiche structurée, rapprochement, validation humaine avant
+tout envoi. Le vrai transcript reste disponible si le client préfère
+l'authenticité à la démonstration lisse.
+
+---
+
+## 12. Le premier calcul du téléphone défilant attend le chargement des polices
+
+`ui/phone.js` pilote la rotation 3D et la révélation des bulles à partir de
+`getBoundingClientRect()`. Les polices `@fontsource` utilisent
+`font-display: swap` : une police de secours s'affiche d'abord, puis la
+vraie police la remplace, ce qui déplace la mise en page après coup.
+
+**Bug rencontré** : un premier calcul lancé avant ce remplacement mesurait une
+hauteur de page erronée, marquait à tort toutes les bulles comme « déjà vues »
+— marquage volontairement permanent pour ne jamais faire disparaître un
+message déjà lu — et le téléphone démarrait avec la conversation entière
+visible au lieu de se révéler au défilement.
+
+**Correction** : le premier calcul attend `document.fonts.ready` (avec repli
+si l'API est absente), puis deux `requestAnimationFrame` pour laisser le
+navigateur terminer la mise en page avant de mesurer quoi que ce soit.
+
+---
+
 ## Points à trancher
 
 - **Durée de remboursement** : la copie fournie indiquait « 30 jours » dans les
   points de réassurance et « 27 jours » dans la FAQ. Le site affiche **30 jours**
   partout, valeur cohérente avec les versions précédentes. À confirmer.
-- **Lien Calendly** : `https://calendly.com/ilias-immocatch/demo` est utilisé
-  tel quel sur tous les appels à l'action. Vérifier que la page existe avant
-  toute diffusion, sinon chaque clic mène à une erreur.
 - **Prix d'installation** : « à partir de 1 701 € », repris tel quel de la copie
   fournie (les versions précédentes indiquaient 1 800 €).
