@@ -1,14 +1,60 @@
 /**
- * Section « Flux en direct » : conversation pleine largeur + glyphes 3D.
+ * Section « Flux en direct » : conversation pleine largeur, ruban 3D en fond.
  *
- * Par défaut, toute la conversation est visible : c'est l'état servi sans
- * JavaScript et avec `prefers-reduced-motion`. Ce module n'ajoute la
- * révélation progressive que si les animations sont autorisées, puis charge
- * les glyphes en import dynamique — jamais sur le chemin critique.
+ * Chaque message se forme en se condensant : les mots arrivent dispersés et
+ * flous, puis se rassemblent à leur place pendant que la bulle se dessine.
+ *
+ * Par défaut, toute la conversation est lisible et nette : c'est l'état servi
+ * sans JavaScript et avec `prefers-reduced-motion`. Le découpage en mots et la
+ * condensation ne sont posés que si les animations sont autorisées.
  */
 
 const animationsReduites = () =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function rng(graine) {
+  let e = graine >>> 0;
+  return () => {
+    e = (e * 1664525 + 1013904223) >>> 0;
+    return e / 4294967296;
+  };
+}
+
+/**
+ * Enveloppe chaque mot d'un élément dans un span, sans toucher aux balises
+ * existantes ni aux espaces (le texte reste sélectionnable et le retour à la
+ * ligne se fait toujours entre les mots).
+ */
+function decouperEnMots(racine) {
+  const marcheur = document.createTreeWalker(racine, NodeFilter.SHOW_TEXT);
+  const noeuds = [];
+  while (marcheur.nextNode()) noeuds.push(marcheur.currentNode);
+
+  const mots = [];
+
+  noeuds.forEach((noeud) => {
+    if (!noeud.textContent.trim()) return;
+
+    const fragment = document.createDocumentFragment();
+    // On garde les séparateurs : sans eux, les mots se colleraient.
+    noeud.textContent.split(/(\s+)/).forEach((morceau) => {
+      if (!morceau) return;
+      if (/^\s+$/.test(morceau)) {
+        fragment.appendChild(document.createTextNode(morceau));
+        return;
+      }
+      const span = document.createElement("span");
+      span.className = "mot";
+      span.textContent = morceau;
+      fragment.appendChild(span);
+      mots.push(span);
+    });
+
+    noeud.parentNode.replaceChild(fragment, noeud);
+  });
+
+  return mots;
+}
 
 export function initialiserFlux() {
   const section = document.querySelector("#preuve");
@@ -33,25 +79,40 @@ export function initialiserFlux() {
   const lignes = [...fil.querySelectorAll("[data-message]")];
   if (!lignes.length) return;
 
-  // ---------------------- révélation des messages -----------------------
+  // ------------------------ préparation des mots -------------------------
+  const alea = rng(20260810);
+
+  lignes.forEach((ligne) => {
+    const bulle = ligne.querySelector(".msg");
+    if (!bulle) return;
+
+    // Le texte à condenser : le corps du message, l'auteur et l'heure.
+    const cibles = bulle.querySelectorAll("p, .msg__auteur, .msg__pied, .msg__duree");
+    const mots = [];
+    cibles.forEach((cible) => mots.push(...decouperEnMots(cible)));
+
+    mots.forEach((mot, i) => {
+      // Chaque mot part d'un point légèrement différent : la condensation se
+      // lit comme un rassemblement, pas comme un simple fondu de bloc.
+      mot.style.setProperty("--dx", `${(alea() - 0.5) * 26}px`);
+      mot.style.setProperty("--dy", `${(alea() - 0.5) * 18}px`);
+      mot.style.transitionDelay = `${120 + i * 45}ms`;
+    });
+
+    // Le vocal n'a pas de mots : ce sont les barres de l'onde qui se dressent.
+    bulle.querySelectorAll(".msg__onde span").forEach((barre, i) => {
+      barre.style.transitionDelay = `${220 + i * 32}ms`;
+    });
+  });
+
   fil.setAttribute("data-progressif", "oui");
 
-  let glyphes = null;
-  const assembles = new Set();
-
-  function reveler(ligne) {
-    ligne.setAttribute("data-vu", "oui");
-    const index = lignes.indexOf(ligne);
-    if (index === -1) return;
-    assembles.add(index);
-    glyphes?.assembler(index, true);
-  }
-
+  // ---------------------- révélation des messages -----------------------
   const observateur = new IntersectionObserver(
     (entrees) => {
       entrees.forEach((entree) => {
         if (!entree.isIntersecting) return;
-        reveler(entree.target);
+        entree.target.setAttribute("data-vu", "oui");
         observateur.unobserve(entree.target);
       });
     },
@@ -60,73 +121,58 @@ export function initialiserFlux() {
 
   // Le tout premier message est acquis d'avance : arriver sur une section
   // vide donnerait l'impression d'un composant cassé.
-  reveler(lignes[0]);
+  lignes[0].setAttribute("data-vu", "oui");
   lignes.slice(1).forEach((ligne) => observateur.observe(ligne));
 
-  // ----------------------------- glyphes 3D ------------------------------
+  // ----------------------------- ruban 3D --------------------------------
   if (!canvas) return;
 
+  let ruban = null;
   let idFrame = 0;
 
   /**
-   * Place chaque glyphe en face de son message.
+   * Progression de la traversée de la section par la fenêtre : 0 quand son
+   * haut touche le bas de l'écran, 1 quand son bas touche le haut.
    *
-   * Les positions viennent du DOM plutôt que d'un calcul indépendant : les
-   * cubes restent ainsi collés à leur bulle quoi qu'il arrive à la mise en
-   * page (retour à la ligne, taille de police, largeur d'écran).
+   * On mesure la traversée complète (hauteur de section + hauteur d'écran)
+   * plutôt que le seul débordement `hauteur - écran` : sur téléphone, la
+   * section dépasse à peine la hauteur de l'écran, et cette seconde formule
+   * donnait une course de quelques dizaines de pixels — le ruban se traçait
+   * d'un coup, sans qu'on voie rien.
    */
-  function placer() {
+  function progresSection() {
+    const rect = section.getBoundingClientRect();
+    const vh = window.innerHeight;
+    return Math.min(1, Math.max(0, (vh - rect.top) / (rect.height + vh)));
+  }
+
+  function appliquer() {
     idFrame = 0;
-    if (!glyphes) return;
-
-    const cadre = canvas.getBoundingClientRect();
-    if (!cadre.height) return;
-
-    lignes.forEach((ligne, i) => {
-      const bulle = ligne.firstElementChild || ligne;
-      const r = bulle.getBoundingClientRect();
-      const centreY = r.top + r.height / 2;
-
-      // Le glyphe se place du côté opposé à la bulle : c'est ce qui produit
-      // l'alternance gauche / droite.
-      //
-      // Sur écran étroit, les bulles occupent presque toute la largeur et il
-      // ne reste aucune marge : poussé au bord, le glyphe se retrouvait coupé.
-      // On le ramène donc vers le centre, où il passe derrière la bulle — dont
-      // le fond translucide et le flou l'intègrent comme une couche de fond.
-      const aDroite = ligne.classList.contains("fil__ligne--gauche");
-      const marge = cadre.width < 700 ? 0.34 : 0.72;
-      const xNdc = aDroite ? marge : -marge;
-      const yNdc = 1 - ((centreY - cadre.top) / cadre.height) * 2;
-
-      // Inutile de dessiner un glyphe très au-delà du cadre.
-      glyphes.placer(i, xNdc, yNdc, Math.abs(yNdc) < 1.6);
-    });
+    // La traversée commence avant que la section soit lisible et finit après :
+    // on ne garde que la portion utile pour que le tracé corresponde au moment
+    // où le visiteur parcourt vraiment la conversation.
+    const brut = (progresSection() - 0.25) / 0.6;
+    ruban?.viserProgres(brut * 1.1 + 0.05);
   }
 
   function surDefilement() {
     if (idFrame) return;
-    idFrame = requestAnimationFrame(placer);
+    idFrame = requestAnimationFrame(appliquer);
   }
 
   async function demarrer() {
     try {
-      const { initialiserGlyphes } = await import("../scene/glyphField.js");
-      glyphes = initialiserGlyphes(canvas, {
+      const { initialiserRuban } = await import("../scene/ribbon.js");
+      ruban = initialiserRuban(canvas, {
         surPret: () => canvas.setAttribute("data-pret", "oui"),
       });
-
-      // Les messages déjà révélés avant l'arrivée du module rattrapent leur
-      // assemblage, sinon leur glyphe resterait invisible.
-      assembles.forEach((i) => glyphes.assembler(i, true));
-
       window.addEventListener("scroll", surDefilement, { passive: true });
       window.addEventListener("resize", surDefilement, { passive: true });
-      placer();
+      appliquer();
     } catch (erreur) {
       // Pas de WebGL ou chunk indisponible : la conversation se suffit à
       // elle-même, le canvas reste simplement transparent.
-      console.warn("Glyphes 3D indisponibles.", erreur);
+      console.warn("Ruban 3D indisponible.", erreur);
     }
   }
 

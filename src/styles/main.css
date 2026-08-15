@@ -559,25 +559,71 @@ h3 {
   color: var(--os-70);
 }
 
-/* Apparition progressive : posée uniquement quand le défilement la pilote.
-   Sans JavaScript, ou avec animations réduites, tout reste visible. */
-.fil[data-progressif="oui"] .fil__ligne[data-message] {
+/* Condensation : posée uniquement quand le défilement la pilote. Sans
+   JavaScript, ou avec animations réduites, tout reste net et lisible. */
+
+/* La bulle se dessine : fond et bordure apparaissent, la forme se pose. */
+.fil[data-progressif="oui"] .msg {
   opacity: 0;
-  transform: translateY(26px);
+  transform: scale(0.97);
   transition:
-    opacity var(--t-long) cubic-bezier(0.22, 1, 0.36, 1),
-    transform var(--t-long) cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 600ms ease,
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.fil[data-progressif="oui"] .fil__ligne--gauche[data-message] {
-  transform: translate(-22px, 26px);
+.fil[data-progressif="oui"] [data-vu="oui"] .msg {
+  opacity: 1;
+  transform: none;
 }
 
-.fil[data-progressif="oui"] .fil__ligne--droite[data-message] {
-  transform: translate(22px, 26px);
+/* Les mots arrivent dispersés et flous, puis se rassemblent à leur place.
+   `--dx` / `--dy` et le retard sont posés par ui/flux.js, un mot après
+   l'autre. `inline-block` est nécessaire pour que la transformation
+   s'applique, et n'empêche pas le retour à la ligne entre les mots. */
+.fil[data-progressif="oui"] .mot {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(7px);
+  transform: translate(var(--dx, 0), var(--dy, 0)) scale(0.9);
+  transition:
+    opacity 640ms ease,
+    filter 640ms ease,
+    transform 760ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, filter, opacity;
 }
 
-.fil[data-progressif="oui"] .fil__ligne[data-message][data-vu="oui"] {
+.fil[data-progressif="oui"] [data-vu="oui"] .mot {
+  opacity: 1;
+  filter: blur(0);
+  transform: none;
+  will-change: auto;
+}
+
+/* Le message vocal n'a pas de mots : ses barres se dressent une à une. */
+.fil[data-progressif="oui"] .msg__onde span {
+  transform: scaleY(0.08);
+  transform-origin: center;
+  opacity: 0;
+  transition:
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 380ms ease;
+}
+
+.fil[data-progressif="oui"] [data-vu="oui"] .msg__onde span {
+  transform: none;
+  opacity: 1;
+}
+
+/* Le bouton de lecture accompagne la bulle. */
+.fil[data-progressif="oui"] .msg__lecture {
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity 420ms ease 140ms,
+    transform 560ms cubic-bezier(0.22, 1, 0.36, 1) 140ms;
+}
+
+.fil[data-progressif="oui"] [data-vu="oui"] .msg__lecture {
   opacity: 1;
   transform: none;
 }

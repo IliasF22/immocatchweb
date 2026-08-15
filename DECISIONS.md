@@ -156,38 +156,31 @@ l'authenticité à la démonstration lisse.
 
 ---
 
-## 12. Des glyphes en cubes plutôt qu'un ruban continu
+## 12. Les messages se condensent, le ruban reste en fond
 
-La section « Flux en direct » associe à chaque message un objet en cubes :
-micro (le vocal), fiche (la structuration), liste (le rapprochement), coche
-(la validation), enveloppe (l'envoi). Les cubes tombent dispersés depuis le
-haut et se rangent en formation quand le message entre à l'écran.
+Section « Flux en direct » : un ruban 3D se trace derrière la conversation
+pendant que chaque message se forme en se condensant — les mots arrivent
+dispersés et flous, puis se rassemblent à leur place, un mot après l'autre.
 
-**Pourquoi pas un tube continu** : la première version dessinait un ruban qui
-serpentait derrière la conversation. Joli, mais purement décoratif — il ne
-disait rien du produit. Les glyphes racontent les cinq étapes du parcours, et
-l'assemblage des cubes illustre littéralement ce que fait l'assistant :
-transformer une matière dispersée en information rangée.
+**Une version intermédiaire a été écartée** : des glyphes en cubes (micro,
+fiche, liste, coche, enveloppe) posés à côté des bulles. L'idée était de faire
+porter le sens par des objets, mais le résultat détournait le regard du
+message au lieu de le servir, et le ruban continu — plus discret — tenait
+mieux le fond. L'animation demandée portait de toute façon sur les messages
+eux-mêmes, pas sur des objets voisins.
 
-**Un maillage par glyphe** plutôt qu'un seul pour l'ensemble : chaque glyphe a
-sa propre progression et sa propre teinte, sans avoir à indexer dynamiquement
-un tableau d'uniformes dans le shader (mal supporté en GLSL ES 1.00). Cinq
-appels de rendu, environ 60 cubes chacun.
+**Comment le texte est découpé** : `ui/flux.js` parcourt les nœuds de texte de
+chaque bulle et enveloppe les mots dans des spans, en conservant les
+séparateurs. Le texte reste donc sélectionnable, lisible par un lecteur
+d'écran, et le retour à la ligne se fait toujours entre les mots. `inline-block`
+est nécessaire pour que la transformation s'applique.
 
-**Le dessin est une grille de caractères** (`scene/glyphs.js`) : on modifie une
-icône en éditant du texte, sans outil de modélisation. Attention, tout
-caractère absent de la table des profondeurs est un vide — un point décoratif
-utilisé comme fond transformerait le glyphe en rectangle plein (l'erreur a été
-faite lors de la première version).
+**Sans JavaScript ou avec animations réduites**, aucun découpage n'a lieu et
+le texte est servi net : la condensation est posée par l'attribut
+`data-progressif`, ajouté seulement quand l'animation peut se jouer.
 
-**Positionnement piloté par le DOM** : chaque glyphe est placé face à sa bulle
-d'après `getBoundingClientRect()`, converti en coordonnées de scène. Les cubes
-restent donc collés à leur message quelle que soit la mise en page.
-
-**Sur écran étroit**, les bulles occupent presque toute la largeur : poussé au
-bord, le glyphe se retrouvait coupé. Il est ramené vers le centre, où il passe
-derrière la bulle — le fond translucide et le flou l'intègrent comme couche de
-fond. Échelle réduite à 72 % et opacité du canvas à 50 %.
+**Le message vocal n'a pas de mots** : ce sont les barres de son onde qui se
+dressent une à une, avec le même principe de retard échelonné.
 
 **Hauteur de section** : le canvas est collé (`sticky`) et ne tient en place
 que sur `hauteur du conteneur − sa propre hauteur`, d'où le `min-height: 185vh`
@@ -195,6 +188,10 @@ que sur `hauteur du conteneur − sa propre hauteur`, d'où le `min-height: 185v
 `overflow: hidden` sur la section en fait un conteneur de défilement et le
 canvas s'en va avec le reste ; `margin-bottom: -100vh` écrase la course
 disponible. D'où la superposition en grille, sans `overflow`.
+
+**Épaisseur du tube** : 0.17 sur grand écran, 0.085 en dessous de 700px, avec
+une opacité réduite à 50 %. À pleine épaisseur, il passait devant les bulles
+sur téléphone et rendait la conversation pénible à lire.
 
 ---
 
@@ -217,13 +214,14 @@ navigateur terminer la mise en page avant de mesurer quoi que ce soit.
 
 ---
 
-## Points à trancher
+## Points tranchés
 
-- **Durée de remboursement** : la copie fournie indiquait « 30 jours » dans les
-  points de réassurance et « 27 jours » dans la FAQ. Le site affiche **30 jours**
-  partout, valeur cohérente avec les versions précédentes. À confirmer.
-- **Prix d'installation** : « à partir de 1 701 € », repris tel quel de la copie
-  fournie (les versions précédentes indiquaient 1 800 €).
+- **Prix d'installation** : 1 800 €, confirmé par le client (une version de la
+  copie indiquait 1 701 €).
+- **Durée de remboursement** : 30 jours partout, confirmé par le client (une
+  version de la copie indiquait 27 jours dans la FAQ).
+- **Lien Calendly** : `https://calendly.com/ilias-frej-pro/30min`, fourni par
+  le client, utilisé sur tous les appels à l'action.
 
 ---
 
