@@ -70,85 +70,70 @@
     </header>
 
     <main id="contenu">
-      <!-- ==================== PREUVE EN DIRECT (TÉLÉPHONE 3D) ==================== -->
-      <section class="preuve" id="preuve">
-        <div class="enveloppe preuve__enveloppe">
-          <div class="section__intro" data-reveal>
+      <!-- ============== FLUX EN DIRECT (RUBAN 3D + CONVERSATION) ============== -->
+      <section class="flux" id="preuve">
+        <canvas class="flux__canvas" id="flux-canvas" aria-hidden="true"></canvas>
+
+        <div class="enveloppe flux__contenu">
+          <div class="flux__intro" data-reveal>
             <p class="surtitre">En direct sur WhatsApp</p>
             <h2 class="h-section">Un mandat, de la dictée à la fiche.</h2>
           </div>
 
-          <div class="preuve__defilement" id="preuve-defilement">
-            <div class="preuve__ancre">
-              <div class="telephone" id="telephone">
-                <span class="telephone__encoche" aria-hidden="true"></span>
-                <div class="telephone__ecran">
-                  <div class="telephone__entete">
-                    <span class="telephone__avatar">IC</span>
-                    <span class="telephone__identite">
-                      <span class="telephone__nom">ImmoCatch</span>
-                      <span class="telephone__statut">en ligne</span>
-                    </span>
-                  </div>
+          <ol class="fil" id="fil">
+            <li class="fil__ligne fil__ligne--droite" data-message>
+              <article class="msg msg--sortant msg--vocal">
+                <span class="msg__auteur">Vous</span>
+                <span class="msg__vocal">
+                  <button class="msg__lecture" type="button" aria-label="Écouter l'aperçu du vocal">
+                    <svg viewBox="0 0 24 24" fill="#0A0F1A" aria-hidden="true">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </button>
+                  <span class="msg__onde" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span>
+                  </span>
+                  <span class="msg__duree">0:38</span>
+                </span>
+                <span class="msg__pied">14:12</span>
+              </article>
+            </li>
 
-                  <div class="telephone__fil" id="telephone-fil">
-                    <div class="bulle bulle--sortant bulle--vocal" data-message>
-                      <span class="bulle__vocal">
-                        <button
-                          class="bulle__lecture"
-                          type="button"
-                          aria-label="Écouter l'aperçu du vocal"
-                        >
-                          <svg viewBox="0 0 24 24" fill="#0A0F1A" aria-hidden="true">
-                            <path d="M8 5v14l11-7z" />
-                          </svg>
-                        </button>
-                        <span class="bulle__onde" aria-hidden="true">
-                          <span></span><span></span><span></span><span></span>
-                          <span></span><span></span><span></span><span></span>
-                          <span></span><span></span><span></span><span></span>
-                        </span>
-                        <span class="bulle__duree">0:38</span>
-                      </span>
-                      <span class="bulle__heure">
-                        14:12
-                        <svg class="bulle__coche" viewBox="0 0 16 11" fill="none" aria-hidden="true">
-                          <path d="M1 5.5 4.5 9 10 1.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                          <path d="M6 5.5 9.5 9 15 1.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                      </span>
-                    </div>
+            <li class="fil__ligne fil__ligne--gauche" data-message>
+              <article class="msg msg--entrant">
+                <span class="msg__auteur">ImmoCatch</span>
+                <p>✅ Fiche créée : F2, 150 000 €, secteur Larache. Mandat actif.</p>
+                <span class="msg__pied">14:12</span>
+              </article>
+            </li>
 
-                    <div class="bulle bulle--entrant" data-message>
-                      <p>✅ Fiche créée : F2, 150 000 €, secteur Larache. Mandat actif.</p>
-                      <span class="bulle__heure">14:12</span>
-                    </div>
+            <li class="fil__ligne fil__ligne--gauche" data-message>
+              <article class="msg msg--entrant">
+                <span class="msg__auteur">ImmoCatch</span>
+                <p>🔎 3 acheteurs compatibles trouvés dans votre base.</p>
+                <span class="msg__pied">14:13</span>
+              </article>
+            </li>
 
-                    <div class="bulle bulle--entrant" data-message>
-                      <p>🔎 3 acheteurs compatibles trouvés dans votre base.</p>
-                      <span class="bulle__heure">14:13</span>
-                    </div>
+            <li class="fil__ligne fil__ligne--droite" data-message>
+              <article class="msg msg--sortant">
+                <span class="msg__auteur">Vous</span>
+                <p>Nickel, envoie-leur le message</p>
+                <span class="msg__pied">14:15</span>
+              </article>
+            </li>
 
-                    <div class="bulle bulle--sortant" data-message>
-                      <p>Nickel, envoie-leur le message</p>
-                      <span class="bulle__heure">
-                        14:15
-                        <svg class="bulle__coche" viewBox="0 0 16 11" fill="none" aria-hidden="true">
-                          <path d="M1 5.5 4.5 9 10 1.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                          <path d="M6 5.5 9.5 9 15 1.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                      </span>
-                    </div>
-
-                    <div class="bulle bulle--entrant" data-message>
-                      <p>📤 3 brouillons prêts, en attente de ta validation.</p>
-                      <span class="bulle__heure">14:15</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+            <li class="fil__ligne fil__ligne--gauche" data-message>
+              <article class="msg msg--entrant">
+                <span class="msg__auteur">ImmoCatch</span>
+                <p>📤 3 brouillons prêts, en attente de ta validation.</p>
+                <span class="msg__pied">14:15</span>
+              </article>
+            </li>
+          </ol>
         </div>
       </section>
 

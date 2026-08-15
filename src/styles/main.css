@@ -342,215 +342,164 @@ h3 {
   }
 }
 
-/* ================== PREUVE EN DIRECT (TÉLÉPHONE 3D) ==================== */
+/* ============ FLUX EN DIRECT : ruban 3D + conversation pleine largeur ======= */
 
-.preuve {
+/* Le canvas et la conversation partagent une seule cellule de grille : ils se
+   superposent sans qu'aucun des deux n'ait à sortir du flux.
+   Surtout, pas d'`overflow: hidden` ici — cela ferait de la section un
+   conteneur de défilement et neutraliserait le `position: sticky` du canvas,
+   qui se mettrait alors à défiler hors de l'écran avec le reste. */
+.flux {
   position: relative;
-  padding-top: clamp(2.5rem, 6vw, 4rem);
-  padding-bottom: clamp(2.5rem, 6vw, 4rem);
-  border-bottom: 1px solid var(--trait);
-}
-
-/* Par défaut (sans JS, ou animations réduites) : conteneur simple, hauteur
-   naturelle, téléphone centré. C'est l'état qui doit toujours rester correct. */
-.preuve__defilement {
-  display: flex;
-  justify-content: center;
-}
-
-.preuve__ancre {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  padding-block: 1rem;
-  perspective: 1500px;
-}
-
-/* Activé uniquement par JS (voir ui/phone.js), et seulement si les animations
-   sont autorisées : bascule vers un long conteneur avec ancre collante, pour
-   que le défilement pilote la conversation. */
-.preuve__defilement[data-scrollytelling="oui"] {
-  display: block;
-  min-height: calc(100vh + var(--etapes, 5) * 48vh);
-}
-
-.preuve__defilement[data-scrollytelling="oui"] .preuve__ancre {
-  position: sticky;
-  top: var(--decalage-entete, 84px);
-  height: calc(100vh - var(--decalage-entete, 84px));
-  padding-block: 1.5rem;
-}
-
-.telephone {
-  position: relative;
-  width: min(300px, 74vw);
-  aspect-ratio: 300 / 612;
-  border-radius: 46px;
-  padding: 12px;
-  background: linear-gradient(160deg, #1c2534 0%, #05070a 72%);
-  border: 2px solid rgba(232, 225, 211, 0.08);
-  box-shadow:
-    0 34px 60px -22px rgba(0, 0, 0, 0.65),
-    0 6px 20px rgba(0, 0, 0, 0.4);
-  transform: rotateY(-14deg) rotateX(4deg) scale(0.97);
-  transform-style: preserve-3d;
-  will-change: transform;
-}
-
-.telephone__encoche {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 82px;
-  height: 22px;
-  background: #000;
-  border-radius: 14px;
-  z-index: 2;
-}
-
-.telephone__ecran {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  border-radius: 34px;
-  overflow: hidden;
-  background: var(--nuit-2);
-  display: flex;
-  flex-direction: column;
-}
-
-.telephone__ecran::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    115deg,
-    rgba(255, 255, 255, 0.05) 0%,
-    transparent 28%,
-    transparent 72%,
-    rgba(255, 255, 255, 0.03) 100%
-  );
-  pointer-events: none;
-}
-
-.telephone__entete {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 32px 14px 12px;
-  background: var(--nuit-3);
-  border-bottom: 1px solid var(--trait);
-}
-
-.telephone__avatar {
-  flex: none;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--ambre);
-  color: var(--nuit);
+  isolation: isolate;
   display: grid;
-  place-items: center;
-  font-family: var(--titre);
-  font-weight: 700;
-  font-size: 0.78rem;
+  grid-template-columns: 1fr;
+  padding-block: clamp(3rem, 8vw, 6rem) clamp(4rem, 10vw, 8rem);
+  border-bottom: 1px solid var(--trait);
+  /* Le canvas collé ne peut rester en place que sur `hauteur de section moins
+     hauteur du canvas`. Sans cette hauteur minimale, la section faisait à
+     peine plus qu'un écran : le ruban se décrochait au tiers de la lecture.
+     Les messages sont répartis dans cet espace, il ne reste donc pas vide. */
+  min-height: 185vh;
 }
 
-.telephone__identite {
+@media (max-width: 700px) {
+  .flux {
+    min-height: 155vh;
+  }
+}
+
+/* Le ruban 3D reste collé pendant que la conversation défile devant lui. */
+.flux__canvas {
+  grid-area: 1 / 1;
+  align-self: start;
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.flux__canvas[data-pret="oui"] {
+  opacity: 1;
+}
+
+/* Sur téléphone, le ruban croise les bulles de bien plus près : on le fait
+   reculer au rang de texture de fond pour préserver la lisibilité. */
+@media (max-width: 700px) {
+  .flux__canvas[data-pret="oui"] {
+    opacity: 0.5;
+  }
+}
+
+.flux__contenu {
+  grid-area: 1 / 1;
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  line-height: 1.3;
 }
 
-.telephone__nom {
-  font-weight: 600;
-  font-size: 0.84rem;
-  color: var(--os);
+.flux__intro {
+  max-width: 40rem;
+  margin-bottom: clamp(2.5rem, 7vw, 5rem);
 }
 
-.telephone__statut {
-  font-size: 0.66rem;
-  color: var(--lampe);
-  opacity: 0.85;
-}
-
-.telephone__fil {
+.fil {
+  display: flex;
+  flex-direction: column;
+  /* Les messages se répartissent sur toute la hauteur disponible : c'est cet
+     espace qui laisse le ruban se déployer entre les bulles au lieu de les
+     traverser d'un trait. */
   flex: 1;
-  padding: 12px 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 9px;
+  justify-content: space-between;
+  gap: clamp(2.25rem, 6vw, 4rem);
 }
 
-/* ---------------------------------- Bulles ------------------------------ */
-
-.bulle {
-  max-width: 84%;
+.fil__ligne {
   display: flex;
-  flex-direction: column;
-  gap: 3px;
-  padding: 7px 9px;
-  border-radius: 14px;
-  font-size: 0.78rem;
-  line-height: 1.4;
-  transition:
-    opacity var(--t-long) ease,
-    transform var(--t-long) ease;
 }
 
-.bulle p {
+.fil__ligne--gauche {
+  justify-content: flex-start;
+}
+
+.fil__ligne--droite {
+  justify-content: flex-end;
+}
+
+/* --------------------------------- Message ------------------------------ */
+
+.msg {
+  --coin: 20px;
+  position: relative;
+  width: fit-content;
+  max-width: min(30rem, 82%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: clamp(1rem, 2.5vw, 1.35rem) clamp(1.15rem, 3vw, 1.6rem);
+  border-radius: var(--coin);
+  backdrop-filter: blur(10px);
+  font-size: clamp(0.95rem, 1.6vw, 1.08rem);
+  line-height: 1.5;
+}
+
+.fil__ligne--droite .msg {
+  max-width: min(30rem, 82%);
+}
+
+.msg p {
   margin: 0;
 }
 
-.bulle--entrant {
-  align-self: flex-start;
-  background: var(--nuit-3);
-  color: var(--os);
-  border-bottom-left-radius: 4px;
+.msg--entrant {
+  background: rgba(19, 27, 43, 0.82);
+  border: 1px solid var(--trait);
+  border-bottom-left-radius: 6px;
 }
 
-.bulle--sortant {
-  align-self: flex-end;
-  background: rgba(168, 232, 176, 0.14);
-  border: 1px solid rgba(168, 232, 176, 0.3);
-  color: var(--os);
-  border-bottom-right-radius: 4px;
+.msg--sortant {
+  background: rgba(168, 232, 176, 0.12);
+  border: 1px solid rgba(168, 232, 176, 0.34);
+  border-bottom-right-radius: 6px;
 }
 
-.bulle__heure {
-  align-self: flex-end;
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
+.msg__auteur {
   font-family: var(--mono);
-  font-size: 0.6rem;
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--os-45);
 }
 
-.bulle__coche {
-  width: 12px;
-  height: 8px;
-  color: #7fd1f0;
+.msg--sortant .msg__auteur {
+  color: var(--lampe);
+  align-self: flex-end;
+}
+
+.msg__pied {
+  align-self: flex-end;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  color: var(--os-45);
 }
 
 /* Message vocal */
 
-.bulle--vocal {
-  padding: 7px;
-}
-
-.bulle__vocal {
+.msg__vocal {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 0.7rem;
 }
 
-.bulle__lecture {
+.msg__lecture {
   flex: none;
-  width: 28px;
-  height: 28px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   background: var(--lampe);
   border: 0;
@@ -561,92 +510,81 @@ h3 {
   transition: transform var(--t-court) ease;
 }
 
-.bulle__lecture:hover {
-  transform: scale(1.06);
+.msg__lecture:hover {
+  transform: scale(1.07);
 }
 
-.bulle__lecture svg {
-  width: 12px;
-  height: 12px;
+.msg__lecture svg {
+  width: 15px;
+  height: 15px;
 }
 
-.bulle__onde {
+.msg__onde {
   display: flex;
   align-items: center;
-  gap: 2px;
-  height: 18px;
+  gap: 3px;
+  height: 26px;
+  flex: 1;
 }
 
-.bulle__onde span {
-  width: 2.5px;
+.msg__onde span {
+  flex: 1;
+  min-width: 2px;
+  max-width: 4px;
   border-radius: 2px;
   background: var(--os-45);
   transition: background-color var(--t-moyen) ease;
 }
 
-.bulle__onde span:nth-child(1) {
-  height: 40%;
-}
-.bulle__onde span:nth-child(2) {
-  height: 70%;
-}
-.bulle__onde span:nth-child(3) {
+.msg__onde span:nth-child(3n) {
   height: 100%;
 }
-.bulle__onde span:nth-child(4) {
-  height: 55%;
+.msg__onde span:nth-child(3n + 1) {
+  height: 48%;
 }
-.bulle__onde span:nth-child(5) {
-  height: 85%;
+.msg__onde span:nth-child(3n + 2) {
+  height: 74%;
 }
-.bulle__onde span:nth-child(6) {
-  height: 35%;
-}
-.bulle__onde span:nth-child(7) {
-  height: 65%;
-}
-.bulle__onde span:nth-child(8) {
-  height: 95%;
-}
-.bulle__onde span:nth-child(9) {
-  height: 50%;
-}
-.bulle__onde span:nth-child(10) {
-  height: 75%;
-}
-.bulle__onde span:nth-child(11) {
-  height: 45%;
-}
-.bulle__onde span:nth-child(12) {
-  height: 30%;
+.msg__onde span:nth-child(5n) {
+  height: 36%;
 }
 
-.bulle__vocal[data-lu="oui"] .bulle__onde span {
+.msg__vocal[data-lu="oui"] .msg__onde span {
   background: var(--lampe);
 }
 
-.bulle__duree {
+.msg__duree {
   font-family: var(--mono);
-  font-size: 0.66rem;
+  font-size: 0.8rem;
   color: var(--os-70);
 }
 
-/* Réserve à l'apparition progressive : uniquement quand le défilement pilote
-   la scène. Dans tous les autres cas (JS absent, animations réduites), les
-   bulles restent visibles — c'est l'état par défaut ci-dessus. */
-.preuve__defilement[data-scrollytelling="oui"] .bulle[data-message] {
+/* Apparition progressive : posée uniquement quand le défilement la pilote.
+   Sans JavaScript, ou avec animations réduites, tout reste visible. */
+.fil[data-progressif="oui"] .fil__ligne[data-message] {
   opacity: 0;
-  transform: translateY(14px);
+  transform: translateY(26px);
+  transition:
+    opacity var(--t-long) cubic-bezier(0.22, 1, 0.36, 1),
+    transform var(--t-long) cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.preuve__defilement[data-scrollytelling="oui"] .bulle[data-message][data-vu="oui"] {
+.fil[data-progressif="oui"] .fil__ligne--gauche[data-message] {
+  transform: translate(-22px, 26px);
+}
+
+.fil[data-progressif="oui"] .fil__ligne--droite[data-message] {
+  transform: translate(22px, 26px);
+}
+
+.fil[data-progressif="oui"] .fil__ligne[data-message][data-vu="oui"] {
   opacity: 1;
   transform: none;
 }
 
-@media (max-width: 640px) {
-  .telephone {
-    width: min(270px, 72vw);
+@media (max-width: 560px) {
+  .msg {
+    max-width: 90%;
   }
 }
 

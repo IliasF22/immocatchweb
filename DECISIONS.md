@@ -156,9 +156,38 @@ l'authenticité à la démonstration lisse.
 
 ---
 
-## 12. Le premier calcul du téléphone défilant attend le chargement des polices
+## 12. Le ruban 3D est collé, la section est donc volontairement haute
 
-`ui/phone.js` pilote la rotation 3D et la révélation des bulles à partir de
+La section « Flux en direct » utilise un canvas en `position: sticky` derrière
+la conversation, et une superposition en grille (canvas et contenu dans la même
+cellule) plutôt qu'une marge négative.
+
+**Deux pièges rencontrés, tous deux fatals au collage :**
+
+- `overflow: hidden` sur la section en fait un conteneur de défilement : le
+  `sticky` s'y accroche au lieu de la fenêtre, et le canvas s'en va avec le
+  reste. Il n'y a donc aucun `overflow` sur `.flux`.
+- `margin-bottom: -100vh` (pour sortir le canvas du flux) écrase la plage de
+  collage : l'élément n'a plus de course et se comporte presque comme statique.
+  D'où la superposition en grille.
+
+**Hauteur minimale** : un élément collé ne tient en place que sur
+`hauteur du conteneur − sa propre hauteur`. Avec un canvas de `100vh` et une
+section à peine plus haute qu'un écran, la course tombait à quelques centaines
+de pixels et le ruban se décrochait au tiers de la lecture. D'où le
+`min-height: 185vh` (155vh sur téléphone), les messages étant répartis dedans
+par `justify-content: space-between` pour ne pas laisser de vide.
+
+**Épaisseur du tube** : 0.17 sur grand écran, 0.085 en dessous de 700px, avec
+une opacité réduite à 50 %. À pleine épaisseur, le ruban passait devant les
+bulles sur téléphone et rendait la conversation pénible à lire. La géométrie
+est refabriquée si l'on franchit ce seuil (rotation d'écran).
+
+---
+
+## 13. Le premier calcul au défilement attend le chargement des polices
+
+`ui/flux.js` (auparavant `ui/phone.js`) pilote la révélation des bulles à partir de
 `getBoundingClientRect()`. Les polices `@fontsource` utilisent
 `font-display: swap` : une police de secours s'affiche d'abord, puis la
 vraie police la remplace, ce qui déplace la mise en page après coup.

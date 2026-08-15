@@ -35,12 +35,13 @@ src/
     index.js            renderer, caméra, boucle, mise en pause
     morphField.js       géométrie instanciée + positions cibles de la fiche
     shaders.js          shaders du morph onde → fiche
+    ribbon.js           ruban 3D de la section "Flux en direct"
   timeline/index.js     synchronise la scène avec le stepper du hero
   ui/
     header.js           filet de l'en-tête, CTA collant mobile
     faq.js              accordéon accessible
     reveal.js           apparitions au défilement + compteurs
-    phone.js            téléphone 3D piloté par le défilement (section "Preuve en direct")
+    flux.js             conversation pleine largeur + pilotage du ruban 3D
     analytics.js        événements Plausible
 public/
   demo.mp4              vidéo de démonstration
