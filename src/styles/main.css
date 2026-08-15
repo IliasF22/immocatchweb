@@ -1206,14 +1206,19 @@ h3 {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 0;
+  /* `--decalage-bas` est posé par ui/header.js d'après la fenêtre réellement
+     visible : sur mobile, la barre d'adresse recouvre le bas de la fenêtre de
+     mise en page, et un `bottom: 0` seul laissait le bouton passer dessous. */
+  bottom: var(--decalage-bas, 0px);
   z-index: 70;
   padding: 0.7rem var(--gouttiere) calc(0.7rem + env(safe-area-inset-bottom));
   background: rgba(10, 15, 26, 0.94);
   backdrop-filter: blur(12px);
   border-top: 1px solid var(--trait);
   transform: translateY(110%);
-  transition: transform var(--t-moyen) ease;
+  transition:
+    transform var(--t-moyen) ease,
+    bottom 120ms linear;
 }
 
 .cta-collant[data-visible="oui"] {
@@ -1250,9 +1255,12 @@ body {
   padding-bottom: 0;
 }
 
+/* Réserve exactement la hauteur de la barre, mesurée par ui/header.js. La
+   valeur était figée à 4,5 rem, soit moins que la barre elle-même : celle-ci
+   recouvrait la fin du pied de page. Le repli sert avant l'exécution du script. */
 @media (max-width: 719px) {
   body {
-    padding-bottom: 4.5rem;
+    padding-bottom: var(--hauteur-cta, 5.5rem);
   }
 }
 
