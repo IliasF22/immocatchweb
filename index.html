@@ -72,7 +72,27 @@
     <main id="contenu">
       <!-- ============== FLUX EN DIRECT (RUBAN 3D + CONVERSATION) ============== -->
       <section class="flux" id="preuve">
-        <canvas class="flux__canvas" id="flux-canvas" aria-hidden="true"></canvas>
+        <!-- Calque du flux de données : tracé posé sur la section, jamais
+             dans le flux. Le chemin est calculé par ui/flux.js d'après la
+             position réelle des messages. -->
+        <svg
+          class="flux__trace"
+          id="flux-trace"
+          aria-hidden="true"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <linearGradient id="degrade-flux" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#A8E8B0" />
+              <stop offset="0.55" stop-color="#CBD08C" />
+              <stop offset="1" stop-color="#F4B266" />
+            </linearGradient>
+          </defs>
+
+          <path class="flux__rail" id="flux-rail" fill="none" />
+          <path class="flux__progression" id="flux-progression" fill="none" />
+          <circle class="flux__particule" id="flux-particule" r="4.5" />
+        </svg>
 
         <div class="enveloppe flux__contenu">
           <div class="flux__intro" data-reveal>

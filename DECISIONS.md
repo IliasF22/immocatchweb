@@ -156,42 +156,55 @@ l'authenticité à la démonstration lisse.
 
 ---
 
-## 12. Les messages se condensent, le ruban reste en fond
+## 12. Le flux de données est un tracé SVG, pas une scène 3D
 
-Section « Flux en direct » : un ruban 3D se trace derrière la conversation
-pendant que chaque message se forme en se condensant — les mots arrivent
-dispersés et flous, puis se rassemblent à leur place, un mot après l'autre.
+Section « Flux en direct » : un calque SVG posé sur la section relie les
+messages par une courbe, qui se dessine au défilement. Une particule lumineuse
+court en tête ; chaque message se défloute à l'instant où elle atteint sa
+hauteur.
 
-**Une version intermédiaire a été écartée** : des glyphes en cubes (micro,
-fiche, liste, coche, enveloppe) posés à côté des bulles. L'idée était de faire
-porter le sens par des objets, mais le résultat détournait le regard du
-message au lieu de le servir, et le ruban continu — plus discret — tenait
-mieux le fond. L'animation demandée portait de toute façon sur les messages
-eux-mêmes, pas sur des objets voisins.
+**Trois fonds ont été écartés avant celui-ci** : un ruban 3D (il ressemblait à
+un tuyau et ne racontait rien), des glyphes en cubes posés à côté des bulles
+(ils détournaient le regard du texte), une aurore de lumière (belle mais
+purement décorative). Le tracé actuel a l'avantage d'être *lié* au contenu :
+il passe par les messages et commande leur apparition.
 
-**Comment le texte est découpé** : `ui/flux.js` parcourt les nœuds de texte de
-chaque bulle et enveloppe les mots dans des spans, en conservant les
-séparateurs. Le texte reste donc sélectionnable, lisible par un lecteur
-d'écran, et le retour à la ligne se fait toujours entre les mots. `inline-block`
-est nécessaire pour que la transformation s'applique.
+**Pourquoi du SVG plutôt que du WebGL** : le tracé doit suivre la position
+réelle des bulles au pixel près, à toute largeur d'écran. En SVG, la même
+géométrie sert au dessin, au remplissage progressif et au placement de la
+particule — aucune synchronisation à maintenir entre deux systèmes de
+coordonnées. Cela retire aussi Three.js de cette section.
 
-**Sans JavaScript ou avec animations réduites**, aucun découpage n'a lieu et
-le texte est servi net : la condensation est posée par l'attribut
-`data-progressif`, ajouté seulement quand l'animation peut se jouer.
+**Courbe lisse** : conversion Catmull-Rom → Bézier cubiques. Les points de
+contrôle se déduisent des voisins, ce qui garantit une tangente continue. Une
+suite de `Q` produirait une cassure visible à chaque passage de message.
 
-**Le message vocal n'a pas de mots** : ce sont les barres de son onde qui se
-dressent une à une, avec le même principe de retard échelonné.
+**Remplissage** : `stroke-dasharray` égal à la longueur totale, et
+`stroke-dashoffset` piloté par la progression du défilement.
 
-**Hauteur de section** : le canvas est collé (`sticky`) et ne tient en place
-que sur `hauteur du conteneur − sa propre hauteur`, d'où le `min-height: 185vh`
-(155vh sur téléphone). Deux pièges rencontrés, tous deux fatals au collage :
-`overflow: hidden` sur la section en fait un conteneur de défilement et le
-canvas s'en va avec le reste ; `margin-bottom: -100vh` écrase la course
-disponible. D'où la superposition en grille, sans `overflow`.
+**Placement de la particule** : `getPointAtLength()` sur le même chemin, à la
+même longueur d'arc que le remplissage. Elle ne peut donc pas se
+désynchroniser de la ligne, quelle que soit la forme de la courbe.
 
-**Épaisseur du tube** : 0.17 sur grand écran, 0.085 en dessous de 700px, avec
-une opacité réduite à 50 %. À pleine épaisseur, il passait devant les bulles
-sur téléphone et rendait la conversation pénible à lire.
+**Déclenchement des messages — la partie délicate.** Il fallait relier une
+position d'écran (le centre d'une bulle) à une position *le long du tracé*.
+La méthode retenue échantillonne le chemin une fois (700 points), puis retient
+pour chaque message l'échantillon le plus proche de son ancre : c'est la
+longueur d'arc à partir de laquelle il s'active. Elle ne suppose rien de la
+façon dont la courbe a été construite et reste juste si le tracé change de
+forme, de tension ou de nombre de points. Tout est calculé une seule fois, à
+la construction : le défilement ne fait plus qu'une comparaison de nombres.
+
+**L'activation ne revient jamais en arrière** : remonter un peu ne doit pas
+refaire disparaître un message déjà lu.
+
+**Mesure après chargement des polices** : elles arrivent en
+`font-display: swap`, et mesurer avant leur remplacement donnerait des
+positions de bulles fausses, donc un tracé et des seuils décalés.
+
+**Le halo de la particule** est fait de deux `drop-shadow` superposées plutôt
+que d'un filtre SVG : même rendu, sans le coût d'un filtre recalculé à chaque
+image.
 
 ---
 

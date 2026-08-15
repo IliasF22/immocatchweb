@@ -342,13 +342,8 @@ h3 {
   }
 }
 
-/* ============ FLUX EN DIRECT : ruban 3D + conversation pleine largeur ======= */
+/* ====== FLUX EN DIRECT : tracé vectoriel + conversation pleine largeur ===== */
 
-/* Le canvas et la conversation partagent une seule cellule de grille : ils se
-   superposent sans qu'aucun des deux n'ait à sortir du flux.
-   Surtout, pas d'`overflow: hidden` ici — cela ferait de la section un
-   conteneur de défilement et neutraliserait le `position: sticky` du canvas,
-   qui se mettrait alors à défiler hors de l'écran avec le reste. */
 .flux {
   position: relative;
   isolation: isolate;
@@ -356,10 +351,9 @@ h3 {
   grid-template-columns: 1fr;
   padding-block: clamp(3rem, 8vw, 6rem) clamp(4rem, 10vw, 8rem);
   border-bottom: 1px solid var(--trait);
-  /* Le canvas collé ne peut rester en place que sur `hauteur de section moins
-     hauteur du canvas`. Sans cette hauteur minimale, la section faisait à
-     peine plus qu'un écran : le ruban se décrochait au tiers de la lecture.
-     Les messages sont répartis dans cet espace, il ne reste donc pas vide. */
+  /* Hauteur volontaire : c'est elle qui donne au tracé la course nécessaire
+     pour se dessiner pendant la lecture. Les messages sont répartis dedans,
+     il ne reste donc pas d'espace vide. */
   min-height: 185vh;
 }
 
@@ -369,30 +363,41 @@ h3 {
   }
 }
 
-/* Le ruban 3D reste collé pendant que la conversation défile devant lui. */
-.flux__canvas {
-  grid-area: 1 / 1;
-  align-self: start;
-  position: sticky;
-  top: 0;
-  z-index: 0;
+/* Calque du tracé : posé sur toute la section, hors du flux, et jamais
+   cliquable — il ne doit rien intercepter. */
+.flux__trace {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: 100vh;
+  height: 100%;
+  z-index: 0;
   pointer-events: none;
+  overflow: visible;
+}
+
+/* Ligne de fond : elle montre le chemin à parcourir, très discrètement. */
+.flux__rail {
+  stroke: var(--trait);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+/* Ligne de progression : se dessine au défilement, du vert vers l'ambre. */
+.flux__progression {
+  stroke: url(#degrade-flux);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+/* Particule en tête du tracé. Le halo est fait de deux ombres portées
+   superposées plutôt que d'un filtre SVG : même rendu, sans le coût d'un
+   filtre recalculé à chaque image. */
+.flux__particule {
+  fill: #f6f1e6;
   opacity: 0;
-  transition: opacity 1.2s ease;
-}
-
-.flux__canvas[data-pret="oui"] {
-  opacity: 1;
-}
-
-/* Sur téléphone, le ruban croise les bulles de bien plus près : on le fait
-   reculer au rang de texture de fond pour préserver la lisibilité. */
-@media (max-width: 700px) {
-  .flux__canvas[data-pret="oui"] {
-    opacity: 0.5;
-  }
+  filter: drop-shadow(0 0 5px rgba(244, 178, 102, 0.95))
+    drop-shadow(0 0 14px rgba(168, 232, 176, 0.55));
+  transition: opacity 300ms ease;
 }
 
 .flux__contenu {
@@ -559,47 +564,31 @@ h3 {
   color: var(--os-70);
 }
 
-/* Condensation : posée uniquement quand le défilement la pilote. Sans
-   JavaScript, ou avec animations réduites, tout reste net et lisible. */
+/* État des cartes : posé uniquement quand le défilement pilote la scène.
+   Sans JavaScript, ou avec animations réduites, tout reste net et lisible. */
 
-/* La bulle se dessine : fond et bordure apparaissent, la forme se pose. */
+/* Au repos, la carte est en retrait : floutée, à 40 % d'opacité, décalée vers
+   le bas. Elle passe au premier plan quand la particule atteint sa hauteur. */
 .fil[data-progressif="oui"] .msg {
-  opacity: 0;
-  transform: scale(0.97);
+  opacity: 0.4;
+  filter: blur(10px);
+  transform: translateY(22px);
   transition:
-    opacity 600ms ease,
-    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 620ms ease,
+    filter 620ms ease,
+    transform 760ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: filter, transform, opacity;
 }
 
 .fil[data-progressif="oui"] [data-vu="oui"] .msg {
-  opacity: 1;
-  transform: none;
-}
-
-/* Les mots arrivent dispersés et flous, puis se rassemblent à leur place.
-   `--dx` / `--dy` et le retard sont posés par ui/flux.js, un mot après
-   l'autre. `inline-block` est nécessaire pour que la transformation
-   s'applique, et n'empêche pas le retour à la ligne entre les mots. */
-.fil[data-progressif="oui"] .mot {
-  display: inline-block;
-  opacity: 0;
-  filter: blur(7px);
-  transform: translate(var(--dx, 0), var(--dy, 0)) scale(0.9);
-  transition:
-    opacity 640ms ease,
-    filter 640ms ease,
-    transform 760ms cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform, filter, opacity;
-}
-
-.fil[data-progressif="oui"] [data-vu="oui"] .mot {
   opacity: 1;
   filter: blur(0);
   transform: none;
   will-change: auto;
 }
 
-/* Le message vocal n'a pas de mots : ses barres se dressent une à une. */
+/* Les barres du vocal se dressent une à une derrière la carte qui s'active.
+   Le retard de chacune est posé par ui/flux.js. */
 .fil[data-progressif="oui"] .msg__onde span {
   transform: scaleY(0.08);
   transform-origin: center;
@@ -612,20 +601,6 @@ h3 {
 .fil[data-progressif="oui"] [data-vu="oui"] .msg__onde span {
   transform: none;
   opacity: 1;
-}
-
-/* Le bouton de lecture accompagne la bulle. */
-.fil[data-progressif="oui"] .msg__lecture {
-  opacity: 0;
-  transform: scale(0.6);
-  transition:
-    opacity 420ms ease 140ms,
-    transform 560ms cubic-bezier(0.22, 1, 0.36, 1) 140ms;
-}
-
-.fil[data-progressif="oui"] [data-vu="oui"] .msg__lecture {
-  opacity: 1;
-  transform: none;
 }
 
 @media (max-width: 560px) {
