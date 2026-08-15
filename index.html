@@ -63,7 +63,7 @@
             rel="noopener"
             data-cta="entete"
           >
-            Nous contacter
+            Me contacter
           </a>
         </nav>
       </div>
@@ -804,13 +804,23 @@
     </footer>
 
     <!-- ========================= CTA COLLANT MOBILE ======================= -->
-    <div class="cta-collant" id="cta-collant">
+    <!-- Deux boutons superposés : tant que la démo n'a pas été dépassée, on
+         y renvoie ; ensuite seulement on propose la prise de rendez-vous.
+         Voir ui/header.js pour la bascule. -->
+    <div class="cta-collant" id="cta-collant" data-etape="demo">
       <a
-        class="btn btn--principal"
+        class="btn btn--fantome cta-collant__demo"
+        href="#demo"
+        data-cta="collant-demo"
+      >
+        Voir la démo en 2 min
+      </a>
+      <a
+        class="btn btn--principal cta-collant__contact"
         href="https://calendly.com/ilias-frej-pro/30min"
         target="_blank"
         rel="noopener"
-        data-cta="collant"
+        data-cta="collant-contact"
       >
         Parler à Ilias (15 min)
       </a>

@@ -35,13 +35,14 @@ src/
     index.js            renderer, caméra, boucle, mise en pause
     morphField.js       géométrie instanciée + positions cibles de la fiche
     shaders.js          shaders du morph onde → fiche
-    ribbon.js           ruban 3D de la section "Flux en direct"
+    glyphField.js       glyphes 3D en cubes (scène, assemblage)
+    glyphs.js           grilles de pixels des cinq glyphes
   timeline/index.js     synchronise la scène avec le stepper du hero
   ui/
     header.js           filet de l'en-tête, CTA collant mobile
     faq.js              accordéon accessible
     reveal.js           apparitions au défilement + compteurs
-    flux.js             conversation pleine largeur + pilotage du ruban 3D
+    flux.js             conversation pleine largeur + placement des glyphes
     analytics.js        événements Plausible
 public/
   demo.mp4              vidéo de démonstration
@@ -70,6 +71,7 @@ Déposer le nouveau fichier dans `public/demo.mp4`, et sa vignette dans
 | Densité de cubes | `COLONNES` et `PILE` dans `scene/morphField.js` | Finesse de l'onde et de la fiche |
 | Rythme d'alternance | `CYCLE_MS` dans `scene/index.js` | Durée de chaque état |
 | Mise en page de la fiche | `segmentsFiche()` dans `scene/morphField.js` | Lignes composant la fiche |
+| Dessin des glyphes | grilles dans `scene/glyphs.js` | Formes micro, fiche, acheteurs, coche, enveloppe |
 | Couleurs | uniformes `uLampe`, `uAmbre`, `uOs` | Teintes du morph |
 
 ## Analytics

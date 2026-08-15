@@ -1178,6 +1178,22 @@ h3 {
   width: 100%;
 }
 
+/* Les deux boutons occupent la même case : celui qui ne correspond pas à
+   l'étape en cours est retiré du flux, donc ni cliquable ni lu par un
+   lecteur d'écran. */
+.cta-collant[data-etape="demo"] .cta-collant__contact,
+.cta-collant[data-etape="contact"] .cta-collant__demo {
+  display: none;
+}
+
+/* En étape « démo », le bouton renvoie vers le lecteur : on l'affiche en
+   plein pour qu'il reste le geste évident à ce moment du parcours. */
+.cta-collant[data-etape="demo"] .cta-collant__demo {
+  background: var(--ambre);
+  border-color: var(--ambre);
+  color: var(--nuit);
+}
+
 @media (min-width: 720px) {
   .cta-collant {
     display: none;

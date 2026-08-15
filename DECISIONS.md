@@ -156,32 +156,45 @@ l'authenticité à la démonstration lisse.
 
 ---
 
-## 12. Le ruban 3D est collé, la section est donc volontairement haute
+## 12. Des glyphes en cubes plutôt qu'un ruban continu
 
-La section « Flux en direct » utilise un canvas en `position: sticky` derrière
-la conversation, et une superposition en grille (canvas et contenu dans la même
-cellule) plutôt qu'une marge négative.
+La section « Flux en direct » associe à chaque message un objet en cubes :
+micro (le vocal), fiche (la structuration), liste (le rapprochement), coche
+(la validation), enveloppe (l'envoi). Les cubes tombent dispersés depuis le
+haut et se rangent en formation quand le message entre à l'écran.
 
-**Deux pièges rencontrés, tous deux fatals au collage :**
+**Pourquoi pas un tube continu** : la première version dessinait un ruban qui
+serpentait derrière la conversation. Joli, mais purement décoratif — il ne
+disait rien du produit. Les glyphes racontent les cinq étapes du parcours, et
+l'assemblage des cubes illustre littéralement ce que fait l'assistant :
+transformer une matière dispersée en information rangée.
 
-- `overflow: hidden` sur la section en fait un conteneur de défilement : le
-  `sticky` s'y accroche au lieu de la fenêtre, et le canvas s'en va avec le
-  reste. Il n'y a donc aucun `overflow` sur `.flux`.
-- `margin-bottom: -100vh` (pour sortir le canvas du flux) écrase la plage de
-  collage : l'élément n'a plus de course et se comporte presque comme statique.
-  D'où la superposition en grille.
+**Un maillage par glyphe** plutôt qu'un seul pour l'ensemble : chaque glyphe a
+sa propre progression et sa propre teinte, sans avoir à indexer dynamiquement
+un tableau d'uniformes dans le shader (mal supporté en GLSL ES 1.00). Cinq
+appels de rendu, environ 60 cubes chacun.
 
-**Hauteur minimale** : un élément collé ne tient en place que sur
-`hauteur du conteneur − sa propre hauteur`. Avec un canvas de `100vh` et une
-section à peine plus haute qu'un écran, la course tombait à quelques centaines
-de pixels et le ruban se décrochait au tiers de la lecture. D'où le
-`min-height: 185vh` (155vh sur téléphone), les messages étant répartis dedans
-par `justify-content: space-between` pour ne pas laisser de vide.
+**Le dessin est une grille de caractères** (`scene/glyphs.js`) : on modifie une
+icône en éditant du texte, sans outil de modélisation. Attention, tout
+caractère absent de la table des profondeurs est un vide — un point décoratif
+utilisé comme fond transformerait le glyphe en rectangle plein (l'erreur a été
+faite lors de la première version).
 
-**Épaisseur du tube** : 0.17 sur grand écran, 0.085 en dessous de 700px, avec
-une opacité réduite à 50 %. À pleine épaisseur, le ruban passait devant les
-bulles sur téléphone et rendait la conversation pénible à lire. La géométrie
-est refabriquée si l'on franchit ce seuil (rotation d'écran).
+**Positionnement piloté par le DOM** : chaque glyphe est placé face à sa bulle
+d'après `getBoundingClientRect()`, converti en coordonnées de scène. Les cubes
+restent donc collés à leur message quelle que soit la mise en page.
+
+**Sur écran étroit**, les bulles occupent presque toute la largeur : poussé au
+bord, le glyphe se retrouvait coupé. Il est ramené vers le centre, où il passe
+derrière la bulle — le fond translucide et le flou l'intègrent comme couche de
+fond. Échelle réduite à 72 % et opacité du canvas à 50 %.
+
+**Hauteur de section** : le canvas est collé (`sticky`) et ne tient en place
+que sur `hauteur du conteneur − sa propre hauteur`, d'où le `min-height: 185vh`
+(155vh sur téléphone). Deux pièges rencontrés, tous deux fatals au collage :
+`overflow: hidden` sur la section en fait un conteneur de défilement et le
+canvas s'en va avec le reste ; `margin-bottom: -100vh` écrase la course
+disponible. D'où la superposition en grille, sans `overflow`.
 
 ---
 
@@ -211,3 +224,31 @@ navigateur terminer la mise en page avant de mesurer quoi que ce soit.
   partout, valeur cohérente avec les versions précédentes. À confirmer.
 - **Prix d'installation** : « à partir de 1 701 € », repris tel quel de la copie
   fournie (les versions précédentes indiquaient 1 800 €).
+
+---
+
+## 14. Le bouton collant suit l'avancement, il ne demande pas tout de suite
+
+Sur mobile, la barre fixe propose d'abord « Voir la démo en 2 min », puis
+bascule sur « Parler à Ilias » une fois la section de démonstration dépassée.
+
+**Pourquoi** : demander un rendez-vous à quelqu'un qui n'a encore rien vu du
+produit, c'est griller la seule occasion de le convaincre. L'ordre suit le
+parcours réel : on montre, puis on propose.
+
+Les deux boutons existent dans le HTML ; celui qui ne correspond pas à l'étape
+est retiré du flux (`display: none`), donc ni cliquable ni annoncé par un
+lecteur d'écran.
+
+**Visibilité** : la barre apparaît après 75 % du premier écran, d'après la
+position de défilement. Elle se basait auparavant sur la visibilité du hero,
+règle devenue fausse depuis que la section de démonstration passe avant lui :
+en haut de page le hero n'est pas à l'écran, et la barre s'affichait aussitôt.
+
+---
+
+## 15. « Me contacter », pas « Nous contacter »
+
+Toute la page parle à la première personne : « Je m'appelle Ilias », « vous
+avez une ligne directe », « un interlocuteur unique, pas une plateforme
+anonyme ». Un « Nous contacter » au milieu contredisait la promesse.
