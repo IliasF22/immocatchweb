@@ -35,13 +35,13 @@ src/
     index.js            renderer, caméra, boucle, mise en pause
     morphField.js       géométrie instanciée + positions cibles de la fiche
     shaders.js          shaders du morph onde → fiche
-    ribbon.js           ruban 3D de la section "Flux en direct"
+    aurora.js           aurore (nappes de lumière) de la section "Flux en direct"
   timeline/index.js     synchronise la scène avec le stepper du hero
   ui/
     header.js           filet de l'en-tête, CTA collant mobile
     faq.js              accordéon accessible
     reveal.js           apparitions au défilement + compteurs
-    flux.js             conversation pleine largeur, condensation du texte, ruban
+    flux.js             conversation pleine largeur, condensation du texte, aurore
     analytics.js        événements Plausible
 public/
   demo.mp4              vidéo de démonstration
