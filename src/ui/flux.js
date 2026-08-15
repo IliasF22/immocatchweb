@@ -66,6 +66,8 @@ export function initialiserFlux() {
   const progression = document.querySelector("#flux-progression");
   const particule = document.querySelector("#flux-particule");
   const degrade = document.querySelector("#degrade-flux");
+  const fondu = document.querySelector("#fondu-degrade");
+  const zoneFondu = document.querySelector("#fondu-zone");
   const lignes = [...fil.querySelectorAll("[data-message]")];
 
   if (animationsReduites() || !svg || !rail || !progression || !lignes.length) {
@@ -98,6 +100,11 @@ export function initialiserFlux() {
     degrade?.setAttribute("x2", "0");
     degrade?.setAttribute("y2", String(hauteur));
 
+    // La zone masquée couvre toute la section ; le dégradé du masque, lui,
+    // est calé plus bas sur les extrémités réelles du tracé.
+    zoneFondu?.setAttribute("width", String(largeur));
+    zoneFondu?.setAttribute("height", String(hauteur));
+
     // Un point d'ancrage par message, du côté libre de la bulle : le tracé
     // serpente entre les messages au lieu de les traverser.
     const ancres = lignes.map((ligne) => {
@@ -115,13 +122,31 @@ export function initialiserFlux() {
     });
 
     // Amorce et sortie : le tracé ne commence ni ne finit net sur un message.
+    // L'amorce démarre sous le bloc de titre : remontée plus haut, la courbe
+    // traversait « Un mandat, de la dictée à la fiche ».
     const premier = ancres[0];
     const dernier = ancres[ancres.length - 1];
+    const intro = section.querySelector(".flux__intro");
+    const basIntro = intro
+      ? intro.getBoundingClientRect().bottom - cadre.top + 28
+      : 0;
+    const depart = Math.max(basIntro, premier.y - 170);
+
     const points = [
-      { x: premier.x, y: Math.max(0, premier.y - 170) },
+      { x: premier.x, y: Math.min(depart, premier.y - 24) },
       ...ancres,
       { x: dernier.x, y: Math.min(hauteur, dernier.y + 170) },
     ];
+
+    // Fondu calé sur les extrémités réelles du tracé, et non sur la hauteur de
+    // la section : cadré sur la section, la zone d'effacement tombait bien
+    // au-dessus du début de la ligne, qui restait donc coupée net.
+    const hautTrace = points[0].y;
+    const basTrace = points[points.length - 1].y;
+    fondu?.setAttribute("x1", "0");
+    fondu?.setAttribute("y1", String(hautTrace));
+    fondu?.setAttribute("x2", "0");
+    fondu?.setAttribute("y2", String(basTrace));
 
     const d = courbeLisse(points);
     rail.setAttribute("d", d);
@@ -176,17 +201,22 @@ export function initialiserFlux() {
     return Math.min(1, Math.max(0, (vh - rect.top) / (rect.height + vh)));
   }
 
+  /** Avance visée par le défilement, et avance réellement dessinée. */
+  let cible = 0;
+  let actuel = 0;
   let idFrame = 0;
 
-  function appliquer() {
-    idFrame = 0;
-    if (!longueur) return;
-
+  function viser() {
     // On ne garde que la portion utile de la traversée : celle où le visiteur
     // parcourt vraiment la conversation.
     const brut = (progresSection() - 0.18) / 0.62;
-    const avance = Math.min(1, Math.max(0, brut));
-    const parcourue = longueur * avance;
+    cible = Math.min(1, Math.max(0, brut));
+  }
+
+  /** Dessine l'état courant : remplissage, particule, activation. */
+  function dessiner() {
+    if (!longueur) return;
+    const parcourue = longueur * actuel;
 
     progression.style.strokeDashoffset = `${longueur - parcourue}`;
 
@@ -195,9 +225,11 @@ export function initialiserFlux() {
     const p = progression.getPointAtLength(parcourue);
     particule.setAttribute("cx", p.x);
     particule.setAttribute("cy", p.y);
-    particule.style.opacity = avance > 0.002 && avance < 0.998 ? "1" : "0";
+    particule.style.opacity = actuel > 0.002 && actuel < 0.998 ? "1" : "0";
 
     // Un message s'active à l'instant où la particule atteint sa hauteur.
+    // On compare à l'avance *dessinée*, pas à la visée : le défloutage reste
+    // ainsi calé sur la position réellement affichée de la particule.
     // L'état ne revient jamais en arrière : remonter un peu ne doit pas
     // refaire disparaître un message déjà lu.
     lignes.forEach((ligne, i) => {
@@ -205,13 +237,44 @@ export function initialiserFlux() {
     });
   }
 
+  /**
+   * Boucle de lissage. Le défilement ne fixe qu'une visée ; le tracé la
+   * rejoint image par image. Sans cela, la ligne avançait par à-coups, au
+   * rythme grossier des événements de défilement — très visible sur mobile,
+   * où ils arrivent par paquets.
+   *
+   * La boucle s'arrête d'elle-même une fois la visée atteinte : rien ne tourne
+   * quand la page est immobile.
+   */
+  function boucle() {
+    actuel += (cible - actuel) * 0.14;
+    if (Math.abs(cible - actuel) < 0.0004) actuel = cible;
+
+    dessiner();
+
+    if (actuel !== cible) {
+      idFrame = requestAnimationFrame(boucle);
+    } else {
+      idFrame = 0;
+    }
+  }
+
+  function relancer() {
+    if (!idFrame) idFrame = requestAnimationFrame(boucle);
+  }
+
   function surDefilement() {
-    if (idFrame) return;
-    idFrame = requestAnimationFrame(appliquer);
+    viser();
+    relancer();
   }
 
   function reconstruire() {
-    if (construire()) appliquer();
+    if (!construire()) return;
+    viser();
+    // Après un changement de taille, on se recale sans animer : la ligne ne
+    // doit pas repartir de zéro parce que la fenêtre a bougé.
+    actuel = cible;
+    dessiner();
   }
 
   // Les polices arrivent en `font-display: swap` : mesurer avant leur

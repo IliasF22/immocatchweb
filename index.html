@@ -87,10 +87,26 @@
               <stop offset="0.55" stop-color="#CBD08C" />
               <stop offset="1" stop-color="#F4B266" />
             </linearGradient>
+
+            <!-- Fondu aux deux extrémités : sans lui, le tracé est coupé net
+                 en haut et en bas de la section. -->
+            <linearGradient id="fondu-degrade" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#000" />
+              <stop offset="0.09" stop-color="#fff" />
+              <stop offset="0.9" stop-color="#fff" />
+              <stop offset="1" stop-color="#000" />
+            </linearGradient>
+
+            <mask id="fondu-flux">
+              <rect id="fondu-zone" x="0" y="0" fill="url(#fondu-degrade)" />
+            </mask>
           </defs>
 
-          <path class="flux__rail" id="flux-rail" fill="none" />
-          <path class="flux__progression" id="flux-progression" fill="none" />
+          <g mask="url(#fondu-flux)">
+            <path class="flux__rail" id="flux-rail" fill="none" />
+            <path class="flux__progression" id="flux-progression" fill="none" />
+          </g>
+
           <circle class="flux__particule" id="flux-particule" r="4.5" />
         </svg>
 
@@ -833,7 +849,7 @@
         href="#demo"
         data-cta="collant-demo"
       >
-        Voir la démo en 2 min
+        Voir la démo
       </a>
       <a
         class="btn btn--principal cta-collant__contact"
