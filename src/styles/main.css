@@ -930,9 +930,21 @@ h3 {
 
 /* --------------------------------- Démo -------------------------------- */
 
+/* Vidéo à gauche, panneau de chapitres à droite. En dessous de 940px, le
+   panneau repasse sous la vidéo. */
+.demo {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.25rem);
+  align-items: start;
+}
+
+@media (min-width: 940px) {
+  .demo {
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  }
+}
+
 .demo__cadre {
-  max-width: 56rem;
-  margin-inline: auto;
   border-radius: var(--r);
   overflow: hidden;
   border: 1px solid var(--trait);
@@ -944,6 +956,85 @@ h3 {
   aspect-ratio: 16 / 9;
   display: block;
   background: var(--nuit-3);
+}
+
+.demo__panneau {
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+}
+
+.demo__accroche {
+  font-size: clamp(1rem, 1.7vw, 1.12rem);
+  line-height: 1.6;
+  color: var(--os-70);
+}
+
+.demo__titre-chapitres {
+  margin-bottom: -0.6rem;
+}
+
+/* ------------------------------- Chapitres ------------------------------ */
+
+.chapitres {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.chapitre {
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--trait);
+  border-radius: var(--r);
+  background: var(--nuit-3);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color var(--t-court) ease,
+    background-color var(--t-court) ease,
+    transform var(--t-court) ease;
+}
+
+.chapitre:hover {
+  border-color: var(--trait-fort);
+  transform: translateX(3px);
+}
+
+/* Chapitre en cours de lecture : repère franc, sans changer la taille du
+   bloc pour que la liste ne saute pas au fil de la vidéo. */
+.chapitre[aria-current="true"] {
+  border-color: var(--ambre);
+  background: rgba(244, 178, 102, 0.08);
+}
+
+.chapitre__temps {
+  flex: none;
+  font-size: 0.78rem;
+  color: var(--ambre);
+  font-variant-numeric: tabular-nums;
+}
+
+.chapitre__corps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.chapitre__titre {
+  font-weight: 600;
+  font-size: 0.96rem;
+  line-height: 1.35;
+}
+
+.chapitre__detail {
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--os-45);
 }
 
 /* -------------------------------- Modules ------------------------------ */

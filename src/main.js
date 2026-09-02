@@ -18,6 +18,7 @@ import "./styles/main.css";
 
 import { initialiserAnalytics } from "./ui/analytics.js";
 import { initialiserEntete } from "./ui/header.js";
+import { initialiserChapitres } from "./ui/chapitres.js";
 import { initialiserFaq } from "./ui/faq.js";
 import { initialiserApparitions, initialiserCompteurs } from "./ui/reveal.js";
 import { initialiserFlux } from "./ui/flux.js";
@@ -27,6 +28,7 @@ document.documentElement.classList.remove("no-js");
 
 initialiserEntete();
 initialiserFaq();
+initialiserChapitres();
 initialiserApparitions();
 initialiserCompteurs();
 initialiserFlux();

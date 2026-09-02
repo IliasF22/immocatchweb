@@ -213,7 +213,7 @@
                 Parler à Ilias (15 min)
               </a>
               <a class="btn btn--fantome" href="#demo" data-cta="hero-demo">
-                Voir la démo en 2 min
+                Voir la démo en 1 min
               </a>
             </div>
 
@@ -454,18 +454,65 @@
             </p>
           </div>
 
-          <div class="demo__cadre" data-reveal>
-            <video
-              class="demo__video"
-              id="demo-video"
-              controls
-              playsinline
-              preload="metadata"
-              poster="/demo-poster.jpg"
-              src="/demo.mp4"
-            >
-              Votre navigateur ne peut pas lire cette vidéo.
-            </video>
+          <div class="demo" data-reveal>
+            <div class="demo__cadre">
+              <video
+                class="demo__video"
+                id="demo-video"
+                controls
+                playsinline
+                preload="metadata"
+                poster="/demo-poster.jpg"
+                src="/demo.mp4"
+              >
+                Votre navigateur ne peut pas lire cette vidéo.
+              </video>
+            </div>
+
+            <aside class="demo__panneau">
+              <p class="demo__accroche">
+                Découvrez comment envoyer un message vocal simple à ImmoCatch
+                sur WhatsApp juste après une visite.
+              </p>
+
+              <p class="surtitre demo__titre-chapitres">Chapitres</p>
+
+              <ol class="chapitres" id="chapitres">
+                <li>
+                  <button
+                    class="chapitre"
+                    type="button"
+                    data-seconde="0"
+                    aria-current="true"
+                  >
+                    <span class="chapitre__temps mono">00:00</span>
+                    <span class="chapitre__corps">
+                      <span class="chapitre__titre">Envoi du vocal WhatsApp</span>
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <button class="chapitre" type="button" data-seconde="18">
+                    <span class="chapitre__temps mono">00:18</span>
+                    <span class="chapitre__corps">
+                      <span class="chapitre__titre">Validation des données</span>
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <button class="chapitre" type="button" data-seconde="43">
+                    <span class="chapitre__temps mono">00:43</span>
+                    <span class="chapitre__corps">
+                      <span class="chapitre__titre">Gestion de la base</span>
+                      <span class="chapitre__detail">
+                        Consultation de la base de données et modification
+                        manuelle si nécessaire.
+                      </span>
+                    </span>
+                  </button>
+                </li>
+              </ol>
+            </aside>
           </div>
         </div>
       </section>

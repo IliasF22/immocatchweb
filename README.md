@@ -39,6 +39,7 @@ src/
   ui/
     header.js           filet de l'en-tête, CTA collant mobile
     faq.js              accordéon accessible
+    chapitres.js        repères cliquables de la vidéo de démonstration
     reveal.js           apparitions au défilement + compteurs
     flux.js             tracé du flux, particule, activation des messages
     analytics.js        événements Plausible
@@ -61,6 +62,11 @@ code.
 
 Déposer le nouveau fichier dans `public/demo.mp4`, et sa vignette dans
 `public/demo-poster.jpg`. Aucune autre modification n'est nécessaire.
+
+Les repères de chapitres sont dans `index.html`, section `#demo` : chaque
+bouton porte son instant en secondes dans `data-seconde`, et son affichage
+(`00:18`) juste à côté. Les deux doivent rester cohérents — le premier pilote
+la lecture, le second est ce que lit le visiteur.
 
 ## Régler la scène 3D
 
