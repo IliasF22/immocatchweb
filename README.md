@@ -47,7 +47,10 @@ public/
   demo.mp4              vidéo de démonstration
   demo-poster.jpg       vignette de la vidéo
   hero-fallback.svg     repli statique de la scène 3D
+  favicon.ico           icône d'onglet (16, 32 et 48 px)
+  apple-touch-icon.png  icône d'écran d'accueil iOS (180 px)
   robots.txt sitemap.xml
+scripts/generer-icones.py  régénère les deux icônes depuis le monogramme
 vercel.json             en-têtes de cache et de sécurité
 DECISIONS.md            choix techniques et leurs raisons
 ```
@@ -104,3 +107,11 @@ domaine `immocatch.fr` sur le projet.
 - La scène cesse tout calcul quand elle sort de l'écran ou que l'onglet passe
   en arrière-plan.
 - Polices auto-hébergées : aucune requête vers un service tiers au chargement.
+
+## Refaire les icônes
+
+```bash
+python3 scripts/generer-icones.py
+```
+
+Les deux fichiers sortent du même tracé, ils ne peuvent donc pas diverger.

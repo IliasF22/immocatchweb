@@ -5,25 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0A0F1A" />
 
-    <title>ImmoCatch — l'assistant IA WhatsApp des agences immobilières</title>
+    <title>ImmoCatch, l'assistant IA WhatsApp des agences immobilières</title>
     <meta
       name="description"
       content="Vous dictez un vocal WhatsApp en sortant de visite. La fiche se remplit toute seule et, à chaque nouveau mandat, les bons acheteurs de votre base remontent automatiquement."
     />
     <link rel="canonical" href="https://immocatch.fr/" />
 
+    <!-- Icônes. Le .ico embarque les tailles 16, 32 et 48 : une seule
+         déclaration suffit pour l'onglet, les favoris et la barre d'adresse. -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="ImmoCatch" />
     <meta property="og:url" content="https://immocatch.fr/" />
     <meta
       property="og:title"
-      content="ImmoCatch — vos heures de saisie redeviennent des heures de visite"
+      content="ImmoCatch : vos heures de saisie redeviennent des heures de visite"
     />
     <meta
       property="og:description"
       content="Un vocal WhatsApp suffit : la fiche se remplit seule et les acheteurs compatibles remontent à chaque mandat. Vous validez avant le moindre envoi."
     />
     <meta property="og:image" content="https://immocatch.fr/demo-poster.jpg" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="714" />
+    <meta
+      property="og:image:alt"
+      content="La conversation WhatsApp d'ImmoCatch : un vocal dicté devient une fiche contact structurée."
+    />
     <meta name="twitter:card" content="summary_large_image" />
 
     <!-- Analytics : Plausible uniquement, sans cookie ni donnée personnelle. -->
@@ -908,5 +920,39 @@
         Parler à Ilias (15 min)
       </a>
     </div>
+    <!-- Données structurées : identité de l'éditeur pour les moteurs.
+         Le téléphone en est volontairement absent — le numéro n'est affiché
+         nulle part en clair sur le site, l'inscrire ici le rendrait à nouveau
+         récupérable automatiquement. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "ImmoCatch",
+        "legalName": "IFGlobal",
+        "url": "https://immocatch.fr/",
+        "email": "ilias@immocatch.fr",
+        "image": "https://immocatch.fr/demo-poster.jpg",
+        "description": "Assistant IA à usage interne pour agences immobilières : une note vocale dictée sur WhatsApp devient une fiche structurée, et chaque nouveau mandat fait remonter les acheteurs compatibles de la base. Rien n'est envoyé à un prospect sans validation humaine.",
+        "vatID": "FR44991793712",
+        "identifier": {
+          "@type": "PropertyValue",
+          "propertyID": "SIREN",
+          "value": "991793712"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "6 place des 3 gares",
+          "postalCode": "95800",
+          "addressLocality": "Cergy",
+          "addressCountry": "FR"
+        },
+        "areaServed": {
+          "@type": "Country",
+          "name": "France"
+        },
+        "knowsLanguage": "fr-FR"
+      }
+    </script>
   </body>
 </html>
