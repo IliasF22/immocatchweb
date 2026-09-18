@@ -1063,25 +1063,79 @@ h3 {
   font-size: 0.94rem;
 }
 
-.offre {
-  max-width: 40rem;
-  margin: clamp(2rem, 4vw, 3rem) auto 0;
-  text-align: center;
-  border: 1px solid var(--ambre);
-  border-radius: var(--r);
-  padding: clamp(1.75rem, 4vw, 2.5rem);
+/* -------------------------------- Tarifs ------------------------------- */
+
+/* Les trois paliers reprennent la carte commune : seule la hiérarchie interne
+   (cible, installation, mensuel) leur est propre. Le palier mis en avant
+   emprunte le liseré ambre de .carte--vedette, déjà utilisé ailleurs. */
+
+.tarifs {
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+
+.tarifs__surtitre {
+  margin-top: 0.9rem;
+}
+
+.tarifs__grille {
+  margin-top: clamp(1.75rem, 3.5vw, 2.5rem);
+  align-items: start;
+}
+
+.tarif {
+  position: relative;
+}
+
+/* La pastille sort du flux et chevauche le liseré : dans la colonne étroite
+   elle passait à la ligne, ce qui décalait d'un cran toutes les lignes du
+   palier mis en avant. Hors flux, les trois cartes s'alignent rang par rang. */
+.tarif .pastille {
+  position: absolute;
+  top: -0.72rem;
+  right: clamp(1.25rem, 3vw, 1.75rem);
   background: var(--nuit-3);
 }
 
-.offre__prix {
-  font-family: var(--titre);
-  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
-  margin-top: 0.9rem;
-  line-height: 1.2;
+.tarif__cible {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--os-45);
+  margin-top: 0.55rem;
 }
 
-.offre__detail {
-  margin-top: 0.85rem;
+/* Déclaré après .mono : la famille du titre l'emporte, mais les chiffres
+   gardent la chasse fixe héritée de .mono (colonnes alignées d'un palier
+   à l'autre). Même mécanique que .option__chiffre. */
+.tarif__prix {
+  font-family: var(--titre);
+  font-size: clamp(1.9rem, 4vw, 2.5rem);
+  line-height: 1;
+  margin-top: 1.5rem;
+  white-space: nowrap;
+}
+
+.tarif__unite {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--os-45);
+  margin-top: 0.45rem;
+}
+
+.tarif__mois {
+  margin-top: 1.2rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--trait);
+  font-size: 1.05rem;
+  color: var(--os-70);
+  white-space: nowrap;
+}
+
+.tarifs__pied {
+  text-align: center;
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.tarifs__detail {
   color: var(--os-70);
   font-size: 0.92rem;
 }
