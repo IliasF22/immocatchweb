@@ -1,0 +1,29 @@
+<a class="saut-contenu" href="#contenu">Aller au contenu</a>
+
+<!-- ============================== EN-TÊTE ============================== -->
+<!-- Fragment partagé par toutes les pages (voir vite.config.js).
+     `extrait` : ancre du formulaire, « #extrait » sur les pages qui l'ont,
+     « /#extrait » ailleurs. Sur mobile, les liens se replient derrière
+     « Menu » ; sans JavaScript, ils restent affichés sous le logo. -->
+<header class="entete" id="entete">
+  <div class="enveloppe entete__interieur">
+    <a href="/" class="marque" aria-label="ImmoCatch, accueil">
+      Immo<span class="marque__catch">Catch</span>
+    </a>
+
+    <nav class="entete__nav" aria-label="Navigation principale">
+      <ul class="entete__liens" id="navigation">
+        <li><a class="entete__lien" href="/" data-page="accueil">Accueil</a></li>
+        <li><a class="entete__lien" href="/campagne-vendeurs" data-page="campagne">Campagne vendeurs</a></li>
+        <li><a class="entete__lien" href="/alertes-vendeurs" data-page="alertes">Alertes vendeurs</a></li>
+        <li><a class="entete__lien" href="/automatisations" data-page="automatisations">Automatisations</a></li>
+      </ul>
+      <a class="btn btn--principal btn--compact" href="{{extrait}}" data-cta="entete-extrait">
+        Extrait gratuit
+      </a>
+      <button class="entete__menu" type="button" aria-expanded="false" aria-controls="navigation">
+        Menu
+      </button>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,78 @@
+<!-- ===================== FORMULAIRE « EXTRAIT GRATUIT » ================= -->
+<!-- Fragment partagé par l'accueil et les deux pages d'offre.
+     Avec JavaScript (ui/formulaire.js) : envoi JSON vers le webhook n8n, sans
+     quitter la page. Sans JavaScript : envoi classique du formulaire vers la
+     même adresse. -->
+<section class="section section--alt extrait" id="extrait" aria-labelledby="extrait-titre">
+  <div class="enveloppe extrait__grille">
+    <div class="extrait__intro" data-reveal>
+      <p class="surtitre">Extrait gratuit</p>
+      <h2 class="h-section" id="extrait-titre">Recevez l'extrait de votre ville</h2>
+      <p class="plomb extrait__texte">
+        Dites-nous où vous travaillez. Sous 24&nbsp;h, vous recevez un extrait
+        des propriétaires concernés dans votre secteur.
+      </p>
+      <p class="extrait__exclu">
+        <span class="pastille">Exclusivité</span>
+        Une seule agence par ville.
+      </p>
+    </div>
+
+    <div class="carte extrait__carte" data-reveal data-delai="120">
+      <form
+        class="formulaire"
+        action="%VITE_EXTRAIT_WEBHOOK_URL%"
+        method="post"
+        data-formulaire-extrait
+      >
+        <div class="formulaire__champ">
+          <label for="extrait-agence">Nom de l'agence</label>
+          <input id="extrait-agence" name="agence" type="text" autocomplete="organization" required maxlength="120" />
+        </div>
+        <div class="formulaire__champ">
+          <label for="extrait-nom">Prénom et nom</label>
+          <input id="extrait-nom" name="nom" type="text" autocomplete="name" required maxlength="120" />
+        </div>
+        <div class="formulaire__champ">
+          <label for="extrait-ville">Ville ou secteur</label>
+          <input id="extrait-ville" name="ville" type="text" autocomplete="address-level2" required maxlength="120" />
+        </div>
+        <div class="formulaire__duo">
+          <div class="formulaire__champ">
+            <label for="extrait-telephone">Téléphone</label>
+            <input id="extrait-telephone" name="telephone" type="tel" autocomplete="tel" inputmode="tel" required maxlength="30" pattern="[0-9+\(\)\.\- ]{10,30}" />
+          </div>
+          <div class="formulaire__champ">
+            <label for="extrait-email">Email professionnel</label>
+            <input id="extrait-email" name="email" type="email" autocomplete="email" required maxlength="160" />
+          </div>
+        </div>
+
+        <!-- Piège à robots : invisible et hors du parcours clavier. Un humain
+             ne le remplit jamais. -->
+        <div class="visuellement-cache" aria-hidden="true">
+          <label for="extrait-site">Ne pas remplir</label>
+          <input id="extrait-site" name="site_web" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <label class="formulaire__consentement">
+          <input name="consentement" type="checkbox" value="oui" required />
+          <span>
+            J'accepte qu'ImmoCatch utilise ces informations pour m'envoyer
+            l'extrait et me recontacter à ce sujet.
+            <a href="/politique-de-confidentialite#formulaire">Politique de confidentialité</a>
+          </span>
+        </label>
+
+        <button class="btn btn--principal formulaire__bouton" type="submit">
+          Recevoir l'extrait gratuit de ma ville
+        </button>
+        <p class="formulaire__statut" role="status" aria-live="polite"></p>
+      </form>
+
+      <div class="formulaire__merci" tabindex="-1" hidden>
+        <p class="h-carte">Merci ! Vous recevez l'extrait de votre ville sous 24&nbsp;h.</p>
+      </div>
+    </div>
+  </div>
+</section>

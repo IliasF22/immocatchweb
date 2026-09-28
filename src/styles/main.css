@@ -1608,3 +1608,554 @@ body {
 .legal__encart p:first-child {
   margin-top: 0;
 }
+
+/* =========================================================================
+   Vitrine : navigation, accueil, pages d'offre, formulaire « Extrait gratuit »
+   Aucune nouvelle teinte : F et G du DPE sont rendus en ambre, contour ou
+   plein, pour rester dans la palette.
+   ========================================================================= */
+
+/* ------------------------------ Navigation ---------------------------- */
+
+.entete__liens {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+.entete__lien[aria-current="page"] {
+  color: var(--os);
+  text-decoration: underline;
+  text-decoration-color: var(--ambre);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+.entete__menu {
+  display: none;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: var(--r);
+  background: transparent;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.entete__menu[aria-expanded="true"] {
+  border-color: var(--lampe);
+  color: var(--lampe);
+}
+
+/* Sous 1000 px, les liens se replient derrière « Menu » : quatre liens, le
+   logo et le bouton ne tiennent plus sur une ligne. Le panneau se place sous
+   l'en-tête, qui est collant et sert donc de repère. */
+@media (max-width: 1000px) {
+  .entete__nav {
+    gap: 0.6rem;
+  }
+
+  .entete__menu {
+    display: inline-flex;
+  }
+
+  .entete__liens {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0.5rem var(--gouttiere) 1rem;
+    background: var(--nuit);
+    border-bottom: 1px solid var(--trait);
+  }
+
+  .entete__liens[data-ouvert="oui"] {
+    display: flex;
+  }
+
+  .entete__liens .entete__lien {
+    display: block;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--trait);
+    font-size: 1rem;
+  }
+
+  .entete__liens li:last-child .entete__lien {
+    border-bottom: 0;
+  }
+
+  /* Sans JavaScript, le bouton ne ferait rien : on l'enlève et les liens
+     restent affichés sous le logo. */
+  .no-js .entete__menu {
+    display: none;
+  }
+
+  .no-js .entete__interieur {
+    flex-wrap: wrap;
+  }
+
+  .no-js .entete__nav {
+    flex-wrap: wrap;
+  }
+
+  .no-js .entete__liens {
+    display: flex;
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.1rem;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+
+  .no-js .entete__liens .entete__lien {
+    padding: 0;
+    border: 0;
+    font-size: 0.9rem;
+  }
+}
+
+/* ------------------------------- À la une ----------------------------- */
+
+.une {
+  padding-block: clamp(3rem, 8vw, 6.5rem) clamp(3rem, 7vw, 5.5rem);
+}
+
+.une__grille {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 6vw, 4.5rem);
+  align-items: center;
+}
+
+@media (min-width: 960px) {
+  .une__grille {
+    grid-template-columns: 1.25fr 0.75fr;
+  }
+}
+
+.une__texte {
+  max-width: 44rem;
+}
+
+.une--offre .une__texte {
+  max-width: 50rem;
+}
+
+.une__titre {
+  margin-top: 1.1rem;
+}
+
+.une__sous {
+  margin-top: 1.35rem;
+  max-width: 38rem;
+}
+
+.une__actions {
+  margin-top: 2rem;
+}
+
+.une__exclu {
+  margin-top: 0.85rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--os-45);
+}
+
+@media (max-width: 520px) {
+  .une__actions .btn {
+    width: 100%;
+  }
+}
+
+/* Échelle du DPE, décorative */
+.echelle {
+  border: 1px solid var(--trait);
+  border-radius: var(--r);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  background: var(--nuit-2);
+}
+
+.echelle__titre {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--os-45);
+}
+
+.echelle__barres {
+  display: grid;
+  gap: 0.4rem;
+  margin-top: 1rem;
+}
+
+.echelle__barre {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: calc(28% + var(--rang) * 10%);
+  min-height: 2rem;
+  padding-inline: 0.75rem;
+  border-radius: 6px;
+  background: var(--nuit-3);
+  border: 1px solid var(--trait);
+  font-family: var(--mono);
+  font-weight: 600;
+  color: var(--os-45);
+  white-space: nowrap;
+}
+
+.echelle__barre--alerte {
+  border-color: var(--ambre);
+  color: var(--ambre);
+}
+
+.echelle__barre--alerte:last-child {
+  background: var(--ambre);
+  color: var(--nuit);
+}
+
+.echelle__note {
+  font-family: var(--corps);
+  font-weight: 500;
+  font-size: 0.72rem;
+}
+
+/* --------------------------- Blocs de contenu ------------------------- */
+
+.section__plomb {
+  margin-top: 1.1rem;
+}
+
+.raison {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.raison__texte {
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.exemple__carte {
+  max-width: 50rem;
+  margin-inline: auto;
+  text-align: center;
+  border: 1px solid var(--ambre);
+  border-radius: var(--r);
+  padding: clamp(1.75rem, 5vw, 3rem);
+  background: var(--nuit-3);
+}
+
+.exemple__texte {
+  margin-top: 1rem;
+  font-family: var(--titre);
+  font-size: clamp(1.4rem, 3.4vw, 2.1rem);
+  line-height: 1.3;
+}
+
+.exemple__texte strong {
+  font-weight: 600;
+}
+
+.offre-lien {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.offre-lien__texte {
+  color: var(--os-70);
+  font-size: 0.95rem;
+  flex: 1;
+}
+
+.offre-lien__suite {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--lampe);
+}
+
+.offre-lien:hover .offre-lien__suite {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.detail {
+  max-width: 46rem;
+  margin: clamp(1.75rem, 4vw, 2.5rem) auto 0;
+  text-align: center;
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: var(--os-45);
+}
+
+/* ------------------------ Aperçu d'alerte flouté ---------------------- */
+
+.apercu {
+  max-width: 62rem;
+  margin-inline: auto;
+}
+
+.apercu__defilement {
+  overflow-x: auto;
+  border: 1px solid var(--trait);
+  border-radius: var(--r);
+  background: var(--nuit-3);
+}
+
+.apercu__table {
+  width: 100%;
+  min-width: 38rem;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.apercu__table th,
+.apercu__table td {
+  text-align: left;
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid var(--trait);
+  vertical-align: middle;
+}
+
+.apercu__table th {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--os-45);
+}
+
+.apercu__table tr:last-child td {
+  border-bottom: 0;
+}
+
+.apercu__adresse {
+  font-size: 0.82rem;
+  color: var(--os-70);
+}
+
+/* Flou visuel sur des valeurs déjà fictives : le texte ne correspond à rien,
+   le flou montre seulement qu'il s'agit d'informations nominatives. */
+.flou {
+  filter: blur(5px);
+  user-select: none;
+}
+
+.dpe {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-weight: 700;
+  border: 1px solid var(--ambre);
+  color: var(--ambre);
+}
+
+.dpe--g {
+  background: var(--ambre);
+  color: var(--nuit);
+}
+
+.apercu__legende {
+  margin-top: 0.9rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--os-45);
+}
+
+/* ---------------------- Formulaire « Extrait gratuit » ---------------- */
+
+.extrait__grille {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2rem, 5vw, 3.5rem);
+  align-items: start;
+}
+
+@media (min-width: 960px) {
+  .extrait__grille {
+    grid-template-columns: 0.85fr 1.15fr;
+  }
+}
+
+.extrait__intro .h-section {
+  margin-top: 0.9rem;
+}
+
+.extrait__texte {
+  margin-top: 1.1rem;
+}
+
+.extrait__exclu {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1.5rem;
+  color: var(--os-70);
+  font-size: 0.95rem;
+}
+
+.formulaire {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.formulaire__champ {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.formulaire__champ label {
+  font-size: 0.86rem;
+  color: var(--os-70);
+}
+
+/* 16 px minimum : en dessous, iOS zoome sur le champ à la saisie. */
+.formulaire input[type="text"],
+.formulaire input[type="tel"],
+.formulaire input[type="email"] {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  font-size: 1rem;
+  background: var(--nuit);
+  border: 1px solid var(--trait-fort);
+  border-radius: 10px;
+  transition: border-color var(--t-court) ease;
+}
+
+.formulaire input:focus-visible {
+  outline: none;
+  border-color: var(--lampe);
+  box-shadow: 0 0 0 3px rgba(168, 232, 176, 0.18);
+}
+
+.formulaire__duo {
+  display: grid;
+  gap: 1.1rem;
+}
+
+@media (min-width: 560px) {
+  .formulaire__duo {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.formulaire__consentement {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--os-70);
+  cursor: pointer;
+}
+
+.formulaire__consentement input {
+  flex: none;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-top: 0.15rem;
+  accent-color: var(--ambre);
+}
+
+.formulaire__consentement a {
+  color: var(--lampe);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.formulaire__bouton {
+  width: 100%;
+  margin-top: 0.3rem;
+}
+
+.formulaire__bouton:disabled {
+  opacity: 0.6;
+  cursor: progress;
+  transform: none;
+}
+
+.formulaire__statut {
+  min-height: 1.4em;
+  font-size: 0.88rem;
+  color: var(--os-70);
+}
+
+.formulaire__statut[data-etat="erreur"] {
+  color: var(--ambre);
+}
+
+.formulaire__merci {
+  padding-block: 1rem;
+  outline: none;
+}
+
+.formulaire__merci .h-carte {
+  color: var(--lampe);
+  font-size: 1.35rem;
+}
+
+/* ------------------------------ Pied de page -------------------------- */
+
+.pied__sources {
+  margin-top: 1.75rem;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--os-70);
+  max-width: 52rem;
+}
+
+/* En-tête sur téléphone : logo, bouton et « Menu » doivent tenir sur une
+   ligne. À 375 px, le bouton passait sur deux lignes. Sous 360 px, on le
+   retire : le bouton collant du bas de page fait le même travail. */
+.entete__nav .btn--compact {
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .entete__interieur {
+    gap: 0.6rem;
+  }
+
+  .entete__nav .btn--compact {
+    padding: 0.55rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .entete__menu {
+    padding: 0.5rem 0.7rem;
+  }
+}
+
+@media (max-width: 359px) {
+  .entete__nav .btn--compact {
+    display: none;
+  }
+}
+
+/* Tableau d'aperçu sur téléphone : plus serré, pour que l'étiquette DPE
+   apparaisse au premier coup d'œil ; le reste défile dans son cadre. */
+@media (max-width: 600px) {
+  .apercu__table {
+    min-width: 30rem;
+    font-size: 0.8rem;
+  }
+
+  .apercu__table th,
+  .apercu__table td {
+    padding: 0.7rem 0.65rem;
+  }
+}

@@ -1,16 +1,19 @@
 /**
- * Chrome de la page : filet sous l'en-tête une fois la page défilée, et barre
- * d'appel à l'action collante sur mobile.
+ * Chrome de la page : filet sous l'en-tête une fois la page défilée, menu
+ * mobile, et barre d'appel à l'action collante sur mobile.
  *
- * La barre apparaît une fois le premier écran dépassé, et son contenu suit
- * l'avancement du visiteur : tant qu'il n'a pas atteint la démo, on l'y
- * envoie ; une fois la démo passée, il a vu le produit et on lui propose la
- * prise de rendez-vous.
+ * La barre apparaît une fois le premier écran dépassé. Deux modes :
+ * - par défaut (/automatisations), son contenu suit l'avancement du
+ *   visiteur : tant qu'il n'a pas atteint la démo, on l'y envoie ; une fois
+ *   la démo passée, on lui propose la prise de rendez-vous ;
+ * - `data-mode="extrait"` (accueil, pages d'offre), un seul bouton vers le
+ *   formulaire, masqué quand le formulaire est lui-même à l'écran.
  */
 export function initialiserEntete() {
   const entete = document.querySelector("#entete");
   const collant = document.querySelector("#cta-collant");
   const demo = document.querySelector("#demo");
+  const extrait = document.querySelector("#extrait");
 
   if (entete) {
     const majFilet = () => {
@@ -18,6 +21,7 @@ export function initialiserEntete() {
     };
     majFilet();
     window.addEventListener("scroll", majFilet, { passive: true });
+    initialiserMenu(entete);
   }
 
   if (!collant) return;
@@ -62,6 +66,17 @@ export function initialiserEntete() {
   function majVisibilite() {
     const y = window.scrollY;
     const h = window.innerHeight;
+
+    // Mode « extrait » : inutile de proposer le formulaire quand il est déjà
+    // sous les yeux du visiteur, et le bouton masquerait ses derniers champs.
+    if (collant.dataset.mode === "extrait" && extrait) {
+      const rect = extrait.getBoundingClientRect();
+      if (rect.top < h && rect.bottom > 0) {
+        collant.dataset.visible = "non";
+        return;
+      }
+    }
+
     if (collant.dataset.visible === "oui") {
       if (y < h * 0.45) collant.dataset.visible = "non";
     } else if (y > h * 0.75) {
@@ -101,4 +116,38 @@ export function initialiserEntete() {
   window.addEventListener("resize", majTout, { passive: true });
   window.visualViewport?.addEventListener("resize", majTout, { passive: true });
   window.visualViewport?.addEventListener("scroll", majTout, { passive: true });
+}
+
+/**
+ * Menu mobile : les liens se replient derrière « Menu » sous 1000 px.
+ * Fermeture par Échap, par un clic sur un lien, ou au retour en grand écran.
+ */
+function initialiserMenu(entete) {
+  const bouton = entete.querySelector(".entete__menu");
+  const liste = entete.querySelector("#navigation");
+  if (!bouton || !liste) return;
+
+  function basculer(ouvrir) {
+    bouton.setAttribute("aria-expanded", String(ouvrir));
+    liste.dataset.ouvert = ouvrir ? "oui" : "non";
+  }
+
+  bouton.addEventListener("click", () => {
+    basculer(bouton.getAttribute("aria-expanded") !== "true");
+  });
+
+  liste.addEventListener("click", (e) => {
+    if (e.target.closest("a")) basculer(false);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && bouton.getAttribute("aria-expanded") === "true") {
+      basculer(false);
+      bouton.focus();
+    }
+  });
+
+  window.matchMedia("(min-width: 1001px)").addEventListener("change", (e) => {
+    if (e.matches) basculer(false);
+  });
 }

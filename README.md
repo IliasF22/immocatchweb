@@ -1,9 +1,17 @@
-# ImmoCatch — site officiel
+# ImmoCatch, site officiel
 
-Landing page une page pour ImmoCatch, l'assistant IA back-office des agences
-immobilières : l'agent dicte un vocal WhatsApp en sortant de visite, la fiche
-se structure toute seule et les acheteurs compatibles remontent à chaque
-nouveau mandat.
+Promesse principale : trouver des vendeurs aux agences immobilières avant
+leurs concurrents. Deux offres (campagne vendeurs ciblée, alertes vendeurs
+hebdomadaires) et, en offre secondaire, l'assistant WhatsApp présenté sur
+`/automatisations`.
+
+| URL | Fichier | Script |
+| --- | --- | --- |
+| `/` | `index.html` | `src/vitrine.js` |
+| `/campagne-vendeurs` | `campagne-vendeurs/index.html` | `src/vitrine.js` |
+| `/alertes-vendeurs` | `alertes-vendeurs/index.html` | `src/vitrine.js` |
+| `/automatisations` | `automatisations/index.html` | `src/main.js` (3D, flux, démo) |
+| `/politique-de-confidentialite` | `politique-de-confidentialite/index.html` | `src/vitrine.js` |
 
 **Stack** : Vite + JavaScript natif + Three.js. Ni framework d'interface, ni
 bibliothèque d'animation.
@@ -27,9 +35,16 @@ npm run preview    # sert dist/ localement
 ## Arborescence
 
 ```
-index.html              tout le contenu éditorial (une seule page)
+index.html              accueil
+campagne-vendeurs/      page d'offre
+alertes-vendeurs/       page d'offre
+automatisations/        ancienne page d'accueil, contenu intégral
+politique-de-confidentialite/
+.env                    adresse publique du webhook du formulaire
 src/
-  main.js               point d'entrée : interface d'abord, 3D ensuite
+  vitrine.js            point d'entrée des pages sans 3D
+  main.js               point d'entrée de /automatisations : interface, puis 3D
+  partials/             en-tête, pied de page, formulaire (un seul exemplaire)
   styles/main.css       système de design (variables, composants)
   scene/
     index.js            renderer, caméra, boucle, mise en pause
@@ -42,6 +57,7 @@ src/
     chapitres.js        repères cliquables de la vidéo de démonstration
     reveal.js           apparitions au défilement + compteurs
     flux.js             tracé du flux, particule, activation des messages
+    formulaire.js       envoi du formulaire « Extrait gratuit » au webhook n8n
     analytics.js        événements Plausible
 public/
   demo.mp4              vidéo de démonstration
@@ -57,9 +73,32 @@ DECISIONS.md            choix techniques et leurs raisons
 
 ## Modifier le contenu
 
-Tout le texte visible est dans `index.html`, en clair. Aucun contenu n'est
-généré par JavaScript : on peut relire et corriger la page sans toucher au
-code.
+Tout le texte visible est dans les fichiers HTML, en clair. Aucun contenu
+n'est généré par JavaScript : on peut relire et corriger une page sans
+toucher au code.
+
+L'en-tête, le pied de page et le formulaire existent en un seul exemplaire,
+dans `src/partials/`. Une page les appelle par un commentaire, remplacé au
+build par un petit plugin de `vite.config.js` :
+
+```html
+<!-- @inclure entete page="campagne" extrait="#extrait" -->
+<!-- @inclure formulaire-extrait -->
+<!-- @inclure pied -->
+```
+
+Pour ajouter une page : créer `nom-de-page/index.html` et le déclarer dans
+`rollupOptions.input` de `vite.config.js`, sinon elle n'est pas construite.
+
+## Formulaire « Extrait gratuit »
+
+Envoi en JSON vers l'adresse de `VITE_EXTRAIT_WEBHOOK_URL` (fichier `.env`).
+Champs envoyés : `agence`, `nom`, `ville`, `telephone`, `email`,
+`consentement`, `page`, `envoye_le`. Sans JavaScript, le formulaire est envoyé
+classiquement à la même adresse.
+
+Le webhook n8n doit accepter les requêtes venant de `https://immocatch.fr`
+(en-têtes CORS), sinon l'envoi échoue en production.
 
 ## Remplacer la vidéo
 
@@ -82,13 +121,14 @@ la lecture, le second est ce que lit le visiteur.
 
 ## Analytics
 
-Plausible uniquement, sans cookie ni donnée personnelle. Trois événements :
+Plausible uniquement, sans cookie ni donnée personnelle. Quatre événements :
 
 | Événement | Déclencheur |
 | --- | --- |
 | `cta_click` | Clic sur un appel à l'action (propriété `position`) |
 | `scroll_to_pricing` | Le bloc tarif entre dans l'écran |
 | `demo_view` | La vidéo de démonstration est lancée |
+| `extrait_demande` | Le formulaire « Extrait gratuit » est envoyé (propriété `page`) |
 
 Le domaine suivi est déclaré dans `index.html` (`data-domain`).
 

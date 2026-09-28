@@ -1,10 +1,11 @@
 /**
  * Plausible uniquement : pas de cookie, pas de donnée personnelle, aucun
- * autre traceur. Les trois événements suivis sont `cta_click`,
- * `scroll_to_pricing` et `demo_view`.
+ * autre traceur. Quatre événements sont suivis : `cta_click`,
+ * `scroll_to_pricing`, `demo_view` et `extrait_demande` (formulaire envoyé,
+ * déclenché par ui/formulaire.js).
  */
 
-function envoyer(nom, props) {
+export function envoyerEvenement(nom, props) {
   // Plausible peut ne pas être chargé (bloqueur, hors ligne) : on ne casse rien.
   if (typeof window.plausible !== "function") return;
   window.plausible(nom, props ? { props } : undefined);
@@ -14,7 +15,7 @@ export function initialiserAnalytics() {
   // --- cta_click : tous les appels à l'action portent un data-cta ---
   document.querySelectorAll("[data-cta]").forEach((lien) => {
     lien.addEventListener("click", () => {
-      envoyer("cta_click", { position: lien.dataset.cta });
+      envoyerEvenement("cta_click", { position: lien.dataset.cta });
     });
   });
 
@@ -25,7 +26,7 @@ export function initialiserAnalytics() {
       ([e]) => {
         if (!e.isIntersecting) return;
         obs.disconnect();
-        envoyer("scroll_to_pricing");
+        envoyerEvenement("scroll_to_pricing");
       },
       { threshold: 0.35 },
     );
@@ -35,6 +36,6 @@ export function initialiserAnalytics() {
   // --- demo_view : la vidéo est réellement lancée ---
   const video = document.querySelector("#demo-video");
   if (video) {
-    video.addEventListener("play", () => envoyer("demo_view"), { once: true });
+    video.addEventListener("play", () => envoyerEvenement("demo_view"), { once: true });
   }
 }

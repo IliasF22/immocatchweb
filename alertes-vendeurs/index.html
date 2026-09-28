@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0A0F1A" />
+
+    <title>Alertes vendeurs hebdomadaires | ImmoCatch</title>
+    <meta
+      name="description"
+      content="Chaque lundi, pour votre ville : SCI dissoutes, nouveaux logements F ou G, maisons tout juste diagnostiquées. Une seule agence par ville."
+    />
+    <link rel="canonical" href="https://immocatch.fr/alertes-vendeurs" />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="ImmoCatch" />
+    <meta property="og:url" content="https://immocatch.fr/alertes-vendeurs" />
+    <meta property="og:title" content="Alertes vendeurs hebdomadaires" />
+    <meta
+      property="og:description"
+      content="Chaque lundi, les nouveaux propriétaires susceptibles de vendre dans votre ville."
+    />
+    <meta name="twitter:card" content="summary" />
+
+    <script
+      defer
+      data-domain="immocatch.fr"
+      src="https://plausible.io/js/script.tagged-events.js"
+    ></script>
+
+    <script type="module" src="/src/vitrine.js"></script>
+  </head>
+
+  <body>
+    <!-- @inclure entete page="alertes" extrait="#extrait" -->
+
+    <main id="contenu">
+      <!-- ================================ À LA UNE ============================= -->
+      <section class="une une--offre">
+        <div class="enveloppe une__texte">
+          <p class="surtitre">Alertes vendeurs hebdomadaires</p>
+          <h1 class="h-geant une__titre">
+            Chaque lundi, les propriétaires susceptibles de vendre dans votre
+            ville.
+          </h1>
+          <p class="plomb une__sous">
+            Une liste courte, pour votre ville seulement, à appeler dans la
+            semaine.
+          </p>
+          <div class="une__actions">
+            <a class="btn btn--principal" href="#extrait" data-cta="alertes-hero">
+              Recevoir l'extrait gratuit de ma ville
+            </a>
+            <p class="une__exclu">Exclusivité : une seule agence par ville.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================ PROBLÈME ============================ -->
+      <section class="section section--alt">
+        <div class="enveloppe">
+          <div class="section__intro" data-reveal>
+            <p class="surtitre">Le problème</p>
+            <h2 class="h-section">Les signaux existent, personne ne les surveille</h2>
+            <p class="plomb section__plomb">
+              Une société qui se dissout, un logement qui passe en F ou G, une
+              maison qui vient d'être diagnostiquée : ces signes sont publics,
+              mais éparpillés dans plusieurs registres. Personne en agence n'a
+              le temps de les éplucher chaque semaine.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================== CE QUE VOUS RECEVEZ ====================== -->
+      <section class="section">
+        <div class="enveloppe">
+          <div class="section__intro" data-reveal>
+            <p class="surtitre">Ce que vous recevez</p>
+            <h2 class="h-section">Chaque lundi, pour votre ville</h2>
+          </div>
+
+          <ol class="grille grille--3 livrables">
+            <li class="carte" data-reveal>
+              <span class="etape__num">01</span>
+              <h3 class="h-carte etape__titre">Les SCI qui se dissolvent</h3>
+              <p class="etape__texte">
+                À la dissolution, leurs biens doivent être vendus ou partagés
+                entre les associés.
+              </p>
+            </li>
+            <li class="carte" data-reveal data-delai="80">
+              <span class="etape__num">02</span>
+              <h3 class="h-carte etape__titre">Les nouveaux logements classés F ou G</h3>
+              <p class="etape__texte">
+                Leurs propriétaires devront bientôt choisir entre travaux et
+                vente.
+              </p>
+            </li>
+            <li class="carte" data-reveal data-delai="160">
+              <span class="etape__num">03</span>
+              <h3 class="h-carte etape__titre">Les maisons tout juste diagnostiquées</h3>
+              <p class="etape__texte">
+                Un diagnostic récent accompagne souvent un projet de vente en
+                cours.
+              </p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ================================= EXEMPLE ============================ -->
+      <!-- Aperçu entièrement fictif : les suites de lettres ne correspondent à
+           aucune personne ni société, et sont floutées en plus. Elles sont
+           masquées aux lecteurs d'écran, qui lisent « masqué » à la place. -->
+      <section class="section section--alt">
+        <div class="enveloppe">
+          <div class="section__intro" data-reveal>
+            <p class="surtitre">Exemple</p>
+            <h2 class="h-section">À quoi ressemble une alerte</h2>
+          </div>
+
+          <figure class="apercu" data-reveal>
+            <div class="apercu__defilement">
+              <table class="apercu__table">
+                <thead>
+                  <tr>
+                    <th scope="col">Société</th>
+                    <th scope="col">Gérant</th>
+                    <th scope="col">Bien</th>
+                    <th scope="col">Étiquette DPE</th>
+                    <th scope="col">Nb logements</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="flou" aria-hidden="true">SCI Qzvrelak</span><span class="visuellement-cache">masqué</span></td>
+                    <td><span class="flou" aria-hidden="true">Mxorbe Pliquan</span><span class="visuellement-cache">masqué</span></td>
+                    <td>Immeuble<br /><span class="flou apercu__adresse" aria-hidden="true">14 rue Dvalqorin</span><span class="visuellement-cache">adresse masquée</span></td>
+                    <td><span class="dpe dpe--g">G</span></td>
+                    <td class="mono">6</td>
+                  </tr>
+                  <tr>
+                    <td><span class="flou" aria-hidden="true">SCI Brunvaxet</span><span class="visuellement-cache">masqué</span></td>
+                    <td><span class="flou" aria-hidden="true">Tolvreb Ascuni</span><span class="visuellement-cache">masqué</span></td>
+                    <td>Appartement<br /><span class="flou apercu__adresse" aria-hidden="true">3 bd Quelmarvot</span><span class="visuellement-cache">adresse masquée</span></td>
+                    <td><span class="dpe dpe--f">F</span></td>
+                    <td class="mono">1</td>
+                  </tr>
+                  <tr>
+                    <td><span class="flou" aria-hidden="true">SCI Pervolik</span><span class="visuellement-cache">masqué</span></td>
+                    <td><span class="flou" aria-hidden="true">Dravoune Keslat</span><span class="visuellement-cache">masqué</span></td>
+                    <td>Maison<br /><span class="flou apercu__adresse" aria-hidden="true">27 allée Vrozignac</span><span class="visuellement-cache">adresse masquée</span></td>
+                    <td><span class="dpe dpe--g">G</span></td>
+                    <td class="mono">1</td>
+                  </tr>
+                  <tr>
+                    <td><span class="flou" aria-hidden="true">SCI Holmtravèze</span><span class="visuellement-cache">masqué</span></td>
+                    <td><span class="flou" aria-hidden="true">Quibral Zenorvet</span><span class="visuellement-cache">masqué</span></td>
+                    <td>Immeuble<br /><span class="flou apercu__adresse" aria-hidden="true">8 place Ternoquel</span><span class="visuellement-cache">adresse masquée</span></td>
+                    <td><span class="dpe dpe--f">F</span></td>
+                    <td class="mono">4</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <figcaption class="apercu__legende">
+              Aperçu illustratif, données fictives.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ============================== EXCLUSIVITÉ =========================== -->
+      <section class="section exclusivite">
+        <div class="enveloppe">
+          <div class="section__intro" data-reveal>
+            <p class="surtitre">Exclusivité</p>
+            <h2 class="h-section">Une seule agence par ville</h2>
+            <p class="plomb section__plomb">
+              Les alertes de votre ville ne sont envoyées qu'à votre agence.
+              Une fois une ville attribuée, elle n'est plus proposée à une
+              autre agence.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- @inclure formulaire-extrait -->
+    </main>
+
+    <!-- @inclure pied -->
+
+    <div class="cta-collant" id="cta-collant" data-mode="extrait">
+      <a class="btn btn--principal" href="#extrait" data-cta="collant-extrait">
+        Recevoir l'extrait gratuit
+      </a>
+    </div>
+  </body>
+</html>

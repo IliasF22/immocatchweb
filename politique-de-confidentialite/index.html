@@ -31,31 +31,27 @@
       src="https://plausible.io/js/script.tagged-events.js"
     ></script>
 
-    <script type="module" src="/src/legal.js"></script>
+    <script type="module" src="/src/vitrine.js"></script>
   </head>
 
   <body>
-    <header class="entete">
-      <div class="enveloppe entete__interieur">
-        <a href="/" class="marque" aria-label="ImmoCatch, accueil">
-          Immo<span class="marque__catch">Catch</span>
-        </a>
-      </div>
-    </header>
+    <!-- @inclure entete page="confidentialite" extrait="/#extrait" -->
 
-    <main class="enveloppe">
+    <main class="enveloppe" id="contenu">
       <article class="legal">
         <a class="legal__retour" href="/">&larr; Retour à l'accueil</a>
 
         <h1 class="legal__titre">Politique de confidentialité</h1>
-        <p class="legal__maj">Dernière mise à jour : 21 septembre 2026</p>
+        <p class="legal__maj">Dernière mise à jour : 28 septembre 2026</p>
 
         <p class="legal__chapeau">
-          ImmoCatch traite des données personnelles de deux natures très
-          différentes : les vôtres, si vous visitez ce site ou si vous êtes
-          contacté par nous, et celles des clients des agences qui utilisent le
-          service. Ces deux cas n'obéissent pas aux mêmes règles, et cette page
-          les distingue explicitement.
+          ImmoCatch traite des données personnelles de trois natures très
+          différentes : les vôtres, si vous visitez ce site, demandez un extrait
+          ou êtes contacté par nous en tant que professionnel ; celles des
+          propriétaires que nous identifions pour les agences à partir de
+          sources publiques ; et celles des clients des agences qui utilisent
+          nos automatisations. Ces cas n'obéissent pas aux mêmes règles, et
+          cette page les distingue explicitement.
         </p>
 
         <h2>1. Qui traite vos données</h2>
@@ -84,8 +80,9 @@
         <p>
           <strong>IFGlobal est responsable de traitement</strong> pour les
           données liées à ce site, à la prospection commerciale et à la relation
-          avec ses clients professionnels. Ces traitements sont décrits aux
-          sections 3 à 5.
+          avec ses clients professionnels, ainsi que pour la constitution des
+          listes de propriétaires. Ces traitements sont décrits aux sections 3
+          à 5, 7 et 8.
         </p>
         <p>
           <strong>IFGlobal est sous-traitant</strong> pour les données des
@@ -94,7 +91,8 @@
           responsable de traitement : elle décide des finalités, elle détient la
           relation contractuelle avec ces personnes, et c'est à elle que ces
           personnes doivent s'adresser en premier lieu. Ces traitements sont
-          décrits à la section 6.
+          décrits à la section 6. IFGlobal est également sous-traitant lorsqu'il
+          écrit à des propriétaires au nom d'une agence (section 8).
         </p>
 
         <h2>3. Ce que fait ce site</h2>
@@ -199,7 +197,73 @@
           l'indiquerons.
         </p>
 
-        <h2>7. Finalités et bases légales</h2>
+        <h2 id="formulaire">7. Si vous demandez l'extrait gratuit</h2>
+        <p>
+          Le formulaire « Extrait gratuit de ma ville » recueille le nom de votre
+          agence, vos prénom et nom, votre ville ou secteur, votre téléphone et
+          votre adresse email professionnelle. Ces informations servent
+          uniquement à vous envoyer l'extrait demandé et à vous recontacter à ce
+          sujet. Elles ne sont ni vendues ni cédées.
+        </p>
+        <p>
+          Base légale : votre consentement, donné en cochant la case du
+          formulaire. Vous pouvez le retirer à tout moment en écrivant à
+          <a href="mailto:ilias@immocatch.fr">ilias@immocatch.fr</a>.
+        </p>
+
+        <h2 id="proprietaires">8. Si vous êtes propriétaire et que nous vous avons contacté</h2>
+        <p>
+          Pour les offres « Campagne vendeurs » et « Alertes vendeurs », nous
+          identifions des logements et leurs propriétaires à partir de sources
+          publiques :
+        </p>
+        <ul>
+          <li>
+            la base des diagnostics de performance énergétique publiée par
+            l'ADEME ;
+          </li>
+          <li>
+            les fichiers des locaux et des parcelles des personnes morales
+            publiés par la DGFiP ;
+          </li>
+          <li>la Base Adresse Nationale ;</li>
+          <li>
+            le registre national des entreprises, pour le nom du gérant d'une
+            société.
+          </li>
+        </ul>
+        <p>
+          Lorsque le logement appartient à une société (SCI ou autre personne
+          morale), les données traitées sont la dénomination de la société,
+          l'adresse de son siège, le nom de son gérant tel qu'il figure au
+          registre, l'adresse du logement et son étiquette énergie. Pour les
+          autres logements, seuls l'adresse du bien et son étiquette énergie
+          sont utilisés, sans nom de propriétaire.
+        </p>
+        <p>
+          <strong>Nos rôles.</strong> Nous sommes responsables de traitement
+          pour la constitution de ces listes. L'agence qui reçoit une alerte
+          devient responsable de l'usage qu'elle en fait. Lorsque nous écrivons
+          à un propriétaire au nom d'une agence, nous agissons pour son compte,
+          en tant que sous-traitant.
+        </p>
+        <p>
+          Base légale : l'intérêt légitime, pour une prospection par voie
+          postale en lien avec le bien détenu. Chaque lettre indique la source
+          des données utilisées et la façon de s'opposer à tout nouveau
+          contact.
+        </p>
+        <div class="legal__encart">
+          <p>
+            <strong>Pour ne plus être contacté</strong>, écrivez à
+            <a href="mailto:ilias@immocatch.fr">ilias@immocatch.fr</a> en
+            indiquant le nom de la société ou l'adresse du bien. Ils sont
+            inscrits sur notre liste d'opposition et ne sont plus contactés,
+            pour aucune agence. Aucune justification ne vous sera demandée.
+          </p>
+        </div>
+
+        <h2>9. Finalités et bases légales</h2>
         <div class="legal__tableau">
           <table>
             <thead>
@@ -226,6 +290,21 @@
                 <td>Intérêt légitime</td>
               </tr>
               <tr>
+                <td>Formulaire « Extrait gratuit »</td>
+                <td>Vous envoyer l'extrait demandé et vous recontacter</td>
+                <td>Consentement</td>
+              </tr>
+              <tr>
+                <td>Identification des propriétaires</td>
+                <td>Constituer les alertes et les campagnes vendeurs</td>
+                <td>Intérêt légitime</td>
+              </tr>
+              <tr>
+                <td>Lettres au nom d'une agence</td>
+                <td>Contacter les propriétaires pour le compte de l'agence</td>
+                <td>Définie par l'agence, responsable de traitement</td>
+              </tr>
+              <tr>
                 <td>Fourniture du service</td>
                 <td>Exécuter le contrat conclu avec l'agence</td>
                 <td>Exécution du contrat</td>
@@ -244,7 +323,7 @@
           </table>
         </div>
 
-        <h2>8. Combien de temps les données sont conservées</h2>
+        <h2>10. Combien de temps les données sont conservées</h2>
         <div class="legal__tableau">
           <table>
             <thead>
@@ -276,6 +355,24 @@
                 <td>3 ans après le dernier échange</td>
               </tr>
               <tr>
+                <td>Formulaire « Extrait gratuit »</td>
+                <td>
+                  3 ans après le dernier échange, ou jusqu'au retrait de votre
+                  consentement
+                </td>
+              </tr>
+              <tr>
+                <td>Propriétaires identifiés</td>
+                <td>
+                  3 ans après le dernier contact, ou immédiatement en cas
+                  d'opposition
+                </td>
+              </tr>
+              <tr>
+                <td>Liste d'opposition</td>
+                <td>3 ans, pour garantir qu'aucun nouveau contact n'a lieu</td>
+              </tr>
+              <tr>
                 <td>Mesure d'audience</td>
                 <td>Agrégée, aucune donnée individuelle conservée</td>
               </tr>
@@ -287,7 +384,7 @@
           </table>
         </div>
 
-        <h2>9. Les prestataires qui interviennent</h2>
+        <h2>11. Les prestataires qui interviennent</h2>
         <p>
           Nous ne vendons aucune donnée et ne les communiquons à personne à des
           fins publicitaires. Les seuls tiers qui y accèdent sont les
@@ -348,7 +445,7 @@
           <a href="mailto:ilias@immocatch.fr">ilias@immocatch.fr</a>.
         </p>
 
-        <h2>10. Transferts en dehors de l'Union européenne</h2>
+        <h2>12. Transferts en dehors de l'Union européenne</h2>
         <p>
           Comme l'indique le tableau ci-dessus, plusieurs de nos prestataires
           sont établis aux États-Unis. Certaines données y sont donc transférées.
@@ -361,7 +458,7 @@
           ne présentant pas de garanties appropriées.
         </p>
 
-        <h2>11. Sécurité</h2>
+        <h2>13. Sécurité</h2>
         <ul>
           <li>
             Les échanges avec le site et avec nos prestataires sont chiffrés en
@@ -381,7 +478,7 @@
           </li>
         </ul>
 
-        <h2>12. Vos droits</h2>
+        <h2>14. Vos droits</h2>
         <p>
           Vous disposez d'un droit d'accès, de rectification, d'effacement, de
           limitation, d'opposition et de portabilité sur vos données, ainsi que
@@ -403,7 +500,7 @@
           <a href="https://www.cnil.fr" rel="noopener">www.cnil.fr</a>.
         </p>
 
-        <h2>13. Données issues de WhatsApp</h2>
+        <h2>15. Données issues de WhatsApp</h2>
         <p>
           Les messages échangés avec ImmoCatch transitent par WhatsApp et sont
           donc également soumis à la politique de confidentialité de Meta, que
@@ -429,7 +526,7 @@
           </li>
         </ul>
 
-        <h2>14. Modifications</h2>
+        <h2>16. Modifications</h2>
         <p>
           Cette politique peut évoluer, notamment si nous changeons de
           prestataire. La date de dernière mise à jour figure en haut de cette
@@ -437,7 +534,7 @@
           en sont informés par email.
         </p>
 
-        <h2>15. Nous écrire</h2>
+        <h2>17. Nous écrire</h2>
         <p>
           Pour toute question sur cette politique ou sur le traitement de vos
           données :
@@ -447,28 +544,6 @@
       </article>
     </main>
 
-    <footer class="pied">
-      <div class="enveloppe">
-        <div class="pied__haut">
-          <span class="marque">Immo<span class="marque__catch">Catch</span></span>
-          <nav class="pied__liens" aria-label="Liens de pied de page">
-            <a href="/">Accueil</a>
-            <a href="mailto:ilias@immocatch.fr">ilias@immocatch.fr</a>
-          </nav>
-        </div>
-
-        <div class="pied__legal">
-          <p>
-            ImmoCatch © 2026. Service édité par IFGlobal, SASU (société par
-            actions simplifiée unipersonnelle).
-          </p>
-          <p>
-            SIREN 991 793 712 · SIRET (siège) 991 793 712 00019 · TVA
-            intracommunautaire FR44991793712.
-          </p>
-          <p>Siège social : 6 place des 3 gares, 95800 Cergy.</p>
-        </div>
-      </div>
-    </footer>
+    <!-- @inclure pied -->
   </body>
 </html>
