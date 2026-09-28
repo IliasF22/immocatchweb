@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0A0F1A" />
 
-    <title>ImmoCatch | On vous trouve des vendeurs avant vos concurrents</title>
+    <title>ImmoCatch | Les futurs vendeurs de votre ville, avant vos concurrents</title>
     <meta
       name="description"
-      content="Nous identifions les propriétaires de votre secteur qui vont devoir vendre, et les contactons au nom de votre agence. Une seule agence par ville."
+      content="Chaque semaine, les propriétaires de votre ville qui vont devoir vendre : passoires énergétiques, SCI dissoutes, maisons diagnostiquées. Une agence par ville."
     />
     <link rel="canonical" href="https://immocatch.fr/" />
 
@@ -19,10 +19,10 @@
     <meta property="og:locale" content="fr_FR" />
     <meta property="og:site_name" content="ImmoCatch" />
     <meta property="og:url" content="https://immocatch.fr/" />
-    <meta property="og:title" content="On vous trouve des vendeurs avant vos concurrents" />
+    <meta property="og:title" content="Les futurs vendeurs de votre ville, avant vos concurrents" />
     <meta
       property="og:description"
-      content="Les propriétaires de votre secteur qui vont devoir vendre, contactés au nom de votre agence. Une seule agence par ville."
+      content="Passoires énergétiques, SCI dissoutes, maisons tout juste diagnostiquées : nous repérons qui va devoir vendre dans votre ville. Une seule agence par ville."
     />
     <meta name="twitter:card" content="summary" />
 
@@ -41,89 +41,228 @@
 
     <main id="contenu">
       <!-- ================================ À LA UNE ============================= -->
-      <section class="une">
+      <section class="une une--accueil">
         <div class="enveloppe une__grille">
           <div class="une__texte">
             <p class="surtitre">Pour les agences immobilières</p>
             <h1 class="h-geant une__titre">
-              On vous trouve des vendeurs avant vos concurrents.
+              Les futurs vendeurs de votre ville,
+              <span class="accent">avant vos concurrents.</span>
             </h1>
             <p class="plomb une__sous">
-              Nous identifions les propriétaires de votre secteur qui vont
-              devoir vendre, et nous les contactons en votre nom. Vous recevez
-              les appels.
+              Chaque semaine, nous repérons les propriétaires de votre secteur
+              qui vont devoir vendre : passoires énergétiques, SCI qui se
+              dissolvent, maisons tout juste diagnostiquées. Vous les contactez
+              en premier.
             </p>
-            <div class="une__actions">
-              <a class="btn btn--principal" href="#extrait" data-cta="accueil-hero">
+            <div class="une__actions une__actions--duo">
+              <a class="btn btn--principal" href="#extrait" data-cta="accueil-hero-extrait">
                 Recevoir l'extrait gratuit de ma ville
               </a>
-              <p class="une__exclu">Une seule agence par ville.</p>
+              <a
+                class="btn btn--lampe"
+                href="https://calendly.com/ilias-frej-pro/30min"
+                target="_blank"
+                rel="noopener"
+                data-cta="accueil-hero-rdv"
+              >
+                Réserver 15 min
+              </a>
             </div>
+            <p class="une__exclu">
+              <span class="pastille">Exclusivité</span> Une seule agence par ville.
+            </p>
           </div>
 
-          <!-- Échelle du DPE : purement illustrative, l'information est
-               reprise en toutes lettres dans « Pourquoi maintenant ». -->
-          <div class="echelle" aria-hidden="true">
-            <p class="echelle__titre">Étiquette énergie</p>
-            <ol class="echelle__barres">
-              <li class="echelle__barre" style="--rang: 1">A</li>
-              <li class="echelle__barre" style="--rang: 2">B</li>
-              <li class="echelle__barre" style="--rang: 3">C</li>
-              <li class="echelle__barre" style="--rang: 4">D</li>
-              <li class="echelle__barre" style="--rang: 5">E</li>
-              <li class="echelle__barre echelle__barre--alerte" style="--rang: 6">
-                F <span class="echelle__note">plus relouable en 2028</span>
+          <figure class="carte-ville">
+            <div class="ville" data-ville="boucle" data-graine="16"></div>
+            <figcaption class="carte-ville__legende">
+              <span class="legende legende--lot">Logement</span>
+              <span class="legende legende--f">Classé F ou G</span>
+              <span class="legende legende--s">Société propriétaire identifiée</span>
+            </figcaption>
+            <p class="visuellement-cache">
+              Illustration : un quartier dont les logements classés F ou G
+              s'allument, puis ceux détenus par une société.
+            </p>
+          </figure>
+        </div>
+
+        <!-- Bandeau des signaux surveillés. Le texte est doublé pour une
+             boucle sans à-coup ; la copie est masquée aux lecteurs d'écran. -->
+        <div class="bandeau" aria-label="Les signaux que nous surveillons">
+          <div class="bandeau__piste">
+            <ul class="bandeau__liste">
+              <li>Logements classés G</li>
+              <li>SCI dissoutes</li>
+              <li>Logements classés F</li>
+              <li>Maisons tout juste diagnostiquées</li>
+              <li>Sociétés propriétaires et leur gérant</li>
+            </ul>
+            <ul class="bandeau__liste" aria-hidden="true">
+              <li>Logements classés G</li>
+              <li>SCI dissoutes</li>
+              <li>Logements classés F</li>
+              <li>Maisons tout juste diagnostiquées</li>
+              <li>Sociétés propriétaires et leur gérant</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ RÉCIT AU DÉFILEMENT ===================== -->
+      <!-- La ville reste épinglée pendant que les étapes défilent ; chaque
+           étape change son état (ui/ville.js, mode « defilement »). -->
+      <section class="section histoire" id="methode" data-histoire>
+        <div class="enveloppe">
+          <div class="section__intro" data-reveal>
+            <p class="surtitre">La méthode</p>
+            <h2 class="h-section">Comment on trouve vos vendeurs</h2>
+          </div>
+
+          <div class="histoire__grille">
+            <div class="histoire__visuel">
+              <div class="carte-ville carte-ville--epinglee">
+                <div class="ville" data-ville="defilement" data-graine="7" data-colonnes="14" data-lignes="11"></div>
+                <p class="carte-ville__exemple">
+                  <span class="surtitre">Exemple réel</span>
+                  À Angoulême : 808 logements classés F ou G, 97 sociétés
+                  propriétaires identifiées avec leur gérant.
+                </p>
+              </div>
+            </div>
+
+            <ol class="histoire__etapes">
+              <li class="histoire__etape" data-etape-ville="ville">
+                <span class="etape__num">01</span>
+                <h3 class="histoire__titre">Tous les logements diagnostiqués de votre secteur.</h3>
+                <p class="histoire__texte">
+                  Nous partons des diagnostics énergétiques publics et de
+                  l'adresse de chaque logement concerné.
+                </p>
               </li>
-              <li class="echelle__barre echelle__barre--alerte" style="--rang: 7">
-                G <span class="echelle__note">plus relouable depuis 2025</span>
+              <li class="histoire__etape" data-etape-ville="passoires">
+                <span class="etape__num">02</span>
+                <h3 class="histoire__titre">Les passoires énergétiques ressortent.</h3>
+                <p class="histoire__texte">
+                  Logements classés F ou G : leurs propriétaires devront
+                  choisir entre des travaux coûteux et la vente.
+                </p>
+                <p class="histoire__chiffre">
+                  <span class="mono accent" data-compteur="808">808</span>
+                  <span>logements classés F ou G à Angoulême</span>
+                </p>
+              </li>
+              <li class="histoire__etape" data-etape-ville="societes">
+                <span class="etape__num">03</span>
+                <h3 class="histoire__titre">Derrière, les sociétés propriétaires.</h3>
+                <p class="histoire__texte">
+                  Quand le logement appartient à une SCI, nous retrouvons la
+                  société et son gérant dans les registres publics.
+                </p>
+                <p class="histoire__chiffre">
+                  <span class="mono lampe" data-compteur="97">97</span>
+                  <span>sociétés identifiées avec leur gérant</span>
+                </p>
+              </li>
+              <li class="histoire__etape" data-etape-ville="extrait">
+                <span class="etape__num">04</span>
+                <h3 class="histoire__titre">Vous les contactez en premier.</h3>
+                <p class="histoire__texte">
+                  Vous recevez la liste chaque lundi, ou nous les contactons
+                  en votre nom et vous recevez les appels.
+                </p>
               </li>
             </ol>
           </div>
         </div>
       </section>
 
-      <!-- ============================ POURQUOI MAINTENANT ====================== -->
-      <section class="section section--alt" id="pourquoi">
+      <!-- ================================ CALENDRIER ========================== -->
+      <section class="section section--claire" id="calendrier">
         <div class="enveloppe">
           <div class="section__intro" data-reveal>
-            <h2 class="h-section">Pourquoi maintenant</h2>
+            <p class="surtitre surtitre--sombre">Pourquoi maintenant</p>
+            <h2 class="h-section">Le calendrier joue pour vous</h2>
+            <p class="plomb section__plomb">
+              Des milliers de bailleurs, souvent des SCI gérées à distance, vont
+              devoir faire des travaux coûteux… ou vendre.
+            </p>
           </div>
 
-          <ol class="grille grille--3 raisons">
-            <li class="carte raison" data-reveal>
-              <span class="etape__num">01</span>
-              <p class="raison__texte">
-                Depuis 2025, un logement classé G ne peut plus être mis en
-                location ni reloué. Les F suivront en 2028.
+          <ol class="frise" data-progression>
+            <li class="frise__jalon frise__jalon--g" data-seuil="0.12">
+              <span class="frise__annee mono">2025</span>
+              <span class="frise__lettre">G</span>
+              <p>
+                Un logement classé G ne peut plus être mis en location ni
+                reloué.
               </p>
             </li>
-            <li class="carte raison" data-reveal data-delai="80">
-              <span class="etape__num">02</span>
-              <p class="raison__texte">
-                Des milliers de bailleurs, souvent des SCI gérées à distance,
-                vont devoir faire des travaux coûteux… ou vendre.
-              </p>
+            <li class="frise__jalon frise__jalon--f" data-seuil="0.5">
+              <span class="frise__annee mono">2028</span>
+              <span class="frise__lettre">F</span>
+              <p>Les logements classés F suivent.</p>
             </li>
-            <li class="carte raison" data-reveal data-delai="160">
-              <span class="etape__num">03</span>
-              <p class="raison__texte">
-                Nous savons qui ils sont, dans votre ville.
-              </p>
+            <li class="frise__jalon frise__jalon--e" data-seuil="0.86">
+              <span class="frise__annee mono">2034</span>
+              <span class="frise__lettre">E</span>
+              <p>Puis les logements classés E.</p>
             </li>
           </ol>
+
+          <p class="frise__chute" data-reveal>
+            Nous savons qui ils sont, dans votre ville.
+          </p>
         </div>
       </section>
 
-      <!-- ================================= EXEMPLE ============================ -->
-      <section class="section exemple">
-        <div class="enveloppe">
-          <figure class="exemple__carte" data-reveal>
-            <figcaption class="surtitre">Exemple réel</figcaption>
-            <p class="exemple__texte">
-              À Angoulême : <strong class="mono accent">808</strong> logements
-              classés F ou G, <strong class="mono accent">97</strong> sociétés
-              propriétaires identifiées avec leur gérant.
-            </p>
+      <!-- ================================ L'EXTRAIT =========================== -->
+      <section class="section" id="apercu">
+        <div class="enveloppe apercu-doc__grille">
+          <div class="apercu-doc__texte" data-reveal="gauche">
+            <p class="surtitre">Ce que vous recevez</p>
+            <h2 class="h-section">Une liste courte, à appeler dans la semaine</h2>
+            <ul class="coches">
+              <li>La société propriétaire et son gérant</li>
+              <li>Le bien concerné et son adresse</li>
+              <li>Son étiquette énergie et le signal qui le rend vendeur</li>
+            </ul>
+            <a class="btn btn--principal" href="#extrait" data-cta="accueil-apercu-extrait">
+              Recevoir l'extrait gratuit de ma ville
+            </a>
+          </div>
+
+          <!-- Document entièrement fictif : suites de lettres floutées,
+               masquées aux lecteurs d'écran. -->
+          <figure class="doc" data-reveal="droite">
+            <div class="doc__entete">
+              <span class="doc__titre">Extrait · votre ville</span>
+              <span class="pastille pastille--lampe">Lundi</span>
+            </div>
+            <ul class="doc__lignes">
+              <li class="doc__ligne" data-reveal data-delai="150">
+                <span class="doc__qui"><span class="flou" aria-hidden="true">SCI Qzvrelak</span><span class="flou doc__gerant" aria-hidden="true">Mxorbe Pliquan</span><span class="visuellement-cache">Société et gérant masqués</span></span>
+                <span class="doc__signal">Classé G</span>
+                <span class="dpe dpe--g" aria-hidden="true">G</span>
+              </li>
+              <li class="doc__ligne" data-reveal data-delai="300">
+                <span class="doc__qui"><span class="flou" aria-hidden="true">SCI Brunvaxet</span><span class="flou doc__gerant" aria-hidden="true">Tolvreb Ascuni</span><span class="visuellement-cache">Société et gérant masqués</span></span>
+                <span class="doc__signal doc__signal--lampe">SCI dissoute</span>
+                <span class="dpe dpe--f" aria-hidden="true">F</span>
+              </li>
+              <li class="doc__ligne" data-reveal data-delai="450">
+                <span class="doc__qui"><span class="flou" aria-hidden="true">27 allée Vrozignac</span><span class="flou doc__gerant" aria-hidden="true">Maison</span><span class="visuellement-cache">Adresse masquée</span></span>
+                <span class="doc__signal">Diagnostic récent</span>
+                <span class="dpe dpe--f" aria-hidden="true">F</span>
+              </li>
+              <li class="doc__ligne" data-reveal data-delai="600">
+                <span class="doc__qui"><span class="flou" aria-hidden="true">SCI Holmtravèze</span><span class="flou doc__gerant" aria-hidden="true">Quibral Zenorvet</span><span class="visuellement-cache">Société et gérant masqués</span></span>
+                <span class="doc__signal">Classé G</span>
+                <span class="dpe dpe--g" aria-hidden="true">G</span>
+              </li>
+            </ul>
+            <figcaption class="doc__legende">Aperçu illustratif, données fictives.</figcaption>
           </figure>
         </div>
       </section>
@@ -132,63 +271,132 @@
       <section class="section section--alt" id="offres">
         <div class="enveloppe">
           <div class="section__intro" data-reveal>
-            <h2 class="h-section">Nos offres</h2>
+            <p class="surtitre">Deux façons de l'exploiter</p>
+            <h2 class="h-section">Vous appelez, ou nous écrivons pour vous</h2>
           </div>
 
-          <div class="grille grille--3">
-            <a class="carte offre-lien" href="/campagne-vendeurs" data-cta="accueil-offre-campagne" data-reveal>
-              <h3 class="h-carte">Campagne vendeurs ciblée</h3>
-              <p class="offre-lien__texte">
+          <div class="grille grille--2 offres">
+            <a class="offre offre--lampe" href="/alertes-vendeurs" data-cta="accueil-offre-alertes" data-reveal="gauche">
+              <span class="offre__etiquette">Vous gardez la main</span>
+              <h3 class="offre__titre">Alertes vendeurs hebdomadaires</h3>
+              <p class="offre__texte">
+                Chaque lundi, les nouveaux propriétaires susceptibles de vendre
+                dans votre ville.
+              </p>
+              <ul class="coches coches--petites">
+                <li>SCI qui se dissolvent</li>
+                <li>Nouveaux logements classés F ou G</li>
+                <li>Maisons tout juste diagnostiquées</li>
+              </ul>
+              <span class="offre__suite">Voir les alertes <span aria-hidden="true">→</span></span>
+            </a>
+
+            <a class="offre offre--ambre" href="/campagne-vendeurs" data-cta="accueil-offre-campagne" data-reveal="droite">
+              <span class="offre__etiquette">Nous le faisons pour vous</span>
+              <h3 class="offre__titre">Campagne vendeurs ciblée</h3>
+              <p class="offre__texte">
                 Nous contactons en votre nom les propriétaires de votre secteur
                 dont le logement ne pourra plus être reloué. Vous recevez les
                 appels.
               </p>
-              <span class="offre-lien__suite">Découvrir la campagne <span aria-hidden="true">→</span></span>
-            </a>
-            <a class="carte offre-lien" href="/alertes-vendeurs" data-cta="accueil-offre-alertes" data-reveal data-delai="80">
-              <h3 class="h-carte">Alertes vendeurs hebdomadaires</h3>
-              <p class="offre-lien__texte">
-                Chaque lundi, les nouveaux propriétaires susceptibles de vendre
-                dans votre ville.
-              </p>
-              <span class="offre-lien__suite">Découvrir les alertes <span aria-hidden="true">→</span></span>
-            </a>
-            <a class="carte offre-lien" href="/automatisations" data-cta="accueil-offre-automatisations" data-reveal data-delai="160">
-              <h3 class="h-carte">Automatisations</h3>
-              <p class="offre-lien__texte">
-                Vos fiches contacts et mandats créées par un simple vocal
-                WhatsApp.
-              </p>
-              <span class="offre-lien__suite">Découvrir les automatisations <span aria-hidden="true">→</span></span>
+              <ul class="coches coches--petites">
+                <li>Propriétaires identifiés un par un</li>
+                <li>Premier contact au nom de votre agence</li>
+                <li>Récapitulatif des envois</li>
+              </ul>
+              <span class="offre__suite">Voir la campagne <span aria-hidden="true">→</span></span>
             </a>
           </div>
+
+          <a class="bande-auto" href="/automatisations" data-cta="accueil-offre-automatisations" data-reveal>
+            <span class="bande-auto__icone" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.4-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.14-.14.3-.35.45-.53.15-.17.2-.3.3-.5.1-.19.05-.37-.03-.52-.07-.15-.67-1.61-.91-2.2-.25-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.08 4.49.7.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.42.25-.69.25-1.29.18-1.41-.08-.13-.28-.2-.57-.35M12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.89 9.89-9.89 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.43 9.89-9.88 9.89m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45c6.55 0 11.89-5.34 11.89-11.9a11.82 11.82 0 0 0-3.48-8.41" />
+              </svg>
+            </span>
+            <span class="bande-auto__texte">
+              <strong>Et pour vos fiches : l'assistant WhatsApp.</strong>
+              Vos fiches contacts et mandats créées par un simple vocal WhatsApp.
+            </span>
+            <span class="bande-auto__suite" aria-hidden="true">→</span>
+          </a>
         </div>
       </section>
 
-      <!-- ============================ COMMENT ÇA MARCHE ======================= -->
-      <section class="section" id="fonctionnement">
+      <!-- ================================== FAQ =============================== -->
+      <section class="section" id="questions">
         <div class="enveloppe">
           <div class="section__intro" data-reveal>
-            <h2 class="h-section">Comment ça marche</h2>
+            <p class="surtitre">Vos questions</p>
+            <h2 class="h-section">Avant de vous lancer</h2>
           </div>
 
-          <ol class="grille grille--3 etapes">
-            <li class="carte" data-reveal>
-              <span class="etape__num">01</span>
-              <h3 class="h-carte etape__titre">Vous choisissez votre secteur.</h3>
-            </li>
-            <li class="carte" data-reveal data-delai="80">
-              <span class="etape__num">02</span>
-              <h3 class="h-carte etape__titre">
-                Nous identifions les propriétaires et les contactons en votre
-                nom.
-              </h3>
-            </li>
-            <li class="carte" data-reveal data-delai="160">
-              <span class="etape__num">03</span>
-              <h3 class="h-carte etape__titre">Vous recevez les appels des vendeurs.</h3>
-            </li>
-          </ol>
+          <div class="faq" data-reveal>
+            <div class="faq__item">
+              <button class="faq__bouton" aria-expanded="false" aria-controls="q-p1" id="q-b1">
+                D'où viennent les données ?
+                <span class="faq__signe" aria-hidden="true"></span>
+              </button>
+              <div class="faq__panneau" id="q-p1" role="region" aria-labelledby="q-b1">
+                <div class="faq__contenu">
+                  <p>
+                    De sources publiques : les diagnostics énergétiques
+                    publiés par l'ADEME, les fichiers des propriétaires
+                    personnes morales de la DGFiP, la Base Adresse Nationale
+                    et le registre national des entreprises.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq__item">
+              <button class="faq__bouton" aria-expanded="false" aria-controls="q-p2" id="q-b2">
+                A-t-on le droit de contacter ces propriétaires ?
+                <span class="faq__signe" aria-hidden="true"></span>
+              </button>
+              <div class="faq__panneau" id="q-p2" role="region" aria-labelledby="q-b2">
+                <div class="faq__contenu">
+                  <p>
+                    Oui, par voie postale : c'est permis sans accord préalable,
+                    à condition d'indiquer d'où viennent les données et de
+                    permettre au propriétaire de s'opposer simplement à tout
+                    nouveau contact. Chaque envoi le précise.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq__item">
+              <button class="faq__bouton" aria-expanded="false" aria-controls="q-p3" id="q-b3">
+                Pourquoi une seule agence par ville ?
+                <span class="faq__signe" aria-hidden="true"></span>
+              </button>
+              <div class="faq__panneau" id="q-p3" role="region" aria-labelledby="q-b3">
+                <div class="faq__contenu">
+                  <p>
+                    Pour que les propriétaires de votre ville n'entendent parler
+                    que de vous. Une fois une ville attribuée, elle n'est plus
+                    proposée à une autre agence.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq__item">
+              <button class="faq__bouton" aria-expanded="false" aria-controls="q-p4" id="q-b4">
+                Est-ce que ça change mon logiciel ?
+                <span class="faq__signe" aria-hidden="true"></span>
+              </button>
+              <div class="faq__panneau" id="q-p4" role="region" aria-labelledby="q-b4">
+                <div class="faq__contenu">
+                  <p>
+                    Non. Vous recevez des listes ou des appels de vendeurs ;
+                    votre logiciel et vos habitudes restent les mêmes.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -197,11 +405,18 @@
 
     <!-- @inclure pied -->
 
-    <!-- Un seul bouton, vers le formulaire. Masqué quand le formulaire est à
-         l'écran (voir ui/header.js, mode « extrait »). -->
+    <!-- Deux boutons à égalité, masqués quand le formulaire est à l'écran
+         (voir ui/header.js, mode « extrait »). -->
     <div class="cta-collant" id="cta-collant" data-mode="extrait">
-      <a class="btn btn--principal" href="#extrait" data-cta="collant-extrait">
-        Recevoir l'extrait gratuit
+      <a class="btn btn--principal" href="#extrait" data-cta="collant-extrait">Extrait gratuit</a>
+      <a
+        class="btn btn--lampe"
+        href="https://calendly.com/ilias-frej-pro/30min"
+        target="_blank"
+        rel="noopener"
+        data-cta="collant-rdv"
+      >
+        Réserver 15 min
       </a>
     </div>
 
@@ -217,7 +432,7 @@
         "legalName": "IFGlobal",
         "url": "https://immocatch.fr/",
         "email": "ilias@immocatch.fr",
-        "description": "ImmoCatch identifie pour les agences immobilières les propriétaires de leur secteur qui vont devoir vendre, et les contacte en leur nom. Une seule agence par ville.",
+        "description": "ImmoCatch repère pour les agences immobilières les propriétaires de leur ville qui vont devoir vendre, à partir de sources publiques. Une seule agence par ville.",
         "vatID": "FR44991793712",
         "identifier": {
           "@type": "PropertyValue",

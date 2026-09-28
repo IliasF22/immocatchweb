@@ -119,7 +119,7 @@ export function initialiserEntete() {
 }
 
 /**
- * Menu mobile : les liens se replient derrière « Menu » sous 1000 px.
+ * Menu mobile : les liens se replient derrière « Menu » sous 1180 px.
  * Fermeture par Échap, par un clic sur un lien, ou au retour en grand écran.
  */
 function initialiserMenu(entete) {
@@ -147,7 +147,7 @@ function initialiserMenu(entete) {
     }
   });
 
-  window.matchMedia("(min-width: 1001px)").addEventListener("change", (e) => {
+  window.matchMedia("(min-width: 1181px)").addEventListener("change", (e) => {
     if (e.matches) basculer(false);
   });
 }
